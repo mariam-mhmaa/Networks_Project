@@ -1,0 +1,12 @@
+firmware/build/
+firmware/sdkconfig.old
+**/__pycache__/
+results/history_host_test.exe
+
+# Local/generated outputs; raw results are intentionally included.
+.venv/
+venv/
+.pytest_cache/
+*.pyc
+*.pyo
+verification/generated/

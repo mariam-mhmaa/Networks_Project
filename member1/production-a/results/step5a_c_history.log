@@ -1,0 +1,15 @@
+Compiler: C:\Program Files (x86)\SKTOOL7.1\Marco\X86\bin\gcc.EXE
+C:\Networks\MCT431_Production_A\tests\history_core_test.c: In function 'config':
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:7:5: warning: missing initializer
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:7:5: warning: (near initialization for 'op.kind')
+C:\Networks\MCT431_Production_A\tests\history_core_test.c: In function 'main':
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: missing braces around initializer
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: (near initialization for 'h.completed')
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: missing initializer
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: (near initialization for 'h.completed[0].request.kind')
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: missing initializer
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: (near initialization for 'h.completed[0].seq')
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: missing initializer
+C:\Networks\MCT431_Production_A\tests\history_core_test.c:11:5: warning: (near initialization for 'h.active')
+PASS: C history decisions, suffixes, conflicts, gaps, replacement, active isolation, reset
+sizeof(operation_t)=116 sizeof(result_t)=124 sizeof(history_t)=1132

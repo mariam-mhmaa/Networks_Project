@@ -1,0 +1,53 @@
+test_busy_unconfigured_and_configuration_change_block (test_dispatch.DispatchTests.test_busy_unconfigured_and_configuration_change_block) ... ok
+test_correlated_status_interleaves_heartbeat_and_late_completion (test_dispatch.DispatchTests.test_correlated_status_interleaves_heartbeat_and_late_completion) ... ok
+test_duplicates_and_mismatched_results (test_dispatch.DispatchTests.test_duplicates_and_mismatched_results) ... ok
+test_explicit_action_rechecks_status_and_then_runs_only_different_part (test_dispatch.DispatchTests.test_explicit_action_rechecks_status_and_then_runs_only_different_part) ... ok
+test_late_evidence_never_clears_lost_contact_fault (test_dispatch.DispatchTests.test_late_evidence_never_clears_lost_contact_fault) ... ok
+test_new_client_does_not_reuse_status_sequence (test_dispatch.DispatchTests.test_new_client_does_not_reuse_status_sequence) ... ok
+test_operation_exception_is_not_station_unavailability (test_dispatch.DispatchTests.test_operation_exception_is_not_station_unavailability) ... ok
+test_positive_assessment_does_not_rearm_or_submit (test_dispatch.DispatchTests.test_positive_assessment_does_not_rearm_or_submit) ... ok
+test_queued_old_status_is_not_fresh (test_dispatch.DispatchTests.test_queued_old_status_is_not_fresh) ... ok
+test_restart_and_other_boot_evidence_block (test_dispatch.DispatchTests.test_restart_and_other_boot_evidence_block) ... ok
+test_stale_matching_timestamp_and_old_counter_timeout (test_dispatch.DispatchTests.test_stale_matching_timestamp_and_old_counter_timeout) ... ok
+test_status_and_heartbeat_never_confirm_a_part (test_dispatch.DispatchTests.test_status_and_heartbeat_never_confirm_a_part) ... ok
+test_status_io_failure_cleans_correlation_and_does_not_touch_budget (test_dispatch.DispatchTests.test_status_io_failure_cleans_correlation_and_does_not_touch_budget) ... ok
+test_unresolved_part_cannot_be_recreated_under_new_ids (test_dispatch.DispatchTests.test_unresolved_part_cannot_be_recreated_under_new_ids) ... ok
+test_explicit_configuration_and_start_required (test_gateway_run.RunTests.test_explicit_configuration_and_start_required) ... ok
+test_local_old_configuration_cannot_arm_stale_setting (test_gateway_run.RunTests.test_local_old_configuration_cannot_arm_stale_setting) ... ok
+test_observation_of_recovery_never_rearms_work (test_gateway_run.RunTests.test_observation_of_recovery_never_rearms_work) ... ok
+test_explicit_duplicate_identity_preserved (test_history_client.HistoryClientTests.test_explicit_duplicate_identity_preserved) ... ok
+test_explicit_mode_keeps_missing_number (test_history_client.HistoryClientTests.test_explicit_mode_keeps_missing_number) ... ok
+test_legacy_regression_adds_number_and_suffix (test_history_client.HistoryClientTests.test_legacy_regression_adds_number_and_suffix) ... ok
+test_actual_c_history (test_history_core.HistoryCoreTests.test_actual_c_history) ... ok
+test_crc_reference_and_independent_implementation (test_protocol.ProtocolTests.test_crc_reference_and_independent_implementation) ... ok
+test_limits_and_validation (test_protocol.ProtocolTests.test_limits_and_validation) ... ok
+test_malformed_escape_and_overflow_count_once (test_protocol.ProtocolTests.test_malformed_escape_and_overflow_count_once) ... ok
+test_parser_matrix (test_protocol.ProtocolTests.test_parser_matrix) ... ok
+test_shared_complete_example (test_protocol.ProtocolTests.test_shared_complete_example) ... ok
+test_acceptance_and_completion_loss_share_one_retry_budget (test_retry.RetryTests.test_acceptance_and_completion_loss_share_one_retry_budget) ... ok
+test_acceptance_loss_running_and_original_sequence (test_retry.RetryTests.test_acceptance_loss_running_and_original_sequence) ... ok
+test_completion_loss_replays_immediately (test_retry.RetryTests.test_completion_loss_replays_immediately) ... ok
+test_config_historical_replay_and_completion_count_once (test_retry.RetryTests.test_config_historical_replay_and_completion_count_once) ... ok
+test_configuration_overall_deadline (test_retry.RetryTests.test_configuration_overall_deadline) ... ok
+test_late_duplicate_and_old_session_frames_quarantined (test_retry.RetryTests.test_late_duplicate_and_old_session_frames_quarantined) ... ok
+test_no_loss_no_retries (test_retry.RetryTests.test_no_loss_no_retries) ... ok
+test_policy_validation_and_local_identity_conflict (test_retry.RetryTests.test_policy_validation_and_local_identity_conflict) ... ok
+test_received_is_not_acceptance_budget_and_absolute_deadline (test_retry.RetryTests.test_received_is_not_acceptance_budget_and_absolute_deadline) ... ok
+test_repeated_running_never_moves_deadline (test_retry.RetryTests.test_repeated_running_never_moves_deadline) ... ok
+test_restart_and_heartbeat_fault_stop_transmissions (test_retry.RetryTests.test_restart_and_heartbeat_fault_stop_transmissions) ... ok
+test_stopped_operation_cannot_acquire_a_new_budget (test_retry.RetryTests.test_stopped_operation_cannot_acquire_a_new_budget) ... ok
+test_terminal_rejections_stop_immediately (test_retry.RetryTests.test_terminal_rejections_stop_immediately) ... ok
+test_unresolved_gateway_operation_disarms_run (test_retry.RetryTests.test_unresolved_gateway_operation_disarms_run) ... ok
+test_exact_deadline_and_same_session_recovery_latches_fault (test_session.SessionTests.test_exact_deadline_and_same_session_recovery_latches_fault) ... ok
+test_invalid_old_or_status_frames_do_not_refresh_deadline (test_session.SessionTests.test_invalid_old_or_status_frames_do_not_refresh_deadline) ... ok
+test_receiver_separates_heartbeats_from_correlated_response (test_session.SessionTests.test_receiver_separates_heartbeats_from_correlated_response) ... ok
+test_restart_is_sticky_and_never_arms_new_boot (test_session.SessionTests.test_restart_is_sticky_and_never_arms_new_boot) ... ok
+test_accumulates_partial_reads (test_two_way.StreamTests.test_accumulates_partial_reads) ... ok
+test_corruption_and_extra_bytes_fail (test_two_way.StreamTests.test_corruption_and_extra_bytes_fail) ... ok
+test_incomplete_read_expires (test_two_way.StreamTests.test_incomplete_read_expires) ... ok
+test_partial_writes_and_exact_binary (test_two_way.StreamTests.test_partial_writes_and_exact_binary) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 0.573s
+
+OK

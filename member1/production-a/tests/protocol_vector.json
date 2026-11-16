@@ -1,0 +1,7 @@
+{
+  "test_id": 4660,
+  "seq": 16909060,
+  "payload_hex": "00 c0 db ff",
+  "atr_hex": "12 34 01 02 03 04 00 04 00 c0 db ff c3 0e",
+  "slip_hex": "c0 12 34 01 02 03 04 00 04 00 db dc db dd ff c3 0e c0"
+}

@@ -1,0 +1,753 @@
+{
+  "firmware": [
+    {
+      "path": "firmware/CMakeLists.txt",
+      "sha256": "f2f0901fc4274ef20986fccaf4910312ebba0e29aac466bb542a5927ca65784e",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/CMakeLists.txt",
+      "sha256": "e2bb240c2e3d317e8226aa4403eb62b2e4ddab1829d70c9038890dadd0153455",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/history.c",
+      "sha256": "34416ede7730525aa8cd4f92920709e313b59a80fb8dd20be4c1f1f6f7c12d2b",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/history.h",
+      "sha256": "b6cecc2e0224f699be8f2f742e22ec3519003a03ce6d88767986aaf81d824712",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/main.c",
+      "sha256": "59e606a478de9ef412a11fa3ed9f9c6cd80abc9b7e81bdab21e7fd100ec3b67b",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/production.c",
+      "sha256": "093c22b4ab9105104b3ddd9037f6f0eecea194d0a1ced516e15b14fd754be075",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/production.h",
+      "sha256": "3c856f093b13e249c1e70115574c4c925a57da3ec87b9124de0b8600917c6cd2",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/protocol.c",
+      "sha256": "e0dd4d952970d9e32bfb7568a96dc250636da8601e66befe56504e536846f2ea",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/main/protocol.h",
+      "sha256": "15db5ec0bd472580c84b1dcbe95d55b1b6ce8e5c2d098cef8144dbd866c6883f",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/sdkconfig",
+      "sha256": "e4399c380e55b818d5f6b83c27f49fc8699279d292b59af2cadc86f3fd67498b",
+      "matches_original": true
+    },
+    {
+      "path": "firmware/sdkconfig.defaults",
+      "sha256": "9859dc3efc168f0535c4f24d5ee1b7497dd109121b45bc6800f25446cbe7cbf8",
+      "matches_original": true
+    }
+  ],
+  "pc_test": [
+    {
+      "path": "pc_test/continuation_test.py",
+      "sha256": "11e8abb42c23ce97c04b8be1777d76482c8b7bbcfd4e9da4f4cf5979f1a67012",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/dispatch.py",
+      "sha256": "8c8059bcdee876f609a1a131fd7cc5a2d1a607658a1e5536f1d6060b18112cb1",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/evidence.py",
+      "sha256": "309851da9a268c5948d6152274f6d4b8da74cbedca07a82fc11b0cb13d9e792a",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/framed_test.py",
+      "sha256": "9973857386cdfa9492dcd72f867625fadb8ec7a9e03d69aee0148abc44cd5aa3",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/gateway_cache_test.py",
+      "sha256": "4add2f210218286fbedd371063053716955fde9fb358b933672ce20ad7515f7b",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/gateway_client.py",
+      "sha256": "b36dfcf7186510fc01f8833b3000936b920e4e4207e260ae206d67392643e4ea",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/history_test.py",
+      "sha256": "21bb19535881cac6fed9553a87dbb03496f45895a0ed58b11738183ad4b69652",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/physical_acceptance.py",
+      "sha256": "4b26e90eb3e2556e91d2559a4ceffd37f9e994f8da157345c5b083e73965fa48",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/production_test.py",
+      "sha256": "03cbb21ca5cc6f3973a592da36f01f57a6ac619df92656d1d791bb5f6d5700d4",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/protocol.py",
+      "sha256": "e40ffa4c22371cfeaba3b7d804533869fc8e44172bfad78e204229d1285174b4",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/protocol_cases.py",
+      "sha256": "75ff64164a719f745352ff9a8f8da1de41a8ddc5fd4b1f1ebdc9b8e0b789d657",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/receiver.py",
+      "sha256": "9aebb27103d7de19de8d2fab2eaafb754d3b2b3542ea10738c67851f4cd6a240",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/requirements.txt",
+      "sha256": "7cc0df6aeeda0ac24a330ba8f51d44c78dec4bbed77bf54dc78f5012810d2c34",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/retry.py",
+      "sha256": "b5a53acc732b0059fe6122095a3a386ebc6185d50908472a1593d1960da65888",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/retry_test.py",
+      "sha256": "f0e0e89eb2007f59f6b8845c8cfdf49e33b279ceadc33b32af469ff2a9155267",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/session.py",
+      "sha256": "4847f93eb3cca47e3b7e32ce3448ac58e4567c8661811b9cd56308a431186440",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/session_test.py",
+      "sha256": "ac75835544b2f4505b34c26b3ae0c84530d1b7c813f765b5b8b8b308bf412b90",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/setup_check.py",
+      "sha256": "fe08511fb20e16a44c2ec077160d2b9b89add94d061dd4825ca622d1eb6c9c11",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/station_watch.py",
+      "sha256": "0baf3d6deae5107498f44bccb7fc3585ca98a8c943be5c5b960b76a96836e34f",
+      "matches_original": true
+    },
+    {
+      "path": "pc_test/two_way_test.py",
+      "sha256": "ecacc07c332f60071f5d11f0825efc3bc63ae44dedeb26e45e637eb55c69eafb",
+      "matches_original": true
+    }
+  ],
+  "results": [
+    {
+      "path": "results/board_probe.log",
+      "sha256": "ae0af7285092c55f3e8b87db4fdd45b3ba65f3c7693385cd1d8ebcce4e6c3f24",
+      "matches_original": true
+    },
+    {
+      "path": "results/build.log",
+      "sha256": "4348ea2ace28195e0af6a6a0c06c2c7da105f7d73e34a731d3ea2770e69f0ad3",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_firmware_after.csv",
+      "sha256": "2bff21e616bb7e1db2da9af506e5ef1a45938cf683cc243577b15f1fe0f2955c",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_firmware_before.csv",
+      "sha256": "2bff21e616bb7e1db2da9af506e5ef1a45938cf683cc243577b15f1fe0f2955c",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_firmware_verification.log",
+      "sha256": "058dc34c8f4ae9c29df2677350c8f3288d130adb9591e933f08b3e6b352b0c6f",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_hardware.json",
+      "sha256": "f7cbcbda201dceb08d389988a7545a5d9b5bfe795097e734286bce3c73c7dd12",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_hardware.log",
+      "sha256": "09b723fb410ce12ebfee01508676863efe239dad962a6f3d91a3308223d7e6cc",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_software_tests.log",
+      "sha256": "372d3826a0bd320dc510dba5121e7cddbabd1a8802848c4f5c53c2697b8e7558",
+      "matches_original": true
+    },
+    {
+      "path": "results/continuation_verification.log",
+      "sha256": "31185e63b82edb5af9e6231449ffce8e7bea7456e4b68258fec02ab4fb7cee58",
+      "matches_original": true
+    },
+    {
+      "path": "results/flash.log",
+      "sha256": "224fb38f222c8bb2d5bef7aa457d732fcd0788844e768465a57ff751c914aa32",
+      "matches_original": true
+    },
+    {
+      "path": "results/original_partition_table.bin",
+      "sha256": "b9118aa3840f7c042a4dea8dae339d07a6e69f3716102174cc87b18046276295",
+      "matches_original": true
+    },
+    {
+      "path": "results/original_partition_table.csv",
+      "sha256": "dbfa44b9f37d4b671497a27c160bdb577e15be62f3d788ef11eec1914e193a1c",
+      "matches_original": true
+    },
+    {
+      "path": "results/partition_read.log",
+      "sha256": "6908fa4e7b3141faf6cf7819c140a03f054d9e604d49614f5b6b2ac80fd5ebb6",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance.csv",
+      "sha256": "e5a07f3744872fc9213280b8eecb01faa2f3cbbf9a91a4d9286c07150ec41537",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance.json",
+      "sha256": "51928d80ee1f9346387dd46141b82921b0152e691a393ce6e9790750d2b2f2ac",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_attempt1.csv",
+      "sha256": "8d8371d1f9fb6ff57e21b811e1402773e20dba91464f9bf56b07a0a317a4948f",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_attempt1.json",
+      "sha256": "b1ae61744803a22a2838f7f502e6210e90c51ecb0dc6750a7ac8dc54037cf414",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_idle.csv",
+      "sha256": "e5a07f3744872fc9213280b8eecb01faa2f3cbbf9a91a4d9286c07150ec41537",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_idle.json",
+      "sha256": "51928d80ee1f9346387dd46141b82921b0152e691a393ce6e9790750d2b2f2ac",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_producing.csv",
+      "sha256": "b6f374fe7b18660817d3c95d70518c0ff8a80d7f24ed0a4329d64a38ed7bce17",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_producing.json",
+      "sha256": "4a504578ae821a315f0f7a33df0004cde1a85c00388f5ff5be63930de1144120",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_acceptance_summary.json",
+      "sha256": "31cb7f5b8cabb010f41423f351ac72a4681d4b2dc4625445231b084b40f3109a",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_discovery_diagnostic.json",
+      "sha256": "590513db6f9bf910dd5043e2203202c25d7d946d95bc5026a6496cb4f04ee368",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_firmware_after.csv",
+      "sha256": "2bff21e616bb7e1db2da9af506e5ef1a45938cf683cc243577b15f1fe0f2955c",
+      "matches_original": true
+    },
+    {
+      "path": "results/physical_firmware_before.csv",
+      "sha256": "2bff21e616bb7e1db2da9af506e5ef1a45938cf683cc243577b15f1fe0f2955c",
+      "matches_original": true
+    },
+    {
+      "path": "results/port_release.log",
+      "sha256": "05e929b79910d3685256ae5a7838e72e271d09c1231da5afb24b158c5954b8cf",
+      "matches_original": true
+    },
+    {
+      "path": "results/README.md",
+      "sha256": "ccc7999ec723f55537f437b4021c501f9ef0fbd722cf9060c8e57908c202a530",
+      "matches_original": true
+    },
+    {
+      "path": "results/setup_check.log",
+      "sha256": "4a2f851a180da30ed8a97775bb300d6c7f9ca4967245f7e1c785ee8c2558d9cd",
+      "matches_original": true
+    },
+    {
+      "path": "results/setup_serial.log",
+      "sha256": "b5f7d35628224aa5d0f3829fe3d0f89b73342b60a4aeecbcf1e0bb2d4e533c01",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_build.log",
+      "sha256": "90d2430e016ffba6a94eff98c87ac4a9f779b208b9514a3b718ecaad25632cd1",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_flash.log",
+      "sha256": "41579e8ce99e346289a265eea04ed56d48c59e3f07cd163e4ef5dd34e8db9b95",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_hardware_test.log",
+      "sha256": "be54c2167f81d76f2267778132830ec549ec519b8e6aa57a628abc612f932bb2",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_host_tests.log",
+      "sha256": "9dfffb9f841f8ae7d83cb2cbb174b9945437745ec1820172bdb078b5380c4b6c",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_partition_before.bin",
+      "sha256": "b9118aa3840f7c042a4dea8dae339d07a6e69f3716102174cc87b18046276295",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_partition_read.log",
+      "sha256": "1942bb8dc64284ff3c8e59cb2ce6916694b5acd1c079f12f26239569ca6f3e29",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_preflash_check.log",
+      "sha256": "1983ba15a9528c6f4fe617916d97a44eb2804274cbec85db0e3ddd021d3c0215",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_serial.json",
+      "sha256": "d0768dfc4c252518140fbce84abfa8e543e517f8f64439d9e39f88378c69bd10",
+      "matches_original": true
+    },
+    {
+      "path": "results/step2_verification.log",
+      "sha256": "13cfc0469cfa545991d39aa54fae68c787f69fb2acbc7c0502412721bc5e0806",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_board_probe.log",
+      "sha256": "d22a7a7d6b00be4b0050ad5fffe9460bc1e7602dee5dd72b31c75f0d7ffed274",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_build.log",
+      "sha256": "b8e0d312f93a2510c7c3025ad4d8ee8e8054cfe990c8ea68bf5b6bd408e81bc8",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_flash.log",
+      "sha256": "4788452f2cebf548d07ad85a9d49126b0d6a4be4035a43bca2aa8c2d23ff50e1",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_hardware.json",
+      "sha256": "56aa35f4df2945b8c3c3793d9b81819a5df32112180e245b886b34fb84758469",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_hardware_test.log",
+      "sha256": "6a41461e6caad6f032f9e0cedb22393435448e9a0d64d5dcc83d96a5661990c9",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_partition_before.bin",
+      "sha256": "b9118aa3840f7c042a4dea8dae339d07a6e69f3716102174cc87b18046276295",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_partition_read.log",
+      "sha256": "62d825716fffbd2ca64baaac0ce03b860313d96e19221c858f30fbbc0e162156",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_preflash_check.log",
+      "sha256": "76d04c1dd0ce4560420ac66d578a3d3dd8765ef3f4d0345430f4de9f7060c53c",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_software_tests.log",
+      "sha256": "c3cd13b4d3e340d769fd6d3002cc3753a8e559c5ca080aaa6a35282317180a21",
+      "matches_original": true
+    },
+    {
+      "path": "results/step3_verification.log",
+      "sha256": "8cd4f406df7d4a06579ac78d4f90e6bb0a2c011f7abab81c0816ff2d24f7c454",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_board_probe.log",
+      "sha256": "6a245e3186f0e2d6fa7672fa1c8c5654aa45868cd00ac8c07974b47e863740fd",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_build.log",
+      "sha256": "23637ed19969105e6db6c66626e268cbe41cee8fa940e2344ccbe4ed7dc1c47f",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_flash.log",
+      "sha256": "5dc8c7fee8a6c58e43b6f98d73e0cd3770ab1b26fe9d14382c8688074e35fb50",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_partition_before.bin",
+      "sha256": "b9118aa3840f7c042a4dea8dae339d07a6e69f3716102174cc87b18046276295",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_partition_read.log",
+      "sha256": "d5d6c49ecddb422453a3ddd613341814a2f3d5695f505577cad1b56e1ca8b2d4",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_preflash_check.log",
+      "sha256": "59830e49666a5edd499066d7b2d7a71350d687939d3ca9116a876332ac70018b",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_production.json",
+      "sha256": "a861811a1146a431ec1f331f84b42f3ba668e6289270c766ef113e6a6eb5f878",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_production_test.log",
+      "sha256": "418b061033e6017a819b5ce4d84998210bc15fb035575bbd3346d2deafcfa38a",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_protocol_regression.json",
+      "sha256": "20201838f6b1582de0c400b113d3511cfe6b2afca7d52c18d266bec065ba8b54",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_protocol_regression.log",
+      "sha256": "d8c4d1e45cbd58f34f8942fb66f7dec2a87cd800078da1cee366aea843a0efdf",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_software_tests.log",
+      "sha256": "2fa9f0acf4d80a3690c76e10b14e974f6a414f8081287ec4a1e91bfad175b7e8",
+      "matches_original": true
+    },
+    {
+      "path": "results/step4_verification.log",
+      "sha256": "7488888cdd8f0786532f6c20d4481567d50f1003ca633fcd1e9ee483da5bf243",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_board_probe.log",
+      "sha256": "6a245e3186f0e2d6fa7672fa1c8c5654aa45868cd00ac8c07974b47e863740fd",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_build.log",
+      "sha256": "f8c99bfe5648a97d88100f6e46a5731425ec7b31d28c5bf30f4bbff961b4ca07",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_c_history.log",
+      "sha256": "6e4fc43f3165247f00939e2c6f1efd04fcd22fad1afaf611901220e2566504e0",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_flash.log",
+      "sha256": "3bf750c517bd2d2d75672417e91f43aca8effa2e214a201994444a6508dfd51f",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_history.json",
+      "sha256": "766da025475872c7e9056ee922ad33df1a4ffa686af292e60b2fd6bf3da972a4",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_history_attempt1.json",
+      "sha256": "b77364a5b5f64f3e56cc2dab05be8a6ee73b672f01ba4f86e2495fa2944936f8",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_history_attempt1.log",
+      "sha256": "afe604adc079dce2841c5ae5461463ff6494c465b3fdc20b7e920d7243979ce1",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_history_attempt2.json",
+      "sha256": "ae6d8ab2f0380e531458869a90af458f6f927c837e1f0e4b15f5f4d86aecb01f",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_history_attempt2.log",
+      "sha256": "1a75244357c630541e2cba0334828814c3698ebeaab79c3a3069258c590758f8",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_history_test.log",
+      "sha256": "9711012c2b3cacd65f862034991dbf051516432872217671b30abdcdc2437472",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_partition_before.bin",
+      "sha256": "b9118aa3840f7c042a4dea8dae339d07a6e69f3716102174cc87b18046276295",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_partition_read.log",
+      "sha256": "071749813c3c1465b5b062e7dc43d0895e96cdd5aa0eed66dc65079207d12a36",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_preflash_check.log",
+      "sha256": "9870b5c763caebd2fd63a9d2860af63b793f27d68fbcc0946e3d60aba606f86c",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_production_regression.json",
+      "sha256": "9de360116f7376ce352913a3ec33a599c8732b83485cb5cc563948142ba5b475",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_production_regression.log",
+      "sha256": "0f154e6ce12792900e28dfdb519f05ed96b33d8a409fe199912216f545736e69",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_protocol_regression.json",
+      "sha256": "e6bf51d5479149e15fe3b7ec5198e07a1acc125f4b9c6874b4049754857fabc5",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_protocol_regression.log",
+      "sha256": "04b92cef1789d808503bd67bf7cc10a215a4b3951e7eeeca3901d355a5edaa92",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_software_tests.log",
+      "sha256": "2ac3cd52375927fa34aa83bd95269a9e90caf97a077984b18a8ae5b105f46dc3",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_target_ram.log",
+      "sha256": "72d3734017f33e31c879a55ad785c8b395d74fc4554b6d8e75f9d39b6fcf3f27",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5a_verification.log",
+      "sha256": "f3bfe2a5c9d8e3b90a1fe613c69cd36e3c814260949e04940eaddd6f1cbcca6d",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_board_probe.log",
+      "sha256": "6a245e3186f0e2d6fa7672fa1c8c5654aa45868cd00ac8c07974b47e863740fd",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_build.log",
+      "sha256": "f99a88b11ce71450305487fe82b69f8f45686354e756bb1866d8bed00527a6b4",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_flash.log",
+      "sha256": "c044106b6173b5094c1f7575d74618fa6d30fa2ebe5b8fce3aea6475ad703b08",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_history_attempt1.json",
+      "sha256": "385c6ad61817cfabc5b4d219e5568adf973f0d255096a8bea50862d8426ff625",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_history_attempt1.log",
+      "sha256": "03846de91071ef2a08a2427a0337b99e91077370693f044e2d5de59eb71bc50b",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_history_regression.json",
+      "sha256": "05fe439f33d3b7a0846bb4716a3dbea3e5ca3c65e3d7bcb5b06f43475d35e3e4",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_history_regression.log",
+      "sha256": "358a088eca0c24d2a55d221e391137055e795ad53d15f8962bc4107527d0d615",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_partition_before.bin",
+      "sha256": "b9118aa3840f7c042a4dea8dae339d07a6e69f3716102174cc87b18046276295",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_partition_read.log",
+      "sha256": "95da359564c48a7cf0c947cab994f40a5c3f036aa34d06419678a8db343423dd",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_preflash_check.log",
+      "sha256": "2c697d9284b976210e57f4eda3ed36fdf6a0114e23ebf2a96137009957db4024",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_production_regression.json",
+      "sha256": "7ab19c0f3081c272f48acf2a83595b681b368e28eef0149a46d1dc5233004c00",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_production_regression.log",
+      "sha256": "7de4b51aa7596e704ed214b547f936e48f552136dd609cdd4c953f8a5c80eeae",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_protocol_regression.json",
+      "sha256": "6ea4b23cdc427724dc8df017c1acf75c01751275596b237ebbc49554472065e7",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_protocol_regression.log",
+      "sha256": "e78d30823ba6daed51538f6b4d81077b3ddb4f5f5b1ddd8e317dac32acc17687",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_sessions.json",
+      "sha256": "4cc7c23b2ccf03edd5d173611d2a5fe46f65d8bb78908a35d6532b3c401ec952",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_sessions_test.log",
+      "sha256": "2b6e999b395d76a77d0ca297005e231fb0cb2dfefb12bd811d7ab1637b25d96d",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_software_tests.log",
+      "sha256": "ed01c84b0d57917ad0704639de0453aab39494bb51be5b6305911a0c01bb3610",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_verification.log",
+      "sha256": "a1a04d80b953797077c28d85027dd098213438b80d905435dd5b184329c38629",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5b_watch.log",
+      "sha256": "22b7e8e811504bb50869a4acc9d007e764400f6d1d6ac34f8abbfd65a1d5336e",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_firmware_after.csv",
+      "sha256": "2bff21e616bb7e1db2da9af506e5ef1a45938cf683cc243577b15f1fe0f2955c",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_firmware_before.csv",
+      "sha256": "2bff21e616bb7e1db2da9af506e5ef1a45938cf683cc243577b15f1fe0f2955c",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_firmware_verification.log",
+      "sha256": "4fa2dcbc725ad3e0866381cb688e6f687cb1811ef4ca0b10d8d0eece6ff58217",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_gateway_cache.csv",
+      "sha256": "cdc00b51e11533e98d9100584b7ec2180a07aa44e944e352ee707becd53403aa",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_gateway_cache.json",
+      "sha256": "6f32e13ea8e3b4422310987e199ed04d276b36d6ae3273461fe612a34616ef17",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_gateway_cache_test.log",
+      "sha256": "51aced0a625d3d7388f2af8d843e48c896c9eae1fbb7455ea6d7e9d189ebdb0e",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_history_regression.json",
+      "sha256": "f33e51163bbcb4a51604ce860606f405af856323de18969308aeb42673fdab4f",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_history_regression.log",
+      "sha256": "836afa857547ed002ec9728f11d28acff9371c926bc45b61ab8dc52991a8c977",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_production_regression.json",
+      "sha256": "c528aa3f0d932e113da3e7d51a2a43e0caef36be139bb00a57559d3bfc4f4b52",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_production_regression.log",
+      "sha256": "8fab1be31c8ea8eb0a863a33910e042e1611e44463cc3e37b45a5f2dbc117203",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_protocol_regression.json",
+      "sha256": "27ad2e2f0b09388a77340c842be61a27f1a51341cc53055ef2eecd6630200bf3",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_protocol_regression.log",
+      "sha256": "3a7c7e46924cd7a828d54ae2ba841cfa7ff4c53cbe961c2d3486db095f0a55ad",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_retries.csv",
+      "sha256": "9bbdfd69978a6cfe208e69156b1b17d10b3356e64c7128afc6f10a0c8a8389e8",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_retries.json",
+      "sha256": "690f011d8f66d174a38cac9f685bf110658132202a13049a81d607cbb59cc63f",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_retry_test.log",
+      "sha256": "b89770e48bc8d34eda749305ed46872673811ee968b13b9b8a1288d654f713ea",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_sessions_regression.json",
+      "sha256": "a7491981ef4f207247210332776d72afc9198dac5db935d5dbf5445ceefd644d",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_sessions_regression.log",
+      "sha256": "ab3899f38773d34b1f4809372cf0e04d8663870b033c55534b023a7c55a0c63d",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_software_tests.log",
+      "sha256": "9b166b3c7664dc370217688689bc3ef0d78b251a38905aa76e9256b54508d684",
+      "matches_original": true
+    },
+    {
+      "path": "results/step5c_verification.log",
+      "sha256": "e7e0bfd9b66e7ba62d3eb67dc1b262fa196ac7edf95c71454f744fc4e35e2ccb",
+      "matches_original": true
+    }
+  ]
+}
