@@ -2,7 +2,7 @@
 
 Reviewed: 2026-11-17, Africa/Cairo.
 
-Status: Planning and source inspection. Application implementation, branch merges, new test runs, hardware access, and remote publication have not been performed in this integration turn. All new project work is on the existing repository's local main branch. The original contributor branches are preserved.
+Status: Initial branch inspection is complete. Member 2's Wi-Fi foundation is merged into local main, with its history preserved; approved TCP/framing transport code and ten passing native C/loopback tests are added. Inspection application contracts, full gateway/UI integration, ESP-IDF build, and hardware tests remain pending. No remote publication has occurred. All new work is on local main and original contributor branches are preserved.
 
 ## Repository and branch audit
 
@@ -111,3 +111,5 @@ This is a plan, not approval of every candidate mechanism or numerical value abo
 ## Current discussion focus
 
 The user requested normal-chat decisions specifically for Member 2. See [ESP32 B integration decisions](member2-integration.md) for the initial role/framing/one-job recommendations and remaining interface topics. This steering changes the presentation/focus; it does not silently approve earlier unanswered choices or authorize deviations from approved rules.
+
+The four Member 2 recommendations are now approved as D010. The portable transport code has been compiled with MSVC and exercised through ten real loopback checks. Tests do not substitute for an ESP-IDF build or board validation. The existing firmware callback intentionally logs framed payload lengths without accepting jobs until configuration/rule/query/result contracts are agreed.

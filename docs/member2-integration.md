@@ -2,7 +2,7 @@
 
 Date: 2026-11-17.
 
-Status: Focused discussion in normal chat at the user's request. Completion of B is authorized; the concrete choices below remain recommendations until agreed. No firmware/application change or branch merge is included in this documentation update.
+Status: The user approved the four network/transport/one-job recommendations below. Member 2's Wi-Fi foundation is merged into local main, and bounded nonblocking TCP/framing code is implemented. Ten native C/loopback checks pass. Inspection/configuration/query behavior is not implemented yet because its exact contracts still need agreement. ESP-IDF build, hotspot configuration, and physical board tests are NOT RUN.
 
 ## Current source
 
@@ -19,6 +19,12 @@ Integration network is also a joint decision: recommend the gateway PC's hotspot
 The server role, four-byte size/JSON representation, production payload bound, and single-job policy are team choices. The official M1 requirement mandates TCP with length-prefix framing, but does not prescribe these particular field sizes, role, encoding, or queue placement details.
 
 ## Next contract topics after those choices
+
+Next concrete recommendations for discussion, not approved by the transport-only agreement:
+
+1. Configure B with an identified command carrying inspection_time_ms, N, and K; confirm the actual applied values in its completion before dispatching dependent jobs.
+2. Use the brief's example rule: FAIL if (numeric part_id + K) mod N == 0, otherwise PASS, computed only on B. N is positive; K is an integer. Agree exact integer/duration bounds and the numeric part-identity allocation policy before freezing the schema or implementing arithmetic.
+3. Freeze settings for each accepted job. Recommend rejecting a new configuration as BUSY during an active inspection rather than changing the active job's time/rule halfway through. Apply a new valid configuration when idle. This behavior is a proposal, not a mandatory interpretation of the PDF's runtime-configuration requirement.
 
 - Configure inspection time and deterministic rule parameters at runtime; agree exact rule, integer ranges, application/configuration version, and behavior when settings change around active work. Never calculate production verdicts on the gateway.
 - Agree full part identity and its numeric rule input before freezing the inspection-request schema. Preserve original job/batch/part identity through request, acceptance, result, cache, and query.

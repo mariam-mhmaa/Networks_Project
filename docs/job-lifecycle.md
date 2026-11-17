@@ -2,7 +2,7 @@
 
 Last reviewed: 2026-11-17.
 
-Status: The user explicitly confirmed the three-stage deadline architecture and R01-R10 below. This is the approved behavioral baseline. Precise timing, numerical limits, command effects, receipt registration, restart/cache mechanisms, freshness, and wire schemas remain open in [reliability-open-decisions.md](reliability-open-decisions.md). No application implementation or hardware verification has been completed.
+Status: The user explicitly confirmed the three-stage deadline architecture and R01-R10 below. This is the approved behavioral baseline. Precise timing, numerical limits, command effects, receipt registration, restart/cache mechanisms, freshness, and wire schemas remain open in [reliability-open-decisions.md](reliability-open-decisions.md). The operation-controller/inspection application is not implemented or hardware verified. Member 2's separately host-tested transport foundation is recorded in D010; it is not proof of this lifecycle contract.
 
 ## Approved user rules
 

@@ -10,7 +10,7 @@ Last updated: 2026-11-17
 - Explain concepts and agree on material design decisions together. The assistant may choose implementation checkpoints once the relevant design decisions are approved. Review implemented behavior and actual test evidence with the user.
 - Ask before implementing any alternative that changes approved behavior or architecture. Routine implementation within an agreed contract and explicitly requested documentation updates do not require repeated permission.
 - As of 2026-11-17, the authoritative working copy is the existing Networks_Project at Semester7/Networks/Project/Networks_Project, on local main. Contributor branches have been inspected; all new project work belongs here. Earlier documents in Documents/ChatGPT/Industrial Communication are historical source snapshots.
-- No implementation or hardware verification has been completed in this chat.
+- Member 2's transport foundation is now implemented and host-tested as recorded in D010. The inspection application, gateway controller, complete system, and hardware verification are not complete.
 
 ## Approved decisions
 
@@ -57,6 +57,12 @@ This approval does not select arbitrary numeric retry candidates, receipt regist
 The user agreed to a separate batch_id. Include and validate it on batch-scoped commands/jobs, related replies, and live status. Allocate one batch identity for a newly accepted Start and return the same batch for duplicate submissions of that original Start command. Do not embed or rename the batch into existing command/job IDs; their counters do not reset between batches in the same issuer session. Device-wide discovery and heartbeats need not invent a batch context.
 
 The exact batch ID generation/format, complete part-identity model, and receiver enforcement of closed run scopes remain open. Carrying a batch_id alone does not prevent old execution requests or stale results from affecting another run; receivers/controllers must validate the context.
+
+### D010 Approve Member 2 network and transport foundation
+
+The user approved all four Member 2 recommendations: use the gateway PC hotspot for integration (subject to actual support/reachability, router fallback), B as a TCP server with one active gateway connection, a four-byte big-endian length followed by up to 1024 UTF-8 JSON bytes, and one active inspection job on B with waiting inspections queued at the gateway. These are implementation choices within the required TCP link.
+
+The existing Member 2 branch has been merged into local main with history preserved. The framing/server foundation is implemented; ten native C/Windows loopback tests pass. No application inspection/configuration/query schema has been silently selected. One-active-job enforcement awaits that application layer; firmware build, hotspot setup, real TCP reachability, and ESP32 testing are not yet verified.
 
 ## Open decisions
 

@@ -9,3 +9,10 @@ menu "Inspection Station Wi-Fi"
         default ""
 
 endmenu
+
+menu "Inspection Station TCP"
+    config INSPECTION_TCP_PORT
+        int "TCP listening port"
+        range 1024 65535
+        default 5001
+endmenu

@@ -1,0 +1,15 @@
+test_actual_c_codec_and_tx_bounds (test_tcp_transport.TransportTests.test_actual_c_codec_and_tx_bounds) ... ok
+test_back_to_back_messages (test_tcp_transport.TransportTests.test_back_to_back_messages) ... ok
+test_fragmented_utf8_message (test_tcp_transport.TransportTests.test_fragmented_utf8_message) ... ok
+test_half_close_drains_already_queued_response (test_tcp_transport.TransportTests.test_half_close_drains_already_queued_response) ... ok
+test_huge_length_closes_before_body (test_tcp_transport.TransportTests.test_huge_length_closes_before_body) ... ok
+test_maximum_frame (test_tcp_transport.TransportTests.test_maximum_frame) ... ok
+test_oversized_length_closes_before_body (test_tcp_transport.TransportTests.test_oversized_length_closes_before_body) ... ok
+test_partial_frame_does_not_leak_to_new_connection (test_tcp_transport.TransportTests.test_partial_frame_does_not_leak_to_new_connection) ... ok
+test_second_client_cannot_replace_silent_owner (test_tcp_transport.TransportTests.test_second_client_cannot_replace_silent_owner) ... ok
+test_zero_length_closes_connection (test_tcp_transport.TransportTests.test_zero_length_closes_connection) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.628s
+
+OK
