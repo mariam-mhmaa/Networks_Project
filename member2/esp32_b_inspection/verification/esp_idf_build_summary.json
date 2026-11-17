@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-17",
+  "scope": "ESP32 cross-compile/link only; this is not physical or application-level verification",
+  "sdk_version": "v6.1.1",
+  "sdk_commit": "051e4c4eb20346e043cdd47bc388fde75ff8af63",
+  "target": "esp32",
+  "compiler": "xtensa-esp-elf GCC 15.2.0",
+  "python": "3.11.9",
+  "sdk_activation_and_dependency_check": "PASS",
+  "non_secret_placeholder_wifi_settings": true,
+  "source_sha256": {
+    "main/tcp_frames.c": "280e9fd1e55d43300cc2205a9f7bfda2fdcc73710606f9a0e6260f6ef20984dd",
+    "main/tcp_frames.h": "e7a94080817f5eac3b07adb53c1f20f243a3d003e3ca1371babc3d84bb675e6f",
+    "CMakeLists.txt": "a83ba62ce117b31bc7b88cab01ebca39c443dc950b2956a8d999edf09ac486e1",
+    "main/Kconfig.projbuild": "5c813a2ff99871fd9582d7be34ee0dd2394877b594b03fb0745e8d8eb0ab04d8",
+    "main/tcp_service.c": "f5c2fe59a2266bea611c5a2d4d91c1158105ba74303af2541ff084c8e9b2d610",
+    "main/main.c": "53804508b1b60037fe6a82d8ecfc9a7c3a4e97fb3e53feba23c71ecc5603d912",
+    "main/CMakeLists.txt": "a510913d7ecbbafe24b3c7d1e8a605fe2d6c9e7ddecc7c35ec7c9ebff60bab59",
+    "main/tcp_service.h": "07713f3032ac0bcb6907046130effa78b1c117fa84e0ea757d4ef82e16900bcc"
+  },
+  "variants": {
+    "normal": {
+      "status": "PASS",
+      "diagnostic_echo": false,
+      "image_bytes": 789312,
+      "image_sha256": "f1c21a9205af78774e2ee59ae578f21bc3da9ff85ed87edc2cf138de2d60f8b4",
+      "required_linked_symbols": [
+        "b_tcp_poll",
+        "esp_wifi_start",
+        "tcp_task",
+        "receive_frame"
+      ],
+      "partition_check": "esp32_b_inspection.bin binary size 0xc0b40 bytes. Smallest app partition is 0x100000 bytes. 0x3f4c0 bytes (25%) free."
+    },
+    "diagnostic": {
+      "status": "PASS",
+      "diagnostic_echo": true,
+      "image_bytes": 789520,
+      "image_sha256": "2fe54deeb904d1da9c7499f0b723edabdc113eaf815736c8910012310134321b",
+      "required_linked_symbols": [
+        "b_tcp_poll",
+        "esp_wifi_start",
+        "tcp_task",
+        "receive_frame",
+        "b_tcp_queue"
+      ],
+      "partition_check": "esp32_b_inspection.bin binary size 0xc0c10 bytes. Smallest app partition is 0x100000 bytes. 0x3f3f0 bytes (25%) free."
+    }
+  },
+  "physical_communication": "NOT_RUN",
+  "board_flashed": false,
+  "hotspot_settings_changed": false,
+  "serial_inventory": [
+    {
+      "port": "COM6",
+      "description": "Standard Serial over Bluetooth link (COM6)",
+      "usb": false
+    },
+    {
+      "port": "COM8",
+      "description": "Standard Serial over Bluetooth link (COM8)",
+      "usb": false
+    }
+  ],
+  "application_inspection_tests": "NOT_RUN: application schemas, bounds, and recovery contracts pending"
+}

@@ -2,7 +2,7 @@
 
 Date: 2026-11-17.
 
-Status: The user approved the four network/transport/one-job recommendations below. Member 2's Wi-Fi foundation is merged into local main, and bounded nonblocking TCP/framing code is implemented. Ten native C/loopback checks pass. Inspection/configuration/query behavior is not implemented yet because its exact contracts still need agreement. ESP-IDF build, hotspot configuration, and physical board tests are NOT RUN.
+Status: The user approved the four network/transport/one-job recommendations below and the three application choices in D011. Member 2's Wi-Fi foundation is merged into local main, and bounded nonblocking TCP/framing code is implemented. Eleven native C/loopback checks pass. ESP-IDF v6.1.1 is installed, and normal/diagnostic firmware compile/link with non-secret placeholder Wi-Fi settings. Inspection/configuration/query behavior is not implemented yet because its exact contracts still need agreement. Hotspot configuration and physical board tests are NOT RUN. See [esp-idf-testing.md](esp-idf-testing.md).
 
 ## Current source
 
@@ -20,11 +20,11 @@ The server role, four-byte size/JSON representation, production payload bound, a
 
 ## Next contract topics after those choices
 
-Next concrete recommendations for discussion, not approved by the transport-only agreement:
+The user subsequently approved these three application-level choices (D011). They are design decisions, not implemented behavior; exact bounds and wire schemas still need agreement:
 
 1. Configure B with an identified command carrying inspection_time_ms, N, and K; confirm the actual applied values in its completion before dispatching dependent jobs.
 2. Use the brief's example rule: FAIL if (numeric part_id + K) mod N == 0, otherwise PASS, computed only on B. N is positive; K is an integer. Agree exact integer/duration bounds and the numeric part-identity allocation policy before freezing the schema or implementing arithmetic.
-3. Freeze settings for each accepted job. Recommend rejecting a new configuration as BUSY during an active inspection rather than changing the active job's time/rule halfway through. Apply a new valid configuration when idle. This behavior is a proposal, not a mandatory interpretation of the PDF's runtime-configuration requirement.
+3. Freeze settings for each accepted job. Reject new configuration as BUSY during an active inspection rather than changing the active job's time/rule halfway through. Apply a new valid configuration when idle. This is an approved team policy, not a mandatory interpretation of the PDF's runtime-configuration requirement.
 
 - Configure inspection time and deterministic rule parameters at runtime; agree exact rule, integer ranges, application/configuration version, and behavior when settings change around active work. Never calculate production verdicts on the gateway.
 - Agree full part identity and its numeric rule input before freezing the inspection-request schema. Preserve original job/batch/part identity through request, acceptance, result, cache, and query.

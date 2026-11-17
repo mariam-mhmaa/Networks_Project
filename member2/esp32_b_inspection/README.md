@@ -20,13 +20,15 @@ contracts remain to be agreed; no inspection work is currently accepted.
 - Disconnect clears only connection framing/TX state. Keep both TCP directions
   open for future asynchronous lifecycle traffic. A peer half-close drains
   already queued frames and closes; it is not an application cancellation.
-- `receive_frame` currently logs frame lengths without sending invented ACKs
-  or executing jobs. Echo behavior exists only in the native test harness.
+- `receive_frame` normally logs frame lengths without sending application ACKs
+  or executing jobs. An explicit test-only echo option is described below and
+  is disabled by default.
 
-Ten host checks compile and exercise the actual C framing/service modules
+Eleven host checks compile and exercise the actual C framing/service modules
 with MSVC (C11, /W4 /WX) and real loopback TCP. They cover frame boundaries,
 maximum/bad sizes, UTF-8 byte preservation, bounded queue ownership, second
-client rejection, disconnect/reconnect isolation, and half-close draining.
+client rejection, disconnect/reconnect isolation, half-close draining, and
+the standalone PC diagnostic probe.
 
 Run from this subsystem directory:
 
@@ -41,20 +43,45 @@ ESP32, change hotspot settings, flash firmware, or execute inspection jobs.
 Evidence is in `verification/tcp_transport_tests.log` and
 `verification/tcp_transport_summary.json`.
 
-The ESP-IDF toolchain has not been located/configured in the current session.
-An ESP-IDF firmware build and board/network tests are NOT RUN; native Windows
-tests do not validate the ESP-IDF integration path or final inspection behavior.
+ESP-IDF v6.1.1 is installed. Normal and optional diagnostic firmware compile and
+link with the Wi-Fi/TCP path included using explicit non-secret placeholder
+network settings. Both fit the configured application partition with 25% free.
+Build evidence is in verification/esp_idf_build_summary.json. Physical
+board/network and inspection-application tests are NOT RUN. Follow the
+[local SDK/test procedure](../../docs/esp-idf-testing.md) before flashing.
 
-## Configure the first Wi-Fi test
+## Physical TCP diagnostic
 
-1. Turn on the iPhone Personal Hotspot. Enable **Maximize Compatibility** if
-   available, so the hotspot uses 2.4 GHz and WPA2.
-2. Connect the PC to that hotspot.
-3. Open this folder in VS Code and run **ESP-IDF: SDK Configuration Editor**.
-4. Under **Inspection Station Wi-Fi**, enter the hotspot name and password,
-   then save. Do not put the password in source code or a shared message.
-5. Build the project, flash the ESP32 through COM3 using UART, and open the
-   serial monitor. Look for `Wi-Fi connected; IPv4 address: ...`.
+1. Use the approved gateway PC hotspot at 2.4 GHz with WPA2. Check actual
+   availability and peer reachability; a router is the agreed fallback.
+2. Connect only the identified ESP32 B over a data-capable USB cable. Determine
+   its current COM port; the historical COM3 value is not an instruction to
+   flash whichever device happens to own COM3.
+3. In an activated ESP-IDF terminal, run `idf.py menuconfig`. Under
+   **Inspection Station Wi-Fi**, enter the hotspot name and password locally.
+   Do not put the password in source code or a shared message.
+4. Under **Inspection Station TCP**, enable **Enable test-only framed echo**.
+   Build, then flash and monitor using B's verified port:
+   `idf.py -p COMx flash monitor`. Exit the monitor with Ctrl+].
+5. Look for the diagnostic-mode warning and B's current
+   `Wi-Fi connected; IPv4 address: ...` in the serial log.
+6. From the PC, run the following with that address:
+
+```powershell
+python -B tools/probe_transport.py B_CURRENT_IP --port 5001
+```
+
+The probe sends two length-prefixed JSON test payloads, including UTF-8 bytes,
+and requires byte-for-byte matching framed replies within its timeout. A PASS
+proves this diagnostic's PC-to-B round trip. It does not verify the future
+gateway operation controller, configuration commands, inspection verdicts,
+acknowledgements, or result recovery. The diagnostic has no such messages.
+Disable the echo option before production application testing.
+
+Windows source paths containing spaces can prevent ESP-IDF builds. If a short
+build staging folder is needed, keep this repository as the source of truth,
+copy only this project's source/CMake/Kconfig files, and verify their hashes.
+Do not copy a credential-bearing sdkconfig into Git or shared evidence.
 
 The local `sdkconfig` and `build/` files are ignored by Git because they can
 contain the hotspot password. Firmware binaries also embed the configured

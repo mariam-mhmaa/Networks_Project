@@ -15,4 +15,11 @@ menu "Inspection Station TCP"
         int "TCP listening port"
         range 1024 65535
         default 5001
+    config INSPECTION_TRANSPORT_DIAGNOSTIC
+        bool "Enable test-only framed echo (no inspection protocol)"
+        default n
+        help
+            Echo received frames to test physical PC-to-B TCP communication.
+            This is a transport diagnostic, never an application acknowledgement.
+            Disable before implementing or testing production job processing.
 endmenu

@@ -4,10 +4,12 @@ No ESP32, firmware flash, hotspot change, or application job execution.
 Set B_VCVARS64 if Visual Studio's developer-environment script is elsewhere.
 """
 from pathlib import Path
+import json
 import os
 import socket
 import struct
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -83,6 +85,17 @@ class TransportTests(unittest.TestCase):
     def test_actual_c_codec_and_tx_bounds(self):
         result = subprocess.run([str(self.exe), "--unit"], capture_output=True, text=True, timeout=5)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_pc_probe_against_actual_c_service(self):
+        result = subprocess.run(
+            [sys.executable, "-B", str(ROOT / "tools/probe_transport.py"),
+             "127.0.0.1", "--port", str(self.port)],
+            capture_output=True, text=True, timeout=10,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["result"], "PASS")
+        self.assertEqual(report["frames"], 2)
 
     def test_fragmented_utf8_message(self):
         sock = self.connect()

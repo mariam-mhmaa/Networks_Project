@@ -62,7 +62,15 @@ The exact batch ID generation/format, complete part-identity model, and receiver
 
 The user approved all four Member 2 recommendations: use the gateway PC hotspot for integration (subject to actual support/reachability, router fallback), B as a TCP server with one active gateway connection, a four-byte big-endian length followed by up to 1024 UTF-8 JSON bytes, and one active inspection job on B with waiting inspections queued at the gateway. These are implementation choices within the required TCP link.
 
-The existing Member 2 branch has been merged into local main with history preserved. The framing/server foundation is implemented; ten native C/Windows loopback tests pass. No application inspection/configuration/query schema has been silently selected. One-active-job enforcement awaits that application layer; firmware build, hotspot setup, real TCP reachability, and ESP32 testing are not yet verified.
+The existing Member 2 branch has been merged into local main with history preserved. The framing/server foundation is implemented; eleven native C/Windows loopback tests pass. Normal and optional diagnostic firmware compile/link with ESP-IDF v6.1.1 using non-secret placeholder Wi-Fi settings. No application inspection/configuration/query schema has been silently selected. One-active-job enforcement awaits that application layer; hotspot setup, physical TCP reachability, and ESP32 testing are not yet verified.
+
+### D011 Approve Member 2 configuration, inspection rule, and active-job settings
+
+The user approved runtime configuration by identified command carrying inspection_time_ms, N, and K, with completion confirming actual applied values before dependent jobs. B computes FAIL when (numeric part_id + K) mod N == 0 and PASS otherwise. N is positive and K is an integer. An accepted job keeps its settings unchanged; a new configuration while inspection is active is rejected as BUSY and may be submitted as a new operation when idle.
+
+Exact numeric/duration bounds, unique numeric part allocation, configuration versioning/wire schemas, receipt registration, cache/restart policy, and operation-controller limits remain open. Approval of these three choices does not mean the inspection application or complete gateway-B integration has been implemented. The user separately authorized installing ESP-IDF and testing communication; the current hardware checkpoint is the implemented transport foundation.
+
+A default-off framed echo diagnostic and a standalone PC probe support the authorized physical transport test. Diagnostic replies are never lifecycle acknowledgements or inspection results. SDK installation and both firmware build variants pass; no board has been flashed and physical communication remains untested. See [esp-idf-testing.md](esp-idf-testing.md).
 
 ## Open decisions
 
@@ -76,11 +84,11 @@ The existing Member 2 branch has been merged into local main with history preser
 - Inspection queue capacity, full policy, and reservation for production already in progress.
 - Deadlines, retry limits, heartbeat/stale thresholds, and restart/disconnection handling.
 - External message contracts, serial encoding details, TCP payload format, and operator endpoints.
-- Inspection rule form and valid parameter ranges.
+- Valid inspection-rule parameter and duration ranges (the rule itself is approved).
 - Serial library and exact runtime/dependency versions.
 - Requirement-by-requirement implementation and verification register, including submission ambiguities.
 
-Queue capacity five, a four-byte TCP length prefix with JSON, the suggested inspection rule, and the guide's Pause/Stop policies are proposals, not approved decisions.
+Queue capacity five and the guide's Pause/Stop policies remain proposals. The TCP framing choice and inspection rule are approved in D010-D011.
 
 ## Reference documents already read
 

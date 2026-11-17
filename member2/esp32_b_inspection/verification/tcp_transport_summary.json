@@ -1,17 +1,20 @@
 {
   "date": "2026-11-17",
-  "scope": "Actual transport C sources compiled for native Windows; real loopback TCP tests. Echo is test-harness only.",
-  "tests_passed": 10,
+  "scope": "Actual transport C sources compiled for native Windows; real loopback TCP tests plus standalone diagnostic client. Physical ESP32 tests are separate.",
+  "tests_passed": 11,
   "native_compiler": "MSVC 14.44, C11, /W4 /WX",
-  "esp_idf_build": "NOT_RUN: toolchain not located/configured",
+  "esp_idf_build": "PASS: normal and optional diagnostic firmware; see esp_idf_build_summary.json",
   "physical_esp32_tests": "NOT_RUN",
-  "application_inspection_tests": "NOT_RUN: message/rule contracts pending",
+  "application_inspection_tests": "NOT_RUN: application schemas, bounds, and recovery contracts pending",
   "sha256": {
     "main/tcp_frames.c": "280e9fd1e55d43300cc2205a9f7bfda2fdcc73710606f9a0e6260f6ef20984dd",
     "main/tcp_frames.h": "e7a94080817f5eac3b07adb53c1f20f243a3d003e3ca1371babc3d84bb675e6f",
     "main/tcp_service.c": "f5c2fe59a2266bea611c5a2d4d91c1158105ba74303af2541ff084c8e9b2d610",
     "main/tcp_service.h": "07713f3032ac0bcb6907046130effa78b1c117fa84e0ea757d4ef82e16900bcc",
     "tests/tcp_host.c": "b2d197ac83fc662e40f64fcaaa6a68003a506228492addf9ce8d6818487b169d",
-    "tests/test_tcp_transport.py": "fa4eb629ad95980229af6728530a94eca200e607afd88ea4c1b8d50ae18449d4"
+    "tests/test_tcp_transport.py": "e028719754ea464b6e0a6093a39e039b317f371eef92a74777b42fa27777ef20",
+    "main/main.c": "53804508b1b60037fe6a82d8ecfc9a7c3a4e97fb3e53feba23c71ecc5603d912",
+    "main/Kconfig.projbuild": "5c813a2ff99871fd9582d7be34ee0dd2394877b594b03fb0745e8d8eb0ab04d8",
+    "tools/probe_transport.py": "7c3192e0ecbc1fb430935029797f9ddf5b1c37865eafaf8286abacc5f25bdfb8"
   }
 }

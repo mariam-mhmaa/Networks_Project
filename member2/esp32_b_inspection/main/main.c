@@ -17,6 +17,10 @@ static EventGroupHandle_t network_events;
 
 static bool receive_frame(const uint8_t *payload, size_t length, void *context)
 {
+#ifdef CONFIG_INSPECTION_TRANSPORT_DIAGNOSTIC
+    /* Hardware transport test only; this is never an application ACK. */
+    return b_tcp_queue((b_tcp_service *)context, payload, length);
+#else
     (void)payload;
     (void)context;
     /* Transport checkpoint only: do not invent application ACKs or execute
@@ -24,13 +28,17 @@ static bool receive_frame(const uint8_t *payload, size_t length, void *context)
     ESP_LOGI(TAG, "Received framed payload (%u bytes); application contract pending",
              (unsigned)length);
     return true;
+#endif
 }
 
 static void tcp_task(void *context)
 {
     (void)context;
     static b_tcp_service service;
-    b_tcp_init(&service, receive_frame, NULL);
+    b_tcp_init(&service, receive_frame, &service);
+#ifdef CONFIG_INSPECTION_TRANSPORT_DIAGNOSTIC
+    ESP_LOGW(TAG, "TRANSPORT DIAGNOSTIC: echo enabled; no inspection/application protocol");
+#endif
     for (;;) {
         if (!(xEventGroupGetBits(network_events) & WIFI_READY)) {
             b_tcp_close(&service);
