@@ -2,7 +2,7 @@
 
 Member 3's cartoon cat-and-puppy operator UI, prepared for a Milestone 1 gateway. The real gateway is not included. The browser no longer simulates production or decides PASS/FAIL. It sends HTTP commands and renders WebSocket snapshots.
 
-Repository location: `member3/operator-ui/` on branch `member3/operator-ui`. Commands below run from this subsystem folder. See [repository setup](docs/repository_setup.md) and the [Member 4 handoff prompt](MEMBER4_PROMPT.md).
+Repository location: `member3/operator-ui/` on branch `member3/operator-ui`. Commands below run from this subsystem folder. See [repository setup](docs/repository_setup.md) and the [gateway API contract](GATEWAY_HANDOFF.md).
 
 ## Run the standalone test gateway
 

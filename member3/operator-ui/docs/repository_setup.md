@@ -36,7 +36,7 @@ real gateway/ESP32 integration or browser visual acceptance.
 
 ## Real gateway integration
 
-Read `GATEWAY_HANDOFF.md` and `MEMBER4_PROMPT.md`. Serve the listed UI assets
+Read `GATEWAY_HANDOFF.md`. Serve the listed UI assets
 with the real gateway's API, or explicitly configure cross-origin HTTP and
 WebSocket access. Set the screen's Gateway address to the real gateway origin.
 The real gateway must implement/agree on the versioned contract before the UI
