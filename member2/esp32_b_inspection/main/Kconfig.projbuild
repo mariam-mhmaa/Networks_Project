@@ -1,0 +1,11 @@
+menu "Inspection Station Wi-Fi"
+
+    config INSPECTION_WIFI_SSID
+        string "Hotspot name (SSID)"
+        default ""
+
+    config INSPECTION_WIFI_PASSWORD
+        string "Hotspot password"
+        default ""
+
+endmenu
