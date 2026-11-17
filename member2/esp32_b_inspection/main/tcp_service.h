@@ -18,7 +18,7 @@ typedef struct {
     b_socket listener, client;
     b_frame_reader reader;
     b_tx_frame tx[B_TX_SLOTS];
-    unsigned head, count;
+    unsigned head, count, generation;
     bool read_closed;
     b_frame_handler handler;
     void *context;

@@ -1,6 +1,6 @@
 # Command and job identifiers
 
-Status: Finalized design on 2026-11-16, following the user's request to review and finalize it if suitable. Implementation and device integration are not yet verified.
+Status updated 2026-11-18: the finalized origin-ID design is implemented for gateway–B and verified in software. Member 1's different ID/serial contract still needs separate integration agreement.
 
 Consistency review: 2026-11-17. The confirmed rules in [job-lifecycle.md](job-lifecycle.md) apply to all command/job IDs. Recovery bounds, exact query/receiver-context fields, and crash durability remain open in [reliability-open-decisions.md](reliability-open-decisions.md).
 
@@ -8,7 +8,7 @@ Consistency review: 2026-11-17. The confirmed rules in [job-lifecycle.md](job-li
 
 Give every command and job a stable, unique identity while keeping logs readable. This is a team design choice implementing official requirements VII and VIII; requirement IX additionally requires stale/restart handling that IDs alone do not provide.
 
-Batch and part identifier formats are separate decisions and remain open. A command or job identifier is not a batch identifier, a part identifier, an ATR sequence number, or a production counter.
+The implemented B subsystem allocates batch IDs as BATCH-GW-full_UUID4 and positive uint32 part IDs from a durable SQLite counter that never resets between batches. A command/job ID remains distinct from batch ID, part ID, ATR sequence or production count. Full operator Start deduplication and Member 1 compatibility are separate integration work.
 
 The separate batch_id field itself is now agreed (D009): preserve it on batch-scoped requests, responses, and status and validate it before effects/accounting. A retried Start must map to its existing batch rather than allocate another. Issuer/action counters do not reset when a new batch begins. Exact batch ID generation and part-number uniqueness are still open; adding batch context is not permission to silently reuse a supposedly unique full part identity.
 

@@ -2,7 +2,7 @@
 
 Date: 2026-11-17.
 
-Status: Planned only. No application fault-injection or hardware check below has been run. Documentation consistency checks are not implementation compliance evidence. The approved contract is [job-lifecycle.md](job-lifecycle.md); unresolved choices are in [reliability-open-decisions.md](reliability-open-decisions.md).
+Status updated 2026-11-18: 50 B-scoped software tests pass, including actual native C/loopback application tests, scripted gateway recovery tests, and transport tests. See member2/esp32_b_inspection/verification/application_summary.json and application_tests.log. Normal/diagnostic ESP-IDF builds pass. The broader scenarios below remain a whole-project plan; A/operator and physical hardware scenarios are NOT claimed as passed. D012/member2-protocol.md resolve the B-specific choices.
 
 ## Ten-rule coverage
 

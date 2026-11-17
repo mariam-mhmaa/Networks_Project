@@ -2,7 +2,7 @@
 
 Last reviewed: 2026-11-17.
 
-Status: The user explicitly confirmed the three-stage deadline architecture and R01-R10 below. This is the approved behavioral baseline. Precise timing, numerical limits, command effects, receipt registration, restart/cache mechanisms, freshness, and wire schemas remain open in [reliability-open-decisions.md](reliability-open-decisions.md). The operation-controller/inspection application is not implemented or hardware verified. Member 2's separately host-tested transport foundation is recorded in D010; it is not proof of this lifecycle contract.
+Status updated 2026-11-18: R01-R10 remain the approved baseline. D012 finalizes B-specific receipt registration, timing/budgets, bounds, history/restart fencing and reconciliation; [member2-protocol.md](member2-protocol.md) is the implemented B contract. The actual C/Python B subsystem has 50 passing software tests and successful firmware builds, with physical testing NOT RUN. A/operator-wide command effects and integrations remain open; historical pending notes below apply to those broader links where not superseded by D012.
 
 ## Approved user rules
 
@@ -88,7 +88,7 @@ Late evidence belongs only to its original job/batch/device context. It cannot s
 
 ## Open decisions and implementation authority
 
-See [reliability-open-decisions.md](reliability-open-decisions.md) for O01-O06. The user permits implementation at coherent checkpoints after relevant decisions are agreed. If an alternative changes approved behavior or architecture, present the alternative and ask before implementing it. The current turn authorizes documentation updates, not silent selection of those open policies.
+See [reliability-open-decisions.md](reliability-open-decisions.md) for O01-O06. The user permits implementation at coherent checkpoints after relevant decisions are agreed. If an alternative changes approved behavior or architecture, present the alternative and ask before implementing it. The latest user instruction authorizes implementing the B subsystem; its remaining choices were explicitly approved in D012. This does not silently choose pending A/operator policies.
 
 ## Verification still required
 
@@ -101,6 +101,6 @@ See [reliability-open-decisions.md](reliability-open-decisions.md) for O01-O06. 
 - Duplicate/late replies without state regression, timer extension, or double-counting.
 - Receiver restart with uncertain work and safe handling.
 
-No checks above have been claimed as passed.
+The B-scoped software subset is exercised in verification/application_tests.log and application_summary.json under member2/esp32_b_inspection. Do not extend those results to A/operator integration or physical devices.
 
 The expanded rule/requirement coverage and planned failure cases are in [reliability-verification.md](reliability-verification.md). These documents establish design agreements, not proven implementation compliance.

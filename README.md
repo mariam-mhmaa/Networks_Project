@@ -1,7 +1,7 @@
 # MCT431 Networks Project
 
-Shared repository for the team's MCT431 project.
+Integration work is on main. ESP32 B's inspection application and the gateway B subsystem are implemented: runtime settings, B-calculated verdicts, lifecycle replies, duplicate/result recovery, boot/run fences, bounded deadlines, queue reservations and result accounting.
 
-Subsystem implementations are contributed on separate branches for review. The Member 1 production-station contribution will live in `member1/production-a/` on branch `member1/production-a`.
+Start with the [Member 2 test handoff](docs/member2-test-handoff.md), [message/API contract](docs/member2-protocol.md), [gateway module](gateway/README.md), and [firmware](member2/esp32_b_inspection/README.md). Software checks and ESP-IDF builds pass; actual-board/network testing is assigned separately and has NOT been run here.
 
-Integration is underway on `main`. Member 2's Wi-Fi foundation is merged, and its bounded TCP/framing layer has eleven passing native C/loopback checks. ESP-IDF v6.1.1 normal and optional diagnostic firmware builds pass with non-secret placeholder network settings. See the [Member 2 checkpoint](member2/esp32_b_inspection/README.md), [SDK and physical test procedure](docs/esp-idf-testing.md), [integration plan](docs/integration-plan.md), [approved decisions](docs/decisions.md), and [reliability contract](docs/job-lifecycle.md). Original references are retained in `reference/`. The inspection application and full-system integration are not complete; physical ESP32 communication tests are not yet run.
+The Member 1 serial and Member 3 operator HTTP/WebSocket integrations remain separate work. The standalone B exercise uses a simulated production source and is not a whole-system batch demonstration. Approved decisions are in [decisions.md](docs/decisions.md); original references are in reference/. Contributor branches/history are preserved.

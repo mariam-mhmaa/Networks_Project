@@ -85,6 +85,7 @@ void b_tcp_poll(b_tcp_service *service) {
             close_socket(candidate);
         } else {
             service->client = candidate;
+            ++service->generation;
             b_frame_reset(&service->reader);
         }
     }

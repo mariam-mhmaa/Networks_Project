@@ -1,15 +1,8 @@
 # ESP32 B SDK and physical communication checkpoint
 
-This checkpoint tests the implemented TCP transport. Full gateway configuration,
-inspection lifecycle, duplicate/result recovery, and batch integration remain
-separate application work.
+This checkpoint now includes the implemented B application and gateway B subsystem. For normal configuration/inspection/recovery testing, use [the teammate handoff](member2-test-handoff.md) with diagnostic echo disabled. Member 1 and operator/full-system integration remain separate.
 
-Verified on 2026-11-17: SDK activation/dependencies pass; eleven native C/loopback
-checks pass; normal and diagnostic ESP32 firmware compile/link successfully.
-Wi-Fi/TCP symbols are present in both linked images; diagnostic queue/send code
-is also linked. Each image has 25% application-partition headroom. Physical
-ESP32 communication is NOT RUN: only Bluetooth serial ports were detected.
-No board was flashed and no hotspot setting was changed.
+Verified on 2026-11-18: SDK activation/dependencies pass; 50 B-scoped software checks pass; normal application and diagnostic firmware compile/link successfully. Normal application has 23% application-partition headroom; diagnostic echo has 25%. Physical ESP32 communication is NOT RUN here. No board was flashed and no hotspot setting was changed.
 
 ## Local Windows setup
 
@@ -25,7 +18,7 @@ SDK's official idf_tools.py were used to finish the installation. Optional full
 Clang compiler/library packages and other chip toolchains were excluded.
 The session launcher does not change the machine-wide PATH or script policy.
 
-Eight source/CMake/Kconfig files were copied to the short staging folder and
+Sixteen source/CMake/Kconfig/vendor files were copied to the short staging folder and
 verified against the repository with SHA256. The local source-manifest.json
 records them. No sdkconfig or credentials were copied. Before any subsequent
 source change is tested/flashed, synchronize and verify the staging files again.
@@ -46,7 +39,9 @@ and build-only-placeholder, so the compiler links the networking path rather
 than removing it after the blank-configuration guard. They are not real network
 credentials. Configure the actual hotspot locally and rebuild before flashing.
 
-## Physical test
+## Optional physical echo diagnostic
+
+For functional job/configuration tests, use the normal image and member2-test-handoff.md instead. The steps below are only the earlier echo diagnostic.
 
 1. Connect only ESP32 B with a data-capable USB cable. Verify its USB identity,
    COM port, and chip before flashing. Do not assume the old COM3 assignment.

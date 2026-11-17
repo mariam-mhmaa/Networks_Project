@@ -4,12 +4,15 @@
 #include "esp_log.h"
 #include "esp_netif.h"
 #include "esp_wifi.h"
+#include "esp_random.h"
+#include "esp_timer.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
 #include "lwip/sockets.h"
 #include "tcp_service.h"
+#include "inspection_protocol.h"
 
 static const char *TAG = "inspection_wifi";
 static EventGroupHandle_t network_events;
@@ -21,13 +24,7 @@ static bool receive_frame(const uint8_t *payload, size_t length, void *context)
     /* Hardware transport test only; this is never an application ACK. */
     return b_tcp_queue((b_tcp_service *)context, payload, length);
 #else
-    (void)payload;
-    (void)context;
-    /* Transport checkpoint only: do not invent application ACKs or execute
-     * work before configuration/inspection/query schemas are agreed. */
-    ESP_LOGI(TAG, "Received framed payload (%u bytes); application contract pending",
-             (unsigned)length);
-    return true;
+    return b_protocol_receive(payload, length, context);
 #endif
 }
 
@@ -35,20 +32,45 @@ static void tcp_task(void *context)
 {
     (void)context;
     static b_tcp_service service;
-    b_tcp_init(&service, receive_frame, &service);
 #ifdef CONFIG_INSPECTION_TRANSPORT_DIAGNOSTIC
+    b_tcp_init(&service, receive_frame, &service);
     ESP_LOGW(TAG, "TRANSPORT DIAGNOSTIC: echo enabled; no inspection/application protocol");
+#else
+    static b_protocol protocol;
+    uint8_t random[16];
+    char boot[B_BOOT_SIZE];
+    esp_fill_random(random, sizeof(random));
+    static const char hex[] = "0123456789abcdef";
+    for (unsigned i = 0; i < 16; ++i) {
+        boot[i*2] = hex[random[i] >> 4]; boot[i*2+1] = hex[random[i] & 15u];
+    }
+    boot[32] = 0;
+    b_tcp_init(&service, receive_frame, &protocol);
+    b_protocol_init(&protocol, &service, boot);
+    ESP_LOGI(TAG, "Inspection protocol v1 boot=%s", boot);
 #endif
+    uint64_t next_listener_attempt = 0;
     for (;;) {
+        uint64_t now_ms = (uint64_t)(esp_timer_get_time() / 1000);
+#ifndef CONFIG_INSPECTION_TRANSPORT_DIAGNOSTIC
+        /* Accepted work progresses even while Wi-Fi/TCP is unavailable. */
+        b_protocol_tick(&protocol, now_ms);
+#endif
         if (!(xEventGroupGetBits(network_events) & WIFI_READY)) {
             b_tcp_close(&service);
-            xEventGroupWaitBits(network_events, WIFI_READY, pdFALSE, pdTRUE, portMAX_DELAY);
-        }
-        if (service.listener == B_INVALID_SOCKET &&
-            !b_tcp_open(&service, htonl(INADDR_ANY), CONFIG_INSPECTION_TCP_PORT)) {
-            ESP_LOGW(TAG, "TCP listener unavailable; retrying transport only");
-            vTaskDelay(pdMS_TO_TICKS(1000));
+            vTaskDelay(pdMS_TO_TICKS(20));
             continue;
+        }
+        if (service.listener == B_INVALID_SOCKET) {
+            if (now_ms < next_listener_attempt ||
+                !b_tcp_open(&service, htonl(INADDR_ANY), CONFIG_INSPECTION_TCP_PORT)) {
+                if (now_ms >= next_listener_attempt) {
+                    ESP_LOGW(TAG, "TCP listener unavailable; retrying transport only");
+                    next_listener_attempt = now_ms + 1000;
+                }
+                vTaskDelay(pdMS_TO_TICKS(20));
+                continue;
+            }
         }
         b_tcp_poll(&service);
         vTaskDelay(pdMS_TO_TICKS(20));
@@ -116,7 +138,7 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
-    if (xTaskCreate(tcp_task, "inspection_tcp", 4096, NULL, 5, NULL) != pdPASS) {
+    if (xTaskCreate(tcp_task, "inspection_tcp", 8192, NULL, 5, NULL) != pdPASS) {
         ESP_LOGE(TAG, "Cannot start TCP service task");
     }
 }

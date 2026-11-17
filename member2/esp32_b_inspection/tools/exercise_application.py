@@ -1,0 +1,8 @@
+"""Run from any folder; use normal application firmware, not diagnostic echo."""
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from gateway.inspection.__main__ import main
+
+if __name__ == "__main__":
+    main()

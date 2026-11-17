@@ -1,8 +1,10 @@
 # Remaining reliability decisions
 
-Last reviewed: 2026-11-17.
+Last reviewed: 2026-11-18.
 
-The user approved three-stage deadlines and R01-R10 in [job-lifecycle.md](job-lifecycle.md). Recommendations below remain pending joint decisions. No application implementation has been changed.
+B-specific O01/O02/O04/O05/O06 choices are now approved/implemented under D012 and [member2-protocol.md](member2-protocol.md): finite initial timing profile, registered receipts, bounded history/boot/run fencing, original-context recovery and exact wire schemas. The historical options below remain for A/operator/full-system integration where not superseded by that contract.
+
+The user approved three-stage deadlines and R01-R10 in [job-lifecycle.md](job-lifecycle.md). Recommendations below remain pending joint decisions. The B application/controller is implemented; this document does not claim the remaining A/operator integration is complete.
 
 ## Review findings
 

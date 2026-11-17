@@ -2,7 +2,7 @@
 
 Date: 2026-11-17
 
-Status after user review on 2026-11-17: Three-stage deadlines and R01-R10 are confirmed in [job-lifecycle.md](job-lifecycle.md), the authoritative behavioral baseline for this topic. This document retains research and candidate mechanisms. Numerical budgets, precise timing, receipt registration, boot/retention mechanisms, command effects, and freshness remain pending O01-O06 in [reliability-open-decisions.md](reliability-open-decisions.md). Nothing has been implemented or hardware tested. The official PDF remains the authority; external protocols/defaults do not override it.
+Status after user review on 2026-11-17: Three-stage deadlines and R01-R10 are confirmed in [job-lifecycle.md](job-lifecycle.md), the authoritative behavioral baseline for this topic. This document retains research and candidate mechanisms. Numerical budgets, precise timing, receipt registration, boot/retention mechanisms, command effects, and freshness remain pending O01-O06 in [reliability-open-decisions.md](reliability-open-decisions.md). The B subsystem has since been implemented under D012/member2-protocol.md and tested in software; this historical research is not a claim that every proposal below was selected. Physical testing remains NOT RUN. The official PDF remains the authority; external protocols/defaults do not override it.
 
 ## Corrections after explicit user confirmation
 

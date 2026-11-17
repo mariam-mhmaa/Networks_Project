@@ -2,7 +2,7 @@
 
 Reviewed: 2026-11-17, Africa/Cairo.
 
-Status: Initial branch inspection is complete. Member 2's Wi-Fi foundation is merged into local main, with its history preserved; approved TCP/framing transport code and ten passing native C/loopback tests are added. Inspection application contracts, full gateway/UI integration, ESP-IDF build, and hardware tests remain pending. No remote publication has occurred. All new work is on local main and original contributor branches are preserved.
+Status updated 2026-11-18: the B firmware and gateway B subsystem are implemented, 50 software tests pass, and normal/diagnostic ESP-IDF builds pass. Physical testing remains NOT RUN here. Member 1/full operator integration remains separate. The branch audit and original gap list below are historical; B-specific implementation/contract gaps are superseded by D012 and [member2-protocol.md](member2-protocol.md). All new work is on main and contributor branches/history are preserved.
 
 ## Repository and branch audit
 

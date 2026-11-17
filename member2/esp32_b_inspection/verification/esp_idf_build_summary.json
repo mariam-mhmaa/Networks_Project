@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-17",
-  "scope": "ESP32 cross-compile/link only; this is not physical or application-level verification",
+  "date": "2026-11-18",
+  "scope": "Normal B application and optional diagnostic firmware compile/link. Physical ESP32 communication NOT RUN.",
   "sdk_version": "v6.1.1",
   "sdk_commit": "051e4c4eb20346e043cdd47bc388fde75ff8af63",
   "target": "esp32",
@@ -9,34 +9,46 @@
   "sdk_activation_and_dependency_check": "PASS",
   "non_secret_placeholder_wifi_settings": true,
   "source_sha256": {
+    "CMakeLists.txt": "a83ba62ce117b31bc7b88cab01ebca39c443dc950b2956a8d999edf09ac486e1",
+    "main/CMakeLists.txt": "b9b28a644f4b4c2b3a5cd96ab2ae71937865e39d528a6ca32bbd7eafc7e727a4",
+    "main/inspection_app.c": "0d7034e99093d33ea272061fdffcf344db46db98ecb7743880e930d4e62c1955",
+    "main/inspection_app.h": "7aa46611c1f2fe9150573d5f32ac421d51d19f792f74d6bdc0d9d74c784f4c52",
+    "main/inspection_protocol.c": "a5bd9e34e7a97209b96defd3ba5494327327e52c56ee23aad631d8f89681e057",
+    "main/inspection_protocol.h": "48bd0ae478fe63e6bf2bd08660be03a76a4e78d38c0af95b858d4a2d3a04e439",
+    "main/Kconfig.projbuild": "5c813a2ff99871fd9582d7be34ee0dd2394877b594b03fb0745e8d8eb0ab04d8",
+    "main/main.c": "7dc155c5c55de1e8e83adcfb8695c4940c265b260feb17e07ad062cf674d880b",
     "main/tcp_frames.c": "280e9fd1e55d43300cc2205a9f7bfda2fdcc73710606f9a0e6260f6ef20984dd",
     "main/tcp_frames.h": "e7a94080817f5eac3b07adb53c1f20f243a3d003e3ca1371babc3d84bb675e6f",
-    "CMakeLists.txt": "a83ba62ce117b31bc7b88cab01ebca39c443dc950b2956a8d999edf09ac486e1",
-    "main/Kconfig.projbuild": "5c813a2ff99871fd9582d7be34ee0dd2394877b594b03fb0745e8d8eb0ab04d8",
-    "main/tcp_service.c": "f5c2fe59a2266bea611c5a2d4d91c1158105ba74303af2541ff084c8e9b2d610",
-    "main/main.c": "53804508b1b60037fe6a82d8ecfc9a7c3a4e97fb3e53feba23c71ecc5603d912",
-    "main/CMakeLists.txt": "a510913d7ecbbafe24b3c7d1e8a605fe2d6c9e7ddecc7c35ec7c9ebff60bab59",
-    "main/tcp_service.h": "07713f3032ac0bcb6907046130effa78b1c117fa84e0ea757d4ef82e16900bcc"
+    "main/tcp_service.c": "74cf04a4c82f15b172a2c6a69f036deb56fbc1601ee651dd5484c6f3b24de7ef",
+    "main/tcp_service.h": "4a4371f072ef3af382e811abd654a125255251117694d4623a11acd314ab575d",
+    "main/vendor/cjson/cJSON.c": "298581a04a36c0165da4b0aade235c23088cb2faa58651d720ea2f3706ed0b0d",
+    "main/vendor/cjson/cJSON.h": "25b0145150d500498e4d209cec69c18c42cf818bffcc54690be3b895a2a16dee",
+    "main/vendor/cjson/LICENSE": "a36dda207c36db5818729c54e7ad4e8b0c6fba847491ba64f372c1a2037b6d5c",
+    "main/vendor/cjson/README.md": "cc87d2283fc1ad0eab957733961939b91f6dcbd5a6ef949fa6a87de0d04d4c20"
   },
   "variants": {
     "normal": {
       "status": "PASS",
       "diagnostic_echo": false,
-      "image_bytes": 789312,
-      "image_sha256": "f1c21a9205af78774e2ee59ae578f21bc3da9ff85ed87edc2cf138de2d60f8b4",
+      "image_bytes": 809488,
+      "image_sha256": "ef594260eff65a052169a637cd41b880bc51c567275b585c0e59b4a122c27a48",
       "required_linked_symbols": [
         "b_tcp_poll",
         "esp_wifi_start",
         "tcp_task",
-        "receive_frame"
+        "receive_frame",
+        "b_tcp_queue",
+        "b_app_request",
+        "b_app_tick",
+        "b_protocol_receive"
       ],
-      "partition_check": "esp32_b_inspection.bin binary size 0xc0b40 bytes. Smallest app partition is 0x100000 bytes. 0x3f4c0 bytes (25%) free."
+      "partition_check": "esp32_b_inspection.bin binary size 0xc5a10 bytes. Smallest app partition is 0x100000 bytes. 0x3a5f0 bytes (23%) free."
     },
     "diagnostic": {
       "status": "PASS",
       "diagnostic_echo": true,
-      "image_bytes": 789520,
-      "image_sha256": "2fe54deeb904d1da9c7499f0b723edabdc113eaf815736c8910012310134321b",
+      "image_bytes": 789584,
+      "image_sha256": "aa2f902bcd5b7162bd4292ed030756faf96b49fcbfb46c2ef67328eeb1a61e5b",
       "required_linked_symbols": [
         "b_tcp_poll",
         "esp_wifi_start",
@@ -44,7 +56,7 @@
         "receive_frame",
         "b_tcp_queue"
       ],
-      "partition_check": "esp32_b_inspection.bin binary size 0xc0c10 bytes. Smallest app partition is 0x100000 bytes. 0x3f3f0 bytes (25%) free."
+      "partition_check": "esp32_b_inspection.bin binary size 0xc0c50 bytes. Smallest app partition is 0x100000 bytes. 0x3f3b0 bytes (25%) free."
     }
   },
   "physical_communication": "NOT_RUN",
@@ -62,5 +74,6 @@
       "usb": false
     }
   ],
-  "application_inspection_tests": "NOT_RUN: application schemas, bounds, and recovery contracts pending"
+  "application_inspection_tests": "PASS in native C/loopback and scripted gateway tests; see application_summary.json. Hardware NOT_RUN.",
+  "serial_inventory_note": "Historical SDK-setup inventory; no board discovery/flash was performed for this implementation handoff."
 }

@@ -1,5 +1,7 @@
 # Recovery and subsequent batch proposal
 
+B-specific update, 2026-11-18: D012 approves stopping inspection dispatch on unresolved work, explicit read-only reconciliation/resume, and acknowledged idle run closure/fencing. Those B mechanisms are implemented in gateway/inspection. The broader A/operator recovery and Pause/Stop proposals below remain separate; see member2-protocol.md.
+
 Date: 2026-11-17.
 
 Status: Clarification for the unresolved-operation planning question, not an approved implementation policy. The user asked what recovery would do and how it affects later batches; that question is not a Yes/No approval. The exact mechanisms remain O01/O03/O04/O05 in reliability-open-decisions.md.

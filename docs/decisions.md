@@ -68,23 +68,36 @@ The existing Member 2 branch has been merged into local main with history preser
 
 The user approved runtime configuration by identified command carrying inspection_time_ms, N, and K, with completion confirming actual applied values before dependent jobs. B computes FAIL when (numeric part_id + K) mod N == 0 and PASS otherwise. N is positive and K is an integer. An accepted job keeps its settings unchanged; a new configuration while inspection is active is rejected as BUSY and may be submitted as a new operation when idle.
 
-Exact numeric/duration bounds, unique numeric part allocation, configuration versioning/wire schemas, receipt registration, cache/restart policy, and operation-controller limits remain open. Approval of these three choices does not mean the inspection application or complete gateway-B integration has been implemented. The user separately authorized installing ESP-IDF and testing communication; the current hardware checkpoint is the implemented transport foundation.
+At the D011 checkpoint, numeric bounds, part allocation, schemas, receipt registration, cache/restart policy and operation-controller limits were still open. D012 below records their subsequent B-specific approval and implementation; D011 alone had not authorized those remaining choices.
 
 A default-off framed echo diagnostic and a standalone PC probe support the authorized physical transport test. Diagnostic replies are never lifecycle acknowledgements or inspection results. SDK installation and both firmware build variants pass; no board has been flashed and physical communication remains untested. See [esp-idf-testing.md](esp-idf-testing.md).
+
+### D012 Finalize and implement the gateway–B application
+
+On 2026-11-18 the user explicitly approved all three remaining recommendation questions:
+
+- Register a queryable record before RECEIVED; retain rejection/results under the original ID. inspection_time_ms is 1–600000, N is 1–2147483647, K is signed int32, and part_id is positive uint32. Preserve separate batch/part context.
+- Use configurable initial receipt/acceptance windows of one second, completion allowance of configured duration plus two seconds, at most two original-request retransmissions before acceptance and two read-only recovery queries, one-second query response windows, and an immutable absolute cap of configured duration plus ten seconds. Progress cannot renew these limits.
+- Bound the run to up to 64 inspection jobs; reserve history before acceptance and retain configuration/job outcomes through explicit idle closure. Reject retired scopes, use a fresh boot identity after restart, stop inspection dispatch on unresolved work, and require explicit reconciliation before proceeding.
+
+The B firmware, gateway B adapter/controller/queue/accounting, and standalone client are implemented under [member2-protocol.md](member2-protocol.md). The receiver uses a boot-scoped monotonic run fence, 64 job records, 16 command records with a reserved CLOSE slot, and eight fenced read-only query snapshots. Full history refuses admission rather than dropping accepted outcomes. Gateway numeric part allocation/evidence persists in a local SQLite ledger; execution is not automatically restored after a gateway/device restart.
+
+Queue capacity and block/Fault policy are explicit required settings; both behaviors are implemented and tested. B's low-level idle CLOSE and explicit reconciliation APIs do not silently define whole-system operator Pause/Stop semantics. Software tests and firmware builds pass; hardware/capture testing is assigned to the teammate and remains NOT RUN here.
+
+This supersedes earlier B-specific “not implemented/pending contract” status text in D010-D011 and historical planning/review documents. Member 1 identity/serial compatibility and Member 3/full operator integration remain separate.
 
 ## Open decisions
 
 - Integration review is in [integration-plan.md](integration-plan.md). The user approved completing B here and directed reuse/completion of Member 3's existing screen. The newly fetched member3/operator-ui branch resolves its source location. The unresolved-operation dispatch policy is still pending. Existing contributor contracts do not override the official PDF or user decisions. The user now wants normal-chat discussion focused on [Member 2 integration](member2-integration.md), rather than additional form-based planning questions for this step.
-- The next question round asks about queryable receipt registration, one active manufacturing job per station with the queue only at the gateway, and Pause-as-dispatch-stop while accepted work finishes. These are recommendations awaiting answers, not approved implementation rules.
+- B's queryable receipt registration and one-active-inspection policy are approved and implemented. A's scheduling details and whole-system Pause/Stop/operator effects still need separate agreement.
 - Three-stage deadlines and R01-R10 are approved. O01-O06 in [reliability-open-decisions.md](reliability-open-decisions.md) cover precise anchors/limits, receipt registration, command effects, restart/cache policy, late-result accounting, and query/wire ownership. The historical [reliability review](reliability-review.md) retains candidate mechanisms; earlier numeric retry suggestions and the two-timeout simplification are not approved specifications.
-- Batch/part identifier formats, detailed parent/child operation correlation, and duplicate/result retention across restarts.
+- Whole-system parent/child operation correlation and Member 1 ID compatibility; B's batch/numeric-part allocation and volatile receiver retention are specified in member2-protocol.md.
 - Exact lifecycle message schemas and operator HTTP/WebSocket representation.
 - Start/configuration sequencing and Idle/Running/Paused/Fault transitions.
 - Pause, Resume, Stop, Fault recovery, and treatment of unfinished work.
 - Inspection queue capacity, full policy, and reservation for production already in progress.
 - Deadlines, retry limits, heartbeat/stale thresholds, and restart/disconnection handling.
-- External message contracts, serial encoding details, TCP payload format, and operator endpoints.
-- Valid inspection-rule parameter and duration ranges (the rule itself is approved).
+- Member 1 serial/identity contract and operator endpoints. B's exact TCP messages, inspection-rule bounds and duration range are finalized in D012/member2-protocol.md.
 - Serial library and exact runtime/dependency versions.
 - Requirement-by-requirement implementation and verification register, including submission ambiguities.
 
