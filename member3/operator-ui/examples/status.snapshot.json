@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "type": "status",
+  "simulation": false,
+  "gateway_id": "gateway-boot-7",
+  "status_seq": 42,
+  "state": "Running",
+  "fault": null,
+  "settings": {
+    "batch_size": 4,
+    "production_time_ms": 2000,
+    "inspection_time_ms": 3000,
+    "N": 4,
+    "K": 0
+  },
+  "batch": {
+    "id": "batch-17",
+    "target": 4,
+    "outcome": "active",
+    "elapsed_ms": 6500
+  },
+  "counts": {
+    "produced": 3,
+    "inspected": 1,
+    "passed": 1,
+    "failed": 0
+  },
+  "queue": {
+    "size": 1,
+    "capacity": 5,
+    "part_ids": [
+      3
+    ]
+  },
+  "stations": {
+    "production": {
+      "connected": true,
+      "busy": true,
+      "part_id": 4,
+      "remaining_ms": 1500
+    },
+    "inspection": {
+      "connected": true,
+      "busy": true,
+      "part_id": 2,
+      "remaining_ms": 500
+    }
+  },
+  "parts": [
+    {
+      "part_id": 1,
+      "status": "pass"
+    },
+    {
+      "part_id": 2,
+      "status": "inspecting"
+    },
+    {
+      "part_id": 3,
+      "status": "queued"
+    },
+    {
+      "part_id": 4,
+      "status": "producing"
+    }
+  ],
+  "command_results": [
+    {
+      "cmd_id": "cmd-c3b54899",
+      "command": "start",
+      "phase": "completed",
+      "result": "Batch started; both station configurations applied."
+    }
+  ]
+}

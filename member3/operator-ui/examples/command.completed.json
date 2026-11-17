@@ -1,0 +1,7 @@
+{
+  "gateway_id": "gateway-boot-7",
+  "cmd_id": "cmd-c3b54899",
+  "command": "start",
+  "phase": "completed",
+  "result": "Batch started; both station configurations applied."
+}
