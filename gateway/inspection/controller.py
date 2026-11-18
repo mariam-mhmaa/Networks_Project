@@ -52,6 +52,7 @@ class Controller:
         self.link, self.ids = link, ids
         self.policy = policy or Policy()
         self.finished = {}
+        self.running = set()
         self.link.late_handler = self._late
 
     @staticmethod
@@ -75,18 +76,18 @@ class Controller:
 
     @staticmethod
     def _identity(message, request):
-        key = "job_id" if request["type"] == "INSPECT" else "cmd_id"
+        key = "job_id" if request["type"] in {"INSPECT", "PRODUCE"} else "cmd_id"
         return (message.get(key) == request[key] and
                 message.get("boot_id") == request["boot_id"] and
                 message.get("action") == request["type"] and
                 message.get("batch_id") == request["batch_id"] and
                 type(message.get("run_no")) is int and message["run_no"] == request["run_no"] and
-                (request["type"] != "INSPECT" or (
+                (request["type"] not in {"INSPECT", "PRODUCE"} or (
                     type(message.get("part_id")) is int and message["part_id"] == request["part_id"])))
 
     @staticmethod
     def _result(result, request, duration_ms, expected_settings=None, completion_allowance_ms=None):
-        key = "job_id" if request["type"] == "INSPECT" else "cmd_id"
+        key = "job_id" if request["type"] in {"INSPECT", "PRODUCE"} else "cmd_id"
         if not isinstance(result, dict) or not Controller._identity(
                 {**result, "boot_id": request["boot_id"]}, request):
             raise ProtocolError("completion result has mismatched operation/part/scope")
@@ -101,7 +102,7 @@ class Controller:
                     type(settings.get("K")) is not int or
                     not -2147483648 <= settings["K"] <= 2147483647):
                 raise ProtocolError("invalid applied settings/configuration version in result")
-        if request["type"] == "INSPECT":
+        if request["type"] in {"INSPECT", "PRODUCE"}:
             if result.get("verdict") not in {"PASS", "FAIL"}:
                 raise ProtocolError("missing B-calculated verdict")
             if result.get("config_version") != request["config_version"]:
@@ -118,6 +119,21 @@ class Controller:
                 raise ProtocolError("B did not confirm the requested applied settings")
             if not uint(result.get("config_version"), minimum=1):
                 raise ProtocolError("invalid applied configuration version")
+        elif request["type"] == "RETIRE":
+            target = result.get("target")
+            if isinstance(target, dict):
+                result = dict(result)
+                target = {**target, "job_id": result.get("target_id"), "part_id": result.get("part_id"),
+                          "batch_id": result["batch_id"], "run_no": result["run_no"]}
+                result["target"] = target
+            if (result.get("target_id") != request["target_id"] or
+                    type(result.get("part_id")) is not int or result["part_id"] != request["part_id"] or
+                    not isinstance(target, dict) or target.get("job_id") != request["target_id"] or
+                    target.get("batch_id") != request["batch_id"] or
+                    type(target.get("run_no")) is not int or target["run_no"] != request["run_no"] or
+                    type(target.get("part_id")) is not int or target["part_id"] != request["part_id"] or
+                    target.get("state") not in {"COMPLETED", "REJECTED"}):
+                raise ProtocolError("invalid retirement target evidence")
         elif request["type"] == "CLOSE" and result.get("closed") is not True:
             raise ProtocolError("B did not confirm the run was closed")
         if result.get(key) != request[key]:
@@ -128,7 +144,7 @@ class Controller:
         # Snapshot once: every request retransmission uses exactly these bytes.
         request = dict(request)
         payload = encode(request)
-        key = "job_id" if request["type"] == "INSPECT" else "cmd_id"
+        key = "job_id" if request["type"] in {"INSPECT", "PRODUCE"} else "cmd_id"
         identifier = request[key]
         policy, clock = self.policy, asyncio.get_running_loop().time
         started = clock()
@@ -137,6 +153,9 @@ class Controller:
         completion_by = None
         evidence = Evidence()
         events = asyncio.Queue(maxsize=128)
+        if identifier in self.running:
+            raise ProtocolError("operation already has a controller")
+        self.running.add(identifier)
         self.link.route(identifier, events)
         query_requests = {}
         next_action = started
@@ -162,7 +181,7 @@ class Controller:
             next_action = min(absolute, now + window)
             try:
                 await asyncio.wait_for(self.link.send(message, wire), max(0.001, min(window, absolute-now)))
-            except (OSError, asyncio.TimeoutError, ProtocolError):
+            except (OSError, asyncio.IncompleteReadError, asyncio.TimeoutError, ProtocolError):
                 # The attempt is still counted. No adapter-level retry exists.
                 if isinstance(self.link.failure, Restarted):
                     raise self.link.failure
@@ -249,7 +268,7 @@ class Controller:
                     target = message.get("target")
                     if target is None:
                         if accepted_at is not None or received_at is not None:
-                            return unresolved("B lost a queryable operation record")
+                            return unresolved("receiver lost a queryable operation record")
                         continue
                     if not isinstance(target, dict):
                         continue
@@ -278,7 +297,7 @@ class Controller:
                     continue
                 stage = message.get("type")
                 if stage == "ERROR":
-                    return unresolved("B protocol/admission error: " + str(message.get("error")))
+                    return unresolved("receiver protocol/admission error: " + str(message.get("error")))
                 if stage == "RECEIVED":
                     first_receipt = received_at is None
                     if evidence.received_observed_at is None:
@@ -320,6 +339,7 @@ class Controller:
         except (ProtocolError, Restarted) as exc:
             return unresolved(str(exc))
         finally:
+            self.running.discard(identifier)
             self.link.unroute(identifier)
             for query_id in query_requests:
                 self.link.unroute(query_id)

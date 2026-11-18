@@ -1,0 +1,196 @@
+{
+  "timestamp_utc": "2026-11-18T11:57:31.749872+00:00",
+  "scope": "Native C/Python software only; physical USB/Wi-Fi and operator UI NOT TESTED",
+  "results": {
+    "inspection": {
+      "exit_code": 0,
+      "log": "inspection.log",
+      "tests_run": 53
+    },
+    "production": {
+      "exit_code": 0,
+      "log": "production.log",
+      "tests_run": 19
+    },
+    "serial-link": {
+      "exit_code": 0,
+      "log": "serial-link.log",
+      "tests_run": 3
+    }
+  },
+  "sources": [
+    {
+      "path": "shared/station/station_app.c",
+      "sha256": "3f57fbc89e6cc76d67c5ca8d132288cb3f06cea042dea71b890dc38dcd1237f3"
+    },
+    {
+      "path": "shared/station/station_app.h",
+      "sha256": "3104fbda9209b82e5995908a61af23b25ed7eb91f5bb0fa9566e339bfd282b52"
+    },
+    {
+      "path": "shared/station/station_protocol.c",
+      "sha256": "365073af11e91aea518fc44b4eaf302cb99ba5f0a8b7970257881a30cfddfd55"
+    },
+    {
+      "path": "shared/station/station_protocol.h",
+      "sha256": "f5b6bbc754fe73ef337fae61c0040c14b9128b7584d1c14fcf2adcfee923d7c2"
+    },
+    {
+      "path": "shared/station/vendor/cjson/cJSON.c",
+      "sha256": "298581a04a36c0165da4b0aade235c23088cb2faa58651d720ea2f3706ed0b0d"
+    },
+    {
+      "path": "shared/station/vendor/cjson/cJSON.h",
+      "sha256": "25b0145150d500498e4d209cec69c18c42cf818bffcc54690be3b895a2a16dee"
+    },
+    {
+      "path": "gateway/__init__.py",
+      "sha256": "abd50ef7a86949bc03144303d0f0bfdb8503099a9924800d8f3abe26a47268f1"
+    },
+    {
+      "path": "gateway/inspection/__init__.py",
+      "sha256": "76a2b6385c1402d5ad94634ff051fdb725e0a3c59bbe61550315801b6d988dc2"
+    },
+    {
+      "path": "gateway/inspection/__main__.py",
+      "sha256": "1d43af7ef82b99adccc8bfe7333c5edb54e7994daa7ad712d0aa0e9132ac0dda"
+    },
+    {
+      "path": "gateway/inspection/client.py",
+      "sha256": "c8446b7fbcf379310cf0c0c87f537e3ed993d0c2785ca13857cfa71760ab5ff9"
+    },
+    {
+      "path": "gateway/inspection/controller.py",
+      "sha256": "156388525e663f36a095546664076bb7cda2369dbaf80358f63b67beb940f18c"
+    },
+    {
+      "path": "gateway/inspection/coordinator.py",
+      "sha256": "31c20573522d0344b0e3349bc38521232fbce3c3cba6cfce6c9cc3cc96b97add"
+    },
+    {
+      "path": "gateway/inspection/wire.py",
+      "sha256": "8d3f922c478690ce9c544466ca83f846f75bf7b3ed34ca025e195d285581d7ea"
+    },
+    {
+      "path": "gateway/production/__init__.py",
+      "sha256": "880ccf2213f8b360f87d9206e144e9f628ac46a36bbc439915d24e7bf0fa6165"
+    },
+    {
+      "path": "gateway/production/__main__.py",
+      "sha256": "e722d55b9fd659cb9351abf4e5878e3042d0a88d3f14508cdf15462b5ca85cfa"
+    },
+    {
+      "path": "gateway/production/client.py",
+      "sha256": "fab7349caa8ca924a400a5410405f687c31a195d23c560ed752c223c7fea0209"
+    },
+    {
+      "path": "gateway/production/controller.py",
+      "sha256": "18c323afbe63ff5d0f261626243e7afd91930b7d9ee4800dcf2e5e58e81a1b56"
+    },
+    {
+      "path": "gateway/production/coordinator.py",
+      "sha256": "10900d90ca2d397353b0bc53a09316d077162fb72e0d98ef53b5d79086f17959"
+    },
+    {
+      "path": "gateway/production/framing.py",
+      "sha256": "7fa29efa46e2655daa4837c20608b084c029addf308da069b9005133e11e37cf"
+    },
+    {
+      "path": "gateway/production/requirements.txt",
+      "sha256": "7c3a7b075c67c54222834f80a92ff4a7651995b7e21c4e37370a7d90018c16de"
+    },
+    {
+      "path": "gateway/production/serial_link.py",
+      "sha256": "7683cb440a88ed6dbc5c3a3668597156391e09d3e6e72feab29998853bcbb069"
+    },
+    {
+      "path": "member1/production-a/firmware/main/CMakeLists.txt",
+      "sha256": "ac5fc312cf9ffc35235eaa76241b87ca9ffd01fcf4ffe494e5d427e83bf1ba60"
+    },
+    {
+      "path": "member1/production-a/firmware/main/history.c",
+      "sha256": "be14b68731469d5b737f10e377ca17422ce47b920f0846d01ed37d69c4f3908f"
+    },
+    {
+      "path": "member1/production-a/firmware/main/history.h",
+      "sha256": "2e16d2cd44ec7953564eb560dcf5391c9c7d8f9f031142632eb00eaab531c68e"
+    },
+    {
+      "path": "member1/production-a/firmware/main/main.c",
+      "sha256": "7555c4d95e5946e104be61d2b1d8ef3043405b809d15206f542bdd991be05b2c"
+    },
+    {
+      "path": "member1/production-a/firmware/main/production.c",
+      "sha256": "06cc9511e2e1323c3f41bf0b7e8cdc622a737406246507327b13ad86cfc6cee4"
+    },
+    {
+      "path": "member1/production-a/firmware/main/production.h",
+      "sha256": "bbe7c42a526519e109c5f185277adffc3d8968655481cb77dcd19923d8d40304"
+    },
+    {
+      "path": "member1/production-a/firmware/main/protocol.c",
+      "sha256": "df6a1e6f3feced30871c57659e86c977c12f7ca417cdc390002ecae108114d47"
+    },
+    {
+      "path": "member1/production-a/firmware/main/protocol.h",
+      "sha256": "45e98e63272e399dc33448adbab77480e35ac46c1f0028b73a454ef726c8c800"
+    },
+    {
+      "path": "member1/production-a/firmware/main/serial_service.c",
+      "sha256": "9dc47bb61574385ab0593ac3529cc24436af3b557d9da759aaada0e9001e9ca0"
+    },
+    {
+      "path": "member1/production-a/firmware/main/serial_service.h",
+      "sha256": "a602c6b430415862fcae8b8d7dc5d67bc78687cc83e8d45163a36a9878d8f73a"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/CMakeLists.txt",
+      "sha256": "b9b28a644f4b4c2b3a5cd96ab2ae71937865e39d528a6ca32bbd7eafc7e727a4"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/inspection_app.c",
+      "sha256": "6c9c52c31bbfe9c6da82619b6d6514dff03318c546092a201e908b01962fa793"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/inspection_app.h",
+      "sha256": "bf77729d42f00ada9e4f45e8fcfbd81a2fbfc86124071209959b7b534627713a"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/inspection_protocol.c",
+      "sha256": "22b0751def2231a44b91f9c299c4684c48497b7bc42584e6983b3ca5e7e33e69"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/inspection_protocol.h",
+      "sha256": "e1555672800afe333710330a5f21d0d575df6a4722fa1c2c9920d126e0efd1fd"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/main.c",
+      "sha256": "7dc155c5c55de1e8e83adcfb8695c4940c265b260feb17e07ad062cf674d880b"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/tcp_frames.c",
+      "sha256": "392b4d6009adc54e7924f60790e5e88c97f8b480faa518ba3aa0d859994958f0"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/tcp_frames.h",
+      "sha256": "be4ed2055388dbe1b0fca59d2eceb94b0f8e53477698965453eec227dce5115b"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/tcp_service.c",
+      "sha256": "b0b02b4daf90d813a066c5a7ef4831d2b75ed73562d2d91dd1cb1f6d8eb2c201"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/tcp_service.h",
+      "sha256": "86f0480706563f1298eac9c4fbd24ff02e535106c1bf484ca75517f7e4f45bfa"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/vendor/cjson/cJSON.c",
+      "sha256": "298581a04a36c0165da4b0aade235c23088cb2faa58651d720ea2f3706ed0b0d"
+    },
+    {
+      "path": "member2/esp32_b_inspection/main/vendor/cjson/cJSON.h",
+      "sha256": "25b0145150d500498e4d209cec69c18c42cf818bffcc54690be3b895a2a16dee"
+    }
+  ],
+  "total_tests": 75
+}

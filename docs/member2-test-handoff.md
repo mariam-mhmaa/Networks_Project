@@ -1,3 +1,10 @@
+> 2026-11-18 integration update: use current main, including the shared
+> A/B engine and identified RETIRE extension in member2-protocol.md. Current
+> software/build evidence is in verification/station-integration (75 software
+> tests; both application firmware builds pass). Earlier counts/build hashes
+> below describe the prior B-only checkpoint. Physical hardware tests remain
+> assigned separately and have not been run by this integration work.
+
 # Member 2–gateway test handoff
 
 The B firmware and gateway B subsystem are implemented. Host software tests

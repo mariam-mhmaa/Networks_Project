@@ -162,3 +162,40 @@ read-only, and explicitly close/reconcile. A new B boot requires reviewing
 the old run as incomplete. Full operator Start/Pause/Resume/Stop and A serial
 integration remain separate tasks; do not equate inspection completion with
 an already demonstrated whole-system batch.
+
+## A integration extension: identified RETIRE
+
+The 2026-11-18 integration adds RETIRE while preserving existing v1 TCP
+CONFIGURE/INSPECT/QUERY/CLOSE behavior. Both firmware profiles now compile
+`shared/station`. The B source wrapper preserves its existing C harness API.
+
+RETIRE has the common v/type/cmd_id/boot_id/batch_id/run_no fields and
+target_id plus positive uint32 part_id. It reserves a record before RECEIVED,
+then completes with a cached target outcome or returns retained BUSY for
+an active target. A known completed target returns its real inspection result;
+a known rejected target remains unchanged but receives a part fence. A safely
+unknown target reserves a job tombstone with REJECTED/RETIRED and a part fence.
+Neither the old ID nor a new ID for that part can trigger execution. The
+target_id cannot equal RETIRE's own cmd_id. Target context conflicts reject.
+
+Retirement commands have a separate 64-record pool, retained through explicit
+idle closure. Tombstones consume the existing 64 job-record capacity. Extra
+control attempts may exhaust the bounded pool and must not evict history.
+The gateway then uses explicit incomplete-run closure instead of unsafe reuse.
+
+For the 1024-byte limit, a retirement result carries its own normal identity,
+state, elapsed_ms, target_id and part_id plus a compact target outcome. The
+target repeats action/state/settings/configuration/elapsed/verdict or error,
+but inherits job_id/batch_id/run_no/part_id from the enclosing result. It does
+not repeat those fields on the wire. The gateway expands them after validating
+the enclosing identity. QUERY of RETIRE returns the same immutable snapshot.
+The result does not repeat RETIRE's unrelated current settings/version.
+
+Gateway `InspectionGateway.isolate` performs explicit lookup/control before
+same-batch continuation. It refuses UNKNOWN after known receipt/acceptance,
+conflicting evidence, a different boot, or an active target. Retired unknowns
+remain unresolved in reporting. `resume_after_reconciliation` can proceed
+when all remaining unknowns have acknowledged fences. Whole-run incomplete
+closure remains the fallback. No recovery progress renews the original budget.
+Current verification supersedes the earlier 50-test count; see
+`verification/station-integration/summary.json`. Hardware tests remain separate.

@@ -1,3 +1,10 @@
+> Current 2026-11-18 implementation: A serial, shared A/B lifecycle and
+> identified RETIRE, integrated queue dispatch, partial-batch accounting and
+> explicit guarded continuation are implemented. See member1-integration.md
+> and verification/station-integration/ for current scope/evidence. Older
+> pending A-only/same-batch policy text below is historical. Hardware
+> calibration and Member 3/operator integration remain separate.
+
 # Milestone 1 integration plan
 
 Reviewed: 2026-11-17, Africa/Cairo.
@@ -109,6 +116,12 @@ Answers to these three questions remain pending until received. They do not auto
 This is a plan, not approval of every candidate mechanism or numerical value above. Update decisions.md when the user answers each material choice.
 
 ## Current discussion focus
+
+As of 2026-11-18, the user has moved to Member 1: explain proposed choices,
+agree them together, then implement and verify. See
+[member1-integration.md](member1-integration.md) for the current review and
+first three proposals. They are not yet approved. The Member 2 discussion
+record below is historical; its implementation is complete as scoped in D012.
 
 The user requested normal-chat decisions specifically for Member 2. See [ESP32 B integration decisions](member2-integration.md) for the initial role/framing/one-job recommendations and remaining interface topics. This steering changes the presentation/focus; it does not silently approve earlier unanswered choices or authorize deviations from approved rules.
 

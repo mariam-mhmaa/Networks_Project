@@ -1,0 +1,710 @@
+{
+  "started_utc": "2026-11-16T15:32:21.949088+00:00",
+  "scope": "actual hardware",
+  "port": "COM3",
+  "baud": 115200,
+  "settings": "8N1, no flow control",
+  "cases": [
+    {
+      "name": "shared_example",
+      "intended_tx_hex": "c0 12 34 01 02 03 04 00 04 00 db dc db dd ff c3 0e c0",
+      "tx_hex": "c0 12 34 01 02 03 04 00 04 00 db dc db dd ff c3 0e c0",
+      "expected_rx_hex": "c0 12 34 01 02 03 04 00 04 a5 65 7e 5a c4 95 c0",
+      "rx_hex": "c0 12 34 01 02 03 04 00 04 a5 65 7e 5a c4 95 c0",
+      "read_sizes": [
+        16
+      ],
+      "write_sizes": [
+        18
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 4660,
+          "seq": 16909060,
+          "payload_hex": "a5 65 7e 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "text",
+      "intended_tx_hex": "c0 00 01 00 00 00 01 00 11 4d 43 54 34 33 31 20 41 54 52 20 74 65 73 74 0d 0a c7 ec c0",
+      "tx_hex": "c0 00 01 00 00 00 01 00 11 4d 43 54 34 33 31 20 41 54 52 20 74 65 73 74 0d 0a c7 ec c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 01 00 11 e8 e6 f1 91 96 94 85 e4 f1 f7 85 d1 db dc d6 d1 a8 af 98 ef c0",
+      "rx_hex": "c0 00 01 00 00 00 01 00 11 e8 e6 f1 91 96 94 85 e4 f1 f7 85 d1 db dc d6 d1 a8 af 98 ef c0",
+      "read_sizes": [
+        17,
+        13
+      ],
+      "write_sizes": [
+        29
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 1,
+          "payload_hex": "e8 e6 f1 91 96 94 85 e4 f1 f7 85 d1 c0 d6 d1 a8 af",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "special_bytes",
+      "intended_tx_hex": "c0 00 01 00 00 00 02 00 07 00 db dc db dd ff 41 00 ff 36 d3 c0",
+      "tx_hex": "c0 00 01 00 00 00 02 00 07 00 db dc db dd ff 41 00 ff 36 d3 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 02 00 07 a5 65 7e 5a e4 a5 5a 26 fa c0",
+      "rx_hex": "c0 00 01 00 00 00 02 00 07 a5 65 7e 5a e4 a5 5a 26 fa c0",
+      "read_sizes": [
+        17,
+        2
+      ],
+      "write_sizes": [
+        21
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 2,
+          "payload_hex": "a5 65 7e 5a e4 a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "all_256",
+      "intended_tx_hex": "c0 00 01 00 00 00 03 01 00 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f 80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f 90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf db dc c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dd dc dd de df e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff 02 f4 c0",
+      "tx_hex": "c0 00 01 00 00 00 03 01 00 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f 60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f 80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f 90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf db dc c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dd dc dd de df e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff 02 f4 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 03 01 00 a5 a4 a7 a6 a1 a0 a3 a2 ad ac af ae a9 a8 ab aa b5 b4 b7 b6 b1 b0 b3 b2 bd bc bf be b9 b8 bb ba 85 84 87 86 81 80 83 82 8d 8c 8f 8e 89 88 8b 8a 95 94 97 96 91 90 93 92 9d 9c 9f 9e 99 98 9b 9a e5 e4 e7 e6 e1 e0 e3 e2 ed ec ef ee e9 e8 eb ea f5 f4 f7 f6 f1 f0 f3 f2 fd fc ff fe f9 f8 fb fa c5 c4 c7 c6 c1 db dc c3 c2 cd cc cf ce c9 c8 cb ca d5 d4 d7 d6 d1 d0 d3 d2 dd dc df de d9 d8 db dd da 25 24 27 26 21 20 23 22 2d 2c 2f 2e 29 28 2b 2a 35 34 37 36 31 30 33 32 3d 3c 3f 3e 39 38 3b 3a 05 04 07 06 01 00 03 02 0d 0c 0f 0e 09 08 0b 0a 15 14 17 16 11 10 13 12 1d 1c 1f 1e 19 18 1b 1a 65 64 67 66 61 60 63 62 6d 6c 6f 6e 69 68 6b 6a 75 74 77 76 71 70 73 72 7d 7c 7f 7e 79 78 7b 7a 45 44 47 46 41 40 43 42 4d 4c 4f 4e 49 48 4b 4a 55 54 57 56 51 50 53 52 5d 5c 5f 5e 59 58 5b 5a e0 26 c0",
+      "rx_hex": "c0 00 01 00 00 00 03 01 00 a5 a4 a7 a6 a1 a0 a3 a2 ad ac af ae a9 a8 ab aa b5 b4 b7 b6 b1 b0 b3 b2 bd bc bf be b9 b8 bb ba 85 84 87 86 81 80 83 82 8d 8c 8f 8e 89 88 8b 8a 95 94 97 96 91 90 93 92 9d 9c 9f 9e 99 98 9b 9a e5 e4 e7 e6 e1 e0 e3 e2 ed ec ef ee e9 e8 eb ea f5 f4 f7 f6 f1 f0 f3 f2 fd fc ff fe f9 f8 fb fa c5 c4 c7 c6 c1 db dc c3 c2 cd cc cf ce c9 c8 cb ca d5 d4 d7 d6 d1 d0 d3 d2 dd dc df de d9 d8 db dd da 25 24 27 26 21 20 23 22 2d 2c 2f 2e 29 28 2b 2a 35 34 37 36 31 30 33 32 3d 3c 3f 3e 39 38 3b 3a 05 04 07 06 01 00 03 02 0d 0c 0f 0e 09 08 0b 0a 15 14 17 16 11 10 13 12 1d 1c 1f 1e 19 18 1b 1a 65 64 67 66 61 60 63 62 6d 6c 6f 6e 69 68 6b 6a 75 74 77 76 71 70 73 72 7d 7c 7f 7e 79 78 7b 7a 45 44 47 46 41 40 43 42 4d 4c 4f 4e 49 48 4b 4a 55 54 57 56 51 50 53 52 5d 5c 5f 5e 59 58 5b 5a e0 26 c0",
+      "read_sizes": [
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        15
+      ],
+      "write_sizes": [
+        270
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 3,
+          "payload_hex": "a5 a4 a7 a6 a1 a0 a3 a2 ad ac af ae a9 a8 ab aa b5 b4 b7 b6 b1 b0 b3 b2 bd bc bf be b9 b8 bb ba 85 84 87 86 81 80 83 82 8d 8c 8f 8e 89 88 8b 8a 95 94 97 96 91 90 93 92 9d 9c 9f 9e 99 98 9b 9a e5 e4 e7 e6 e1 e0 e3 e2 ed ec ef ee e9 e8 eb ea f5 f4 f7 f6 f1 f0 f3 f2 fd fc ff fe f9 f8 fb fa c5 c4 c7 c6 c1 c0 c3 c2 cd cc cf ce c9 c8 cb ca d5 d4 d7 d6 d1 d0 d3 d2 dd dc df de d9 d8 db da 25 24 27 26 21 20 23 22 2d 2c 2f 2e 29 28 2b 2a 35 34 37 36 31 30 33 32 3d 3c 3f 3e 39 38 3b 3a 05 04 07 06 01 00 03 02 0d 0c 0f 0e 09 08 0b 0a 15 14 17 16 11 10 13 12 1d 1c 1f 1e 19 18 1b 1a 65 64 67 66 61 60 63 62 6d 6c 6f 6e 69 68 6b 6a 75 74 77 76 71 70 73 72 7d 7c 7f 7e 79 78 7b 7a 45 44 47 46 41 40 43 42 4d 4c 4f 4e 49 48 4b 4a 55 54 57 56 51 50 53 52 5d 5c 5f 5e 59 58 5b 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "empty_payload",
+      "intended_tx_hex": "c0 00 01 00 00 00 04 00 00 55 9f c0",
+      "tx_hex": "c0 00 01 00 00 00 04 00 00 55 9f c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 04 00 00 55 9f c0",
+      "rx_hex": "c0 00 01 00 00 00 04 00 00 55 9f c0",
+      "read_sizes": [
+        12
+      ],
+      "write_sizes": [
+        12
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 4,
+          "payload_hex": "",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "maximum_payload",
+      "intended_tx_hex": "c0 00 01 00 00 00 05 04 00 db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd b6 e9 c0",
+      "tx_hex": "c0 00 01 00 00 00 05 04 00 db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd db dc db dd b6 e9 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 05 04 00 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e ca ca c0",
+      "rx_hex": "c0 00 01 00 00 00 05 04 00 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e ca ca c0",
+      "read_sizes": [
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        16
+      ],
+      "write_sizes": [
+        2060
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 5,
+          "payload_hex": "65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e 65 7e",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "one_byte_pieces",
+      "intended_tx_hex": "c0 00 01 00 00 00 06 00 04 00 db dc db dd ff 85 49 c0",
+      "tx_hex": "c0 00 01 00 00 00 06 00 04 00 db dc db dd ff 85 49 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 06 00 04 a5 65 7e 5a 82 d2 c0",
+      "rx_hex": "c0 00 01 00 00 00 06 00 04 a5 65 7e 5a 82 d2 c0",
+      "read_sizes": [
+        16
+      ],
+      "write_sizes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 6,
+          "payload_hex": "a5 65 7e 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "three_frames_together",
+      "intended_tx_hex": "c0 00 01 00 00 00 07 00 03 6f 6e 65 4b ab c0 c0 00 02 ff ff ff ff 00 04 74 77 6f db dc 6a 0f c0 c0 ff ff 00 00 00 09 00 06 db dd 74 68 72 65 65 32 ca c0",
+      "tx_hex": "c0 00 01 00 00 00 07 00 03 6f 6e 65 4b ab c0 c0 00 02 ff ff ff ff 00 04 74 77 6f db dc 6a 0f c0 c0 ff ff 00 00 00 09 00 06 db dd 74 68 72 65 65 32 ca c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 07 00 03 ca cb db dc 1a 03 c0 c0 00 02 ff ff ff ff 00 04 d1 d2 ca 65 6d 94 c0 c0 ff ff 00 00 00 09 00 06 7e d1 cd d7 db dc db dc 9e 4b c0",
+      "rx_hex": "c0 00 01 00 00 00 07 00 03 ca cb db dc 1a 03 c0 c0 00 02 ff ff ff ff 00 04 d1 d2 ca 65 6d 94 c0 c0 ff ff 00 00 00 09 00 06 7e d1 cd d7 db dc db dc 9e 4b c0",
+      "read_sizes": [
+        17,
+        17,
+        17,
+        1
+      ],
+      "write_sizes": [
+        51
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 7,
+          "payload_hex": "ca cb c0",
+          "crc_valid": true
+        },
+        {
+          "test_id": 2,
+          "seq": 4294967295,
+          "payload_hex": "d1 d2 ca 65",
+          "crc_valid": true
+        },
+        {
+          "test_id": 65535,
+          "seq": 9,
+          "payload_hex": "7e d1 cd d7 c0 c0",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "empty_frames_ignored",
+      "intended_tx_hex": "c0 c0 c0 00 01 00 00 00 0a 00 10 65 6d 70 74 79 20 64 65 6c 69 6d 69 74 65 72 73 d8 75 c0 c0 c0",
+      "tx_hex": "c0 c0 c0 00 01 00 00 00 0a 00 10 65 6d 70 74 79 20 64 65 6c 69 6d 69 74 65 72 73 d8 75 c0 c0 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 0a 00 10 db dc c8 d5 d1 dc 85 c1 db dc c9 cc c8 cc d1 db dc d7 d6 18 16 c0",
+      "rx_hex": "c0 00 01 00 00 00 0a 00 10 db dc c8 d5 d1 dc 85 c1 db dc c9 cc c8 cc d1 db dc d7 d6 18 16 c0",
+      "read_sizes": [
+        17,
+        14
+      ],
+      "write_sizes": [
+        32
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 10,
+          "payload_hex": "c0 c8 d5 d1 dc 85 c1 c0 c9 cc c8 cc d1 c0 d7 d6",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "incorrect_crc_silent",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd 80 c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd 80 c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        15
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "incorrect_crc_immediate_recovery",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd 80 c0 c0 00 01 00 00 00 64 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff cc db dc c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd 80 c0 c0 00 01 00 00 00 64 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff cc db dc c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 64 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 02 0b c0",
+      "rx_hex": "c0 00 01 00 00 00 64 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 02 0b c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        42
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 100,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "declared_length_silent",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 04 62 61 64 8c ac c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 04 62 61 64 8c ac c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        15
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "declared_length_immediate_recovery",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 04 62 61 64 8c ac c0 c0 00 01 00 00 00 65 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 62 3c c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 04 62 61 64 8c ac c0 c0 00 01 00 00 00 65 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 62 3c c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 65 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a ac f7 c0",
+      "rx_hex": "c0 00 01 00 00 00 65 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a ac f7 c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        41
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 101,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "invalid_escape_silent",
+      "intended_tx_hex": "c0 01 db 00 02 c0",
+      "tx_hex": "c0 01 db 00 02 c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        6
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "invalid_escape_immediate_recovery",
+      "intended_tx_hex": "c0 01 db 00 02 c0 c0 00 01 00 00 00 66 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 81 19 c0",
+      "tx_hex": "c0 01 db 00 02 c0 c0 00 01 00 00 00 66 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 81 19 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 66 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 4f d2 c0",
+      "rx_hex": "c0 00 01 00 00 00 66 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 4f d2 c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        32
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 102,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "dangling_escape_silent",
+      "intended_tx_hex": "c0 01 db c0",
+      "tx_hex": "c0 01 db c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        4
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "dangling_escape_immediate_recovery",
+      "intended_tx_hex": "c0 01 db c0 c0 00 01 00 00 00 67 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 2f e5 c0",
+      "tx_hex": "c0 01 db c0 c0 00 01 00 00 00 67 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 2f e5 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 67 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a e1 2e c0",
+      "rx_hex": "c0 00 01 00 00 00 67 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a e1 2e c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        30
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 103,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "truncated_header_silent",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        9
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "truncated_header_immediate_recovery",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 c0 c0 00 01 00 00 00 68 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 70 37 c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 c0 c0 00 01 00 00 00 68 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 70 37 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 68 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a be fc c0",
+      "rx_hex": "c0 00 01 00 00 00 68 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a be fc c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        35
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 104,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "truncated_crc_silent",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        14
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "truncated_crc_immediate_recovery",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd c0 c0 00 01 00 00 00 69 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff de cb c0",
+      "tx_hex": "c0 00 01 00 00 00 14 00 03 62 61 64 dd c0 c0 00 01 00 00 00 69 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff de cb c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 69 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 10 00 c0",
+      "rx_hex": "c0 00 01 00 00 00 69 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 10 00 c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        40
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 105,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "oversized_frame_silent",
+      "intended_tx_hex": "c0 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 c0",
+      "tx_hex": "c0 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        1037
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "oversized_frame_immediate_recovery",
+      "intended_tx_hex": "c0 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 c0 c0 00 01 00 00 00 6a 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 3d ee c0",
+      "tx_hex": "c0 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 c0 c0 00 01 00 00 00 6a 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 3d ee c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 6a 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a f3 25 c0",
+      "rx_hex": "c0 00 01 00 00 00 6a 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a f3 25 c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        1063
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 106,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "over_limit_length_silent",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 04 01 ca 19 c0",
+      "tx_hex": "c0 00 01 00 00 00 14 04 01 ca 19 c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        12
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "over_limit_length_immediate_recovery",
+      "intended_tx_hex": "c0 00 01 00 00 00 14 04 01 ca 19 c0 c0 00 01 00 00 00 6b 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 93 12 c0",
+      "tx_hex": "c0 00 01 00 00 00 14 04 01 ca 19 c0 c0 00 01 00 00 00 6b 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 93 12 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 6b 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 5d d9 c0",
+      "rx_hex": "c0 00 01 00 00 00 6b 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 5d d9 c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        38
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 107,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "reserved_test_id_silent",
+      "intended_tx_hex": "c0 00 00 00 00 00 14 00 08 72 65 73 65 72 76 65 64 1e 27 c0",
+      "tx_hex": "c0 00 00 00 00 00 14 00 08 72 65 73 65 72 76 65 64 1e 27 c0",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        20
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "reserved_test_id_immediate_recovery",
+      "intended_tx_hex": "c0 00 00 00 00 00 14 00 08 72 65 73 65 72 76 65 64 1e 27 c0 c0 00 01 00 00 00 6c 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff eb 85 c0",
+      "tx_hex": "c0 00 00 00 00 00 14 00 08 72 65 73 65 72 76 65 64 1e 27 c0 c0 00 01 00 00 00 6c 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff eb 85 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 6c 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 25 4e c0",
+      "rx_hex": "c0 00 01 00 00 00 6c 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 25 4e c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        46
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 108,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    },
+    {
+      "name": "unterminated_record_silent",
+      "intended_tx_hex": "c0 00 01 00 00 00",
+      "tx_hex": "c0 00 01 00 00 00",
+      "expected_rx_hex": "",
+      "rx_hex": "",
+      "read_sizes": [],
+      "write_sizes": [
+        6
+      ],
+      "passed": true,
+      "responses": [],
+      "slip_rejections": 0
+    },
+    {
+      "name": "unterminated_record_immediate_recovery",
+      "intended_tx_hex": "c0 00 01 00 00 00 c0 00 01 00 00 00 6d 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 45 79 c0",
+      "tx_hex": "c0 00 01 00 00 00 c0 00 01 00 00 00 6d 00 0c 72 65 63 6f 76 65 72 79 db dc db dd 00 ff 45 79 c0",
+      "expected_rx_hex": "c0 00 01 00 00 00 6d 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 8b b2 c0",
+      "rx_hex": "c0 00 01 00 00 00 6d 00 0c d7 db dc c6 ca d3 db dc d7 dc 65 7e a5 5a 8b b2 c0",
+      "read_sizes": [
+        17,
+        9
+      ],
+      "write_sizes": [
+        32
+      ],
+      "passed": true,
+      "responses": [
+        {
+          "test_id": 1,
+          "seq": 109,
+          "payload_hex": "d7 c0 c6 ca d3 c0 d7 dc 65 7e a5 5a",
+          "crc_valid": true
+        }
+      ],
+      "slip_rejections": 0
+    }
+  ],
+  "not_run": [],
+  "passed": true,
+  "port_closed": true,
+  "startup_rx_hex": ""
+}

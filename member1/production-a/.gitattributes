@@ -1,0 +1,2 @@
+# Preserve raw evidence exactly, including original line endings.
+results/** -text -whitespace

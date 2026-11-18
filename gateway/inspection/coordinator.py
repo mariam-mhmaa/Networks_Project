@@ -90,6 +90,8 @@ class InspectionGateway:
         self.active = None
         self.results = {}
         self.unresolved = {}
+        self.isolated = set()
+        self.skipped_production = set()
         self.requests = {}
         self.frozen_settings = {}
         self.accepted = self.rejected = 0  # Product verdict counts only.
@@ -114,6 +116,7 @@ class InspectionGateway:
             await self._fault("B configuration did not complete")
             raise GatewayFault(self.fault_reason)
         self.parts, self.results, self.unresolved, self.requests, self.frozen_settings = {}, {}, {}, {}, {}
+        self.isolated, self.skipped_production = set(), set()
         self.accepted = self.rejected = self._slots_used = 0
         self.queue = asyncio.Queue(maxsize=self.capacity)
         self._stopping = False
@@ -132,6 +135,11 @@ class InspectionGateway:
             "active_part_id": self.active.part_id if self.active else None,
             "pass": self.accepted, "fail": self.rejected,
             "unresolved_job_ids": list(self.unresolved),
+            "inspected": len(self.results),
+            "unresolved": len(set(self.unresolved) | self.skipped_production),
+            "unstarted": self.target-len(self.parts),
+            "not_inspected": len(self.parts)-len(self.results),
+            "isolated_job_ids": sorted(self.isolated),
             "inspection_complete": len(self.results) == self.target and self.target > 0,
         }
 
@@ -180,6 +188,8 @@ class InspectionGateway:
                 raise GatewayFault("unknown/wrong-batch production completion")
             if part.produced:
                 return False
+            if part.job_id in self.skipped_production:
+                raise GatewayFault("retired production requires explicit historical reconciliation")
             if self.state not in {"RUNNING", "FAULT"}:
                 raise GatewayFault("run is closed; production evidence belongs to its original history")
             part.produced = True
@@ -243,7 +253,6 @@ class InspectionGateway:
                         request, duration_ms=self.frozen_settings[part.job_id]["inspection_time_ms"],
                         expected_settings=self.frozen_settings[part.job_id])
                 await self.ledger.record("inspection_outcome", asdict(outcome))
-                self.active = None
                 if self.client.link.terminal_conflict:
                     await self._fault("conflicting terminal response")
                 if outcome.state != "COMPLETED" or self.state == "FAULT":
@@ -254,6 +263,7 @@ class InspectionGateway:
                 else:
                     await self._account(part, outcome)
                 self.queue.task_done()
+                self.active = None
         except asyncio.CancelledError:
             if self.active:
                 part = self.active
@@ -323,7 +333,6 @@ class InspectionGateway:
             original = self.unresolved[job_id]
             if job_id in self.results or (original and original.evidence.acceptance_established_by):
                 raise GatewayFault("rejection contradicts prior accepted/completed evidence")
-            self.unresolved.pop(job_id)
             return outcome
         if target.get("state") != "COMPLETED":
             return outcome
@@ -338,9 +347,55 @@ class InspectionGateway:
             self.client.link.terminal_conflict = None
         return recovered
 
+    async def release_unproduced(self, part):
+        """Called only after A's acknowledged fence; never discard a produced part."""
+        async with self.condition:
+            if self.parts.get(part.part_id) is not part or part.produced or part.dispatched:
+                raise GatewayFault("reservation is not an unproduced current part")
+            if part.job_id not in self.skipped_production:
+                await self.ledger.record("production_isolated", {"part_id":part.part_id,"job_id":part.job_id})
+                self.skipped_production.add(part.job_id)
+                self._slots_used -= 1
+                if not part.future.done():
+                    part.future.set_result(Outcome("UNRESOLVED",part.job_id,None,Evidence(),"production isolated"))
+                self.condition.notify_all()
+
+    async def isolate(self, job_id):
+        """Explicit bounded lookup + mutating fence; original uncertainty survives."""
+        if self.state != "FAULT" or job_id not in self.unresolved or self.active:
+            raise GatewayFault("no quiescent unresolved inspection")
+        if job_id in self.isolated: return None
+        if self.client.link.terminal_conflict: raise GatewayFault("conflicting evidence needs review")
+        lookup=await self.reconcile(job_id)
+        if job_id not in self.unresolved: return lookup
+        original=self.unresolved[job_id]
+        target=lookup.result.get("target") if lookup.state=="COMPLETED" else None
+        if lookup.state!="COMPLETED": raise GatewayFault("lookup did not complete")
+        if not target and original and original.evidence.delivery_established_by:
+            raise GatewayFault("receiver lost queryable history; close incomplete instead")
+        if target and target.get("state") not in {"REJECTED","COMPLETED"}:
+            raise GatewayFault("target still active; let accepted work finish")
+        request=self.requests[job_id]
+        outcome=await self.client.retire(job_id,request["part_id"])
+        await self.ledger.record("inspection_retirement",asdict(outcome))
+        if outcome.state!="COMPLETED": raise GatewayFault(outcome.reason or "retirement unconfirmed")
+        target=outcome.result["target"]
+        if target["action"]!="INSPECT": raise GatewayFault("wrong retirement action")
+        if target["state"]=="COMPLETED":
+            frozen=self.frozen_settings[job_id]
+            result=self.client.controller._result(target,request,frozen["inspection_time_ms"],frozen)
+            recovered=Outcome("COMPLETED",job_id,result,outcome.evidence,"retirement recovered result")
+            await self._account(self.parts[request["part_id"]],recovered)
+            self.unresolved.pop(job_id)
+        else:
+            if original and original.evidence.acceptance_established_by:
+                raise GatewayFault("retirement rejection contradicts acceptance")
+            self.isolated.add(job_id)
+        return outcome
+
     async def resume_after_reconciliation(self):
         """Explicit operator recovery hook; no automatic resume on reconnect."""
-        if (self._stopping or self.state != "FAULT" or self.unresolved or self.active
+        if (self._stopping or self.state != "FAULT" or (set(self.unresolved)-self.isolated) or self.active
                 or self.client.link.terminal_conflict
                 or not self.client.link.fresh or self.client.link.heartbeat["state"] != "IDLE"
                 or not self.client.link.heartbeat["run_open"]

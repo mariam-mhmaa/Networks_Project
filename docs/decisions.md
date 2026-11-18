@@ -86,10 +86,113 @@ Queue capacity and block/Fault policy are explicit required settings; both behav
 
 This supersedes earlier B-specific “not implemented/pending contract” status text in D010-D011 and historical planning/review documents. Member 1 identity/serial compatibility and Member 3/full operator integration remain separate.
 
+### D013 Approve Member 1 shared identity and run-history model
+
+On 2026-11-18 the user answered Yes to Member 1 recommendation 1 and confirmed
+we may adapt its implementation rather than follow the contributor's design
+exactly. A will accept the shared opaque cmd_id/job_id scheme without a
+mandatory :op_no suffix/separate application op_no, expand IDs to the shared
+limit, and use boot/run fencing with retained outcomes for up to 64 production
+jobs in a run. ATR sequence numbers remain separate transport correlation.
+
+Recommendations 2 (one active production job and pre-production queue
+reservation) and 3 (stop new A/B dispatch on unresolved production) remain
+pending; the user requested clearer explanations and a check of examiner-
+configured timing requirements. Those questions are not approval. See
+[member1-integration.md](member1-integration.md).
+
+### D014 Approve Member 1 scheduling and queue reservation
+
+On 2026-11-18 the user approved decision 2: one active production job on A,
+no hidden accepted-job queue there, inspection capacity reserved at the
+gateway before production starts, the same part/batch identity passed on
+confirmed production completion, and the configured block/Fault policy
+applied before further production. A and B may run concurrently on different
+parts using examiner-assigned durations.
+
+Decision 3 remains under discussion. The user explicitly rejects permanent
+system blockage solely because an old outcome/root cause cannot be learned,
+and wants dispatch/future work possible with incomplete batches. The revised
+recommendation is temporary hold followed by explicit incomplete closure and
+safe new-run transition without requiring the missing result. Same-batch
+guarded continuation is an alternative needing additional retirement and
+accounting rules. Neither specific revised workflow is approved yet.
+
+### D015 Recovery clarification and revised continuation recommendation
+
+On 2026-11-18 the user agreed with retaining uncertainty correctly, preventing
+old/duplicate work, safe readiness checks, and not permanently blocking future
+work solely because a part's outcome is unknown. The user asked for the best
+appropriate design rather than choosing solely to minimize implementation,
+and asked whether INCOMPLETE must be entered manually in the GUI.
+
+The revised recommendation is guarded continuation of other original-target
+parts in the same batch, with explicit per-job retirement/fencing before
+affected-station reuse, and incomplete closure/new batch as fallback when
+safe isolation cannot be established. This is not implemented or approved
+in its detailed form yet; it would extend D012's existing B recovery policy.
+The gateway computes unresolved counts/final completion status automatically;
+operator workflow actions never fabricate or manually assign factual results.
+See member1-integration.md for the proposed guards and current scope.
+
+### D016 Authorize A extension and require complete partial-batch reporting
+
+On 2026-11-18 the user explicitly authorized extending A to the updated
+recovery design and clarified that an incomplete batch must still show
+confirmed PASS/FAIL totals for the rest. Always report those totals alongside
+unresolved and other unfinished counts; uncertainty is never converted to
+FAIL, and the gateway computes factual counts/status automatically.
+
+The user requested a clearer explanation of isolation. It means a separately
+tracked uncertain part with its original identity retained, dependent work
+withheld until evidenced, and prevention of delayed duplicate execution.
+Affected-station reuse and reservation release require readiness/inactivity
+and fencing; accepted work is not implicitly cancelled. Exact retirement
+messages and shared A/B mechanism details remain to be specified, not assumed
+implemented by this discussion.
+
+### D017 Finalize A contract and authorize implementation
+
+On 2026-11-18 the user approved all remaining A recommendations: production
+duration 1–600000 ms, positive uint32 part identity, frozen per-job settings,
+the shared bounded recovery profile, and identified duplicate-safe RETIRE
+on A and B for guarded same-batch continuation. Unknown parts never become
+FAIL or replacement work. Active targets return BUSY; completed targets
+return their actual results; safely unknown targets retain job/part fences.
+Contradictory/lost history requires incomplete closure/new-run recovery.
+
+A initially emits a heartbeat every second with a five-second stale limit;
+B retains its initial 500 ms/1.5 s profile. All numerical heartbeat/deadline
+settings are initial engineering values to validate/tune on hardware. Tuning
+does not remove bounded attempts, immutable deadlines or explicit recovery.
+No more A-specific behavior decisions block implementation. Whole-system
+operator Pause/Stop and Member 3 screen integration remain separate scope.
+
+### D018 Implement and verify the A/B gateway core
+
+On 2026-11-18 the approved A integration was implemented on main, preserving
+Member 1's source/history and its CRC/SLIP/ATR transport. A and B now share
+the operation engine, identified read-only lookup and duplicate-safe RETIRE.
+The gateway integrates real serial production, reserved inspection capacity,
+TCP inspection, bounded recovery, explicit guarded same-batch continuation,
+partial totals, two-scope closure and explicit different-boot recovery.
+
+Verification passed: 53 inspection/controller/TCP tests, 19 native A/integrated
+batch/CLI tests and three serial-worker tests (75 total), plus application
+ESP-IDF v6.1.1 builds for both ESP32 targets. Source hashes and logs are in
+verification/station-integration. No physical USB/Wi-Fi/board test was run;
+existing contributor hardware evidence remains historical. Heartbeat/timeouts
+are initial configurable engineering values pending real hardware calibration.
+
+The active implementation/commands are in member1-integration.md. Whole-system
+operator Pause/Stop behavior and Member 3 HTTP/WebSocket screen integration
+remain separate; this is not a claim that the complete Milestone 1 GUI/capture
+demonstration has been delivered.
+
 ## Open decisions
 
-- Integration review is in [integration-plan.md](integration-plan.md). The user approved completing B here and directed reuse/completion of Member 3's existing screen. The newly fetched member3/operator-ui branch resolves its source location. The unresolved-operation dispatch policy is still pending. Existing contributor contracts do not override the official PDF or user decisions. The user now wants normal-chat discussion focused on [Member 2 integration](member2-integration.md), rather than additional form-based planning questions for this step.
-- B's queryable receipt registration and one-active-inspection policy are approved and implemented. A's scheduling details and whole-system Pause/Stop/operator effects still need separate agreement.
+- Integration review is in [integration-plan.md](integration-plan.md). The user approved completing B here and directed reuse/completion of Member 3's existing screen. The newly fetched member3/operator-ui branch resolves its source location. Guarded same-batch continuation/incomplete closure is approved under D015–D017. Existing contributor contracts do not override the official PDF or user decisions. The user now wants normal-chat discussion focused on [Member 2 integration](member2-integration.md), rather than additional form-based planning questions for this step.
+- A/B scheduling, identified lookup/retirement, queue reservation and the initial reliability profiles are approved and implemented in D013–D017. Whole-system Pause/Stop/operator effects still need separate agreement.
 - Three-stage deadlines and R01-R10 are approved. O01-O06 in [reliability-open-decisions.md](reliability-open-decisions.md) cover precise anchors/limits, receipt registration, command effects, restart/cache policy, late-result accounting, and query/wire ownership. The historical [reliability review](reliability-review.md) retains candidate mechanisms; earlier numeric retry suggestions and the two-timeout simplification are not approved specifications.
 - Whole-system parent/child operation correlation and Member 1 ID compatibility; B's batch/numeric-part allocation and volatile receiver retention are specified in member2-protocol.md.
 - Exact lifecycle message schemas and operator HTTP/WebSocket representation.
@@ -97,7 +200,7 @@ This supersedes earlier B-specific “not implemented/pending contract” status
 - Pause, Resume, Stop, Fault recovery, and treatment of unfinished work.
 - Inspection queue capacity, full policy, and reservation for production already in progress.
 - Deadlines, retry limits, heartbeat/stale thresholds, and restart/disconnection handling.
-- Member 1 serial/identity contract and operator endpoints. B's exact TCP messages, inspection-rule bounds and duration range are finalized in D012/member2-protocol.md.
+- Operator endpoints and full screen integration. Member 1 serial/identity and A/B retirement are implemented under member1-integration.md; B TCP/rule bounds remain in member2-protocol.md.
 - Serial library and exact runtime/dependency versions.
 - Requirement-by-requirement implementation and verification register, including submission ambiguities.
 

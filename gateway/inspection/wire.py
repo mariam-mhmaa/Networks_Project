@@ -51,6 +51,12 @@ async def receive(reader):
     if not 1 <= size <= MAX_PAYLOAD:
         raise ProtocolError("invalid length prefix")
     body = await reader.readexactly(size)
+    return decode(body)
+
+
+def decode(body):
+    if not 1 <= len(body) <= MAX_PAYLOAD:
+        raise ProtocolError("payload outside 1..1024 bytes")
     try:
         value = json.loads(body.decode("utf-8"), object_pairs_hook=_pairs,
                            parse_constant=lambda value: (_ for _ in ()).throw(

@@ -1,0 +1,55 @@
+[1/12] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\build\bootloader" && C:\Espressif\python_env\idf6.1_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf-v6.1.1/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/ainour/OneDrive - Faculty of Engineering Ain Shams University/Semester7/Networks/Project/Networks_Project/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6530 bytes. 0xad0 bytes (10%) free.
+
+
+[2/12] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/serial_service.c.obj
+[3/12] No install step for 'bootloader'
+[4/12] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/C_/Espressif/projects/networks-integration/shared/station/station_app.c.obj
+[5/12] Completed 'bootloader'
+[6/12] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+[7/12] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/C_/Espressif/projects/networks-integration/shared/station/station_protocol.c.obj
+[8/12] Linking C static library esp-idf\main\libmain.a
+[9/12] Generating esp-idf/esp_system/ld/sections.ld
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bootloader/Kconfig.projbuild:383: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bootloader/Kconfig.projbuild:423: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bt/common/Kconfig.in:180: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bt/host/bluedroid/Kconfig.in:75: Choice symbol BT_ENC_KEY_SIZE_CTRL_STD (member of BT_ENC_KEY_SIZE_CTRL_ENABLED choice) is defined with a warning, which has no effect for choice symbols.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bt/host/bluedroid/Kconfig.in:81: Choice symbol BT_ENC_KEY_SIZE_CTRL_VSC (member of BT_ENC_KEY_SIZE_CTRL_ENABLED choice) is defined with a warning, which has no effect for choice symbols.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bt/host/bluedroid/Kconfig.in:88: Choice symbol BT_ENC_KEY_SIZE_CTRL_NONE (member of BT_ENC_KEY_SIZE_CTRL_ENABLED choice) is defined with a warning, which has no effect for choice symbols.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bt/host/nimble/Kconfig.in:1124: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/bt/controller/esp32/Kconfig.in:542: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/esp_hw_support\./lowpower/port/esp32p4/Kconfig.p4_rev3_mspi_workaround:6: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/esp_mm/Kconfig:20: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/esp_system\./port/soc/esp32/Kconfig.memory:24: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+NOTE: C:/Espressif/esp-idf-v6.1.1/components/openthread/Kconfig:106: Deprecation notice: hex literal '0' without '0x' prefix detected. In the next major version, hex literals will be required to have a '0x' prefix.
+
+Skipping linker fragment parsing, fragment files unchanged
+
+[10/12] Linking CXX executable mct431_a_setup.elf
+[11/12] Generating binary image from built executable
+esptool v5.6.0
+
+Creating ESP32 image...
+
+Merged 3 ELF sections.
+
+Successfully created ESP32 image.
+
+Generated C:/Users/ainour/OneDrive - Faculty of Engineering Ain Shams University/Semester7/Networks/Project/Networks_Project/build/mct431_a_setup.bin
+[12/12] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\build" && C:\Espressif\python_env\idf6.1_py3.11_env\Scripts\python.exe C:/Espressif/esp-idf-v6.1.1/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/ainour/OneDrive - Faculty of Engineering Ain Shams University/Semester7/Networks/Project/Networks_Project/build/partition_table/partition-table.bin" "C:/Users/ainour/OneDrive - Faculty of Engineering Ain Shams University/Semester7/Networks/Project/Networks_Project/build/mct431_a_setup.bin""
+mct431_a_setup.bin binary size 0x34870 bytes. Smallest app partition is 0x100000 bytes. 0xcb790 bytes (79%) free.
+
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\build'
+Executing "ninja all"...
+
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32 -b 460800 --before default-reset --after hard-reset write-flash --flash-mode dio --flash-size 2MB --flash-freq 40m 0x1000 build\bootloader\bootloader.bin 0x8000 build\partition_table\partition-table.bin 0x10000 build\mct431_a_setup.bin
+or from the "C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\build" directory
+ python -m esptool --chip esp32 -b 460800 --before default-reset --after hard-reset write-flash "@flash_args"

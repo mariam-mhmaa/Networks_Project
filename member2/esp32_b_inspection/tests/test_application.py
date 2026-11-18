@@ -492,3 +492,37 @@ class ApplicationTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(recovered.result["verdict"], original)
             self.assertEqual(gateway.accepted + gateway.rejected, 1)
             await gateway.shutdown()
+
+    async def test_retirement_unknown_fences_job_and_part_without_inspection(self):
+        client,_=await self.client()
+        identifier=client.ids.new("INSP")
+        retired=await client.retire(identifier,22)
+        self.assertEqual(retired.state,"COMPLETED",retired.reason)
+        self.assertEqual(retired.result["target"]["error"],"RETIRED")
+        old=await client.inspect(22,identifier=identifier)
+        self.assertEqual(old.reason,"RETIRED")
+        other=await client.inspect(22)
+        self.assertEqual(other.reason,"PART_ALREADY_ACCEPTED")
+        self.assertEqual((await client.inspect(23)).state,"COMPLETED")
+
+    async def test_retirement_returns_real_verdict_or_busy_without_cancelling(self):
+        client,_=await self.client(duration=120)
+        identifier=client.ids.new("INSP")
+        task=asyncio.create_task(client.inspect(7,identifier=identifier))
+        await asyncio.sleep(.04)
+        busy=await client.retire(identifier,7)
+        self.assertEqual(busy.reason,"BUSY")
+        original=await task
+        recovered=await client.retire(identifier,7)
+        self.assertEqual(recovered.state,"COMPLETED",recovered.reason)
+        self.assertEqual(recovered.result["target"],original.result)
+
+    async def test_retirement_capacity_preserves_64_fences_and_close_slot(self):
+        client,_=await self.client()
+        for part in range(1,65):
+            out=await client.retire(client.ids.new("INSP"),part)
+            self.assertEqual(out.state,"COMPLETED",out.reason)
+        self.assertEqual((await client.close_run()).state,"COMPLETED")
+        client.select_run("next-run",2)
+        self.assertEqual((await client.configure(Settings(1,3,0))).state,"COMPLETED")
+        self.assertEqual((await client.inspect(65)).state,"COMPLETED")

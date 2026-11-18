@@ -1,4 +1,29 @@
+> Current 2026-11-18 implementation: A serial, shared A/B lifecycle and
+> identified RETIRE, integrated queue dispatch, partial-batch accounting and
+> explicit guarded continuation are implemented. See member1-integration.md
+> and verification/station-integration/ for current scope/evidence. Older
+> pending A-only/same-batch policy text below is historical. Hardware
+> calibration and Member 3/operator integration remain separate.
+
 # Recovery and subsequent batch proposal
+
+Latest discussion, 2026-11-18: the user agrees that unknown outcomes must not
+permanently block the system and asks for the best fitting design and automatic
+GUI status classification. The current recommendation is guarded continuation
+of other parts in the same batch after explicit uncertain-job isolation,
+fresh readiness and acknowledged execution retirement/fencing. Incomplete
+closure/new batch remains the fallback if safe isolation is unavailable,
+especially after restart/history inconsistency. Missing outcome/root cause is
+not itself a permanent prerequisite for future work.
+
+This revised shared A/B workflow is PROPOSED, not implemented/fully approved;
+see D015 and member1-integration.md. B's existing incomplete-run closure does
+not already provide per-job retirement. Retirement must not cancel accepted
+work implicitly, erase terminal truth, restart original retries, or let old
+requests execute later. GUI flags and final INCOMPLETE status are computed
+from recorded facts; the operator chooses workflow actions, not result labels.
+The older stop-and-close-first proposal below is historical where superseded
+by this recommendation.
 
 B-specific update, 2026-11-18: D012 approves stopping inspection dispatch on unresolved work, explicit read-only reconciliation/resume, and acknowledged idle run closure/fencing. Those B mechanisms are implemented in gateway/inspection. The broader A/operator recovery and Pause/Stop proposals below remain separate; see member2-protocol.md.
 

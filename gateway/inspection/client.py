@@ -46,7 +46,7 @@ class BClient:
     def request(self, action, *, identifier=None, **fields):
         if not self.link.boot_id or not self.batch_id or self.run_no is None:
             raise ProtocolError("connect and select an explicit run context first")
-        prefix = {"CONFIGURE": "CFG", "INSPECT": "INSP", "QUERY": "QUERY", "CLOSE": "CLOSE"}[action]
+        prefix = {"CONFIGURE": "CFG", "INSPECT": "INSP", "QUERY": "QUERY", "CLOSE": "CLOSE", "RETIRE": "RETIRE"}[action]
         key = "job_id" if action == "INSPECT" else "cmd_id"
         identifier = identifier or self.ids.new(prefix)
         if not ID.fullmatch(identifier):
@@ -88,6 +88,11 @@ class BClient:
             raise ValueError("invalid target ID")
         request = self.request("QUERY", target_id=target_id, query_no=self.link.next_query_no())
         return await self.controller.run(request)
+
+    async def retire(self, target_id, part_id):
+        if not ID.fullmatch(target_id) or not uint(part_id, minimum=1):
+            raise ValueError("invalid retirement identity")
+        return await self.controller.run(self.request("RETIRE", target_id=target_id, part_id=part_id))
 
     async def close_run(self):
         return await self.controller.run(self.request("CLOSE"))
