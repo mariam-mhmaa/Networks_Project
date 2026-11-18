@@ -1,45 +1,23 @@
 {
-  "timestamp_utc": "2026-11-18T19:02:10.135234+00:00",
-  "contributor_commit": "d1b8e696c169a94292a2081ace02f5938a8b03a0",
-  "tests": {
-    "station_regression": 75,
-    "operator_and_capture": 16,
-    "frontend_protocol_render": 9,
-    "total": 100
-  },
-  "results": "PASS",
-  "backend_log": "backend.log",
-  "frontend_log": "frontend.log",
-  "browser_visual_qa": "NOT RUN: browser access host unavailable",
-  "physical_hardware": "NOT RUN: no physical COM/ESP32 used",
-  "firmware_source_changed": false,
-  "theme_integrity": [
-    {
-      "path": "member3/operator-ui/cartoon.css",
-      "sha256": "d8bcdd6d254a7ef3f67f3ffebf899c44b54889a3d18e5cca7ee70f6fe5230cb3",
-      "matches_contributor": true
+  "timestamp_utc": "2026-11-18T22:31:49.883366+00:00",
+  "results": {
+    "backend": {
+      "exit_code": 0,
+      "checks": 26
     },
-    {
-      "path": "member3/operator-ui/toys.css",
-      "sha256": "dae4586acf1ae283ba4b0ec08b57e4f9fbaec5413eb6fdb381b1a54e488a2d75",
-      "matches_contributor": true
-    },
-    {
-      "path": "member3/operator-ui/toys.js",
-      "sha256": "c1266e0993653c4dd06032584e3ce050b73ad6305f840a3761fa364eb876a426",
-      "matches_contributor": true
-    },
-    {
-      "path": "member3/operator-ui/motion.css",
-      "sha256": "c81a57e375478d36d7b9cdd4274df3fc24fced4fc44d9044c5a9d6f99b95ee02",
-      "matches_contributor": true
-    },
-    {
-      "path": "member3/operator-ui/motion.js",
-      "sha256": "d380173c14f6db7aabd8d63581245a094be92aba61ccd66d973e38d3c80b2b98",
-      "matches_contributor": true
+    "frontend": {
+      "exit_code": 0,
+      "checks": 9
     }
-  ],
+  },
+  "prior_station_regression": {
+    "checks": 75,
+    "commit": "7a6d088",
+    "rerun_this_update": false
+  },
+  "browser_visual_qa": "Not run in this verification script",
+  "physical_hardware": "Not used; native C peers and loopback HTTP/WebSocket only",
+  "firmware_source_changed": false,
   "sources": [
     {
       "path": "gateway/operator/__init__.py",
@@ -47,11 +25,19 @@
     },
     {
       "path": "gateway/operator/__main__.py",
-      "sha256": "00d8db3ac50cc9747456b9d4fad80181abcfe30f6df1146f0852e92060047183"
+      "sha256": "c83e17a3eea27cf560a0c140952d2894f625f8415338a7a293a600bed95e1011"
     },
     {
       "path": "gateway/operator/evidence.py",
-      "sha256": "16e5e0bfe38820592ea718e135ab08280acc27ebbeab5db693ad72b7e32c547d"
+      "sha256": "3b6cf192e321fa462b88c32ba29ae8e8a3f35fb9ee621ef3453ad836d88d6bcc"
+    },
+    {
+      "path": "gateway/operator/history.py",
+      "sha256": "2f06d80c1cad864abae12f7a72047b566338fa970884be9680a2388b6e88da92"
+    },
+    {
+      "path": "gateway/operator/requirements-test.txt",
+      "sha256": "934fbb549ab3209320a68f549631f92ffa7dcd1372d15620c148eb5f55bd7735"
     },
     {
       "path": "gateway/operator/requirements.txt",
@@ -59,23 +45,27 @@
     },
     {
       "path": "gateway/operator/server.py",
-      "sha256": "d220f3ebbdec3aaf078762c0a3d3acff7719bf48922ffe390336c3c312abfed9"
+      "sha256": "e36c6e0dc6af8a1c0a5b9f51c6c2d64bc799551d04ac80d46f4be86b80c4076c"
     },
     {
       "path": "gateway/operator/service.py",
-      "sha256": "5cec6fc00c61b9182cc2e5363e1d28ee15fa738371bd4ff93e0fc99d80eba3f6"
+      "sha256": "c178c70e39ce6ffb42c4446c205563e70b8cfaaf5d95ca3bd2a299819ba70b7d"
     },
     {
       "path": "gateway/operator/tests/test_evidence.py",
-      "sha256": "ab4ddb37e1ae0c6cefa67b22e204ebe3d2c98e2a35c2fef8d3a0ca5917a47b7d"
+      "sha256": "b5d15be3f50e421aeb5be7cd47232376a10ddcd6dc9d1a05bc63198a0f8a42db"
+    },
+    {
+      "path": "gateway/operator/tests/test_history.py",
+      "sha256": "a574f392bcb8a408ae76393cf688b65aa39bf3a1dba741b7ceed08bcb58e149a"
     },
     {
       "path": "gateway/operator/tests/test_operator.py",
-      "sha256": "3594309736c3d6e355066ba2548024bb4656e6a3d55f1b4de7118b6a2f4c400d"
+      "sha256": "15a41b102259c415774ce05e2833985484f0c8a2520a7e41ea0970b806b00bc7"
     },
     {
       "path": "member3/operator-ui/app.js",
-      "sha256": "39869220db44ef93a800a9debe44150055a3c9cc6a757ed6d8c407b071fffaac"
+      "sha256": "78d7fdf248c00f76d056eaaa7535e64fb981fd5f8493a69cf90628f861355444"
     },
     {
       "path": "member3/operator-ui/cartoon.css",
@@ -83,11 +73,11 @@
     },
     {
       "path": "member3/operator-ui/index.html",
-      "sha256": "b3696089d62c8f933d87072e50a0cca871a4c4e8be82fce3d92371af61bfe3fa"
+      "sha256": "e0f01915c38113a6ba78b241e896a6f911299f0bb77be782ceef5f69e6e6f296"
     },
     {
       "path": "member3/operator-ui/integration.css",
-      "sha256": "1a1b8dc8d5eccf8d6e422095aee1684eee7b52463caf58337a402ed279319f87"
+      "sha256": "b011e4d04b09d27a155d0e00b4f97fa93cdb165f3ab1bf280f0d5900897bf240"
     },
     {
       "path": "member3/operator-ui/mock_gateway.py",
@@ -115,7 +105,7 @@
     },
     {
       "path": "member3/operator-ui/test_client.mjs",
-      "sha256": "970c333acc3daf8ce754cd554e75c411743d3dbd8ccfb5f1b476f9f3ef7d7a54"
+      "sha256": "59e0bdf4bc0e0acabfdb9c307f99f3023c963fa10d512d79a3a55338547827de"
     },
     {
       "path": "member3/operator-ui/test_gateway.py",
@@ -134,10 +124,8 @@
       "sha256": "d8244f68d37e51fc3e2d300a55f34980da10ab8ee831321b5a8747f662464790"
     },
     {
-      "path": "gateway/production/serial_link.py",
-      "sha256": "faec1822ca36cf4dbd6ac44c19d124be5096db20c26c2d6bf3ec5e2e85d82986"
+      "path": "member3/operator-ui/verification/server_tests.txt",
+      "sha256": "42e1163dbec34058ac44b73ae67cb98fadec981266f650d88d3e56fad8cec65f"
     }
-  ],
-  "preview_teardown": "Owned localhost preview and its two native peers stopped after checks",
-  "setup_scope": "Two PCs / phone hotspot; native/remote-origin checks only. Physical setup/testing deferred to user."
+  ]
 }

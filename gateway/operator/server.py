@@ -4,7 +4,7 @@ import asyncio
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
-from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Query, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, JSONResponse
 from .service import AdmissionError
 
@@ -44,6 +44,19 @@ def create_app(service):
         value = service.lookup(identifier)
         return JSONResponse(value or {"gateway_id": service.gateway_id, "error": "Unknown command"},
                             status_code=200 if value else 404, headers={"Cache-Control": "no-store"})
+
+    @app.get("/api/history")
+    async def history(offset: int = Query(0, ge=0), limit: int = Query(20, ge=1, le=100)):
+        return JSONResponse(await service.history.page(offset, limit), headers={"Cache-Control": "no-store"})
+
+    @app.get("/api/history/{identifier}")
+    async def report(identifier: str, download: bool = False):
+        value = await service.history.report(identifier)
+        headers = {"Cache-Control": "no-store"}
+        if value and download:
+            number = service.history.numbers[identifier]
+            headers["Content-Disposition"] = f'attachment; filename="batch-{number}.json"'
+        return JSONResponse(value or {"error": "Unknown batch"}, status_code=200 if value else 404, headers=headers)
 
     @app.post("/api/{action}")
     async def command(action: str, request: Request):

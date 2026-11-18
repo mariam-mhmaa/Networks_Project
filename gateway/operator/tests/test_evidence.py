@@ -8,6 +8,18 @@ from gateway.operator.evidence import EventLog
 
 
 class EvidenceTests(unittest.TestCase):
+    def test_serial_logger_excludes_decoded_traffic_and_heartbeats(self):
+        with tempfile.TemporaryDirectory() as directory:
+            capture = EventLog(Path(directory)/"serial.local.jsonl")
+            logger = capture.serial_logger()
+            logger("receive", {"type": "HEARTBEAT"})
+            logger("receive", {"type": "COMPLETED", "cmd_id": "config-1"})
+            logger("serial_rx", {"hex": "c000c0"})
+            logger("serial_tx", {"hex": "c001c0"})
+            capture.close()
+            events = [json.loads(line)["event"] for line in capture.path.read_text().splitlines()]
+            self.assertEqual(events, ["capture_started", "serial_rx", "serial_tx", "capture_stopped"])
+
     def test_append_sessions_drain_records_without_replacing_prior_evidence(self):
         with tempfile.TemporaryDirectory() as directory:
             path=Path(directory)/"events.local.jsonl"

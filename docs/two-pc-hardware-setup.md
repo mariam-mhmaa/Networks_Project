@@ -154,7 +154,7 @@ mock gateway. Only one process may own A's COM port/B's TCP connection.
 At the gateway repository root in ordinary PowerShell:
 
 ```powershell
-.\.venv\Scripts\python.exe -B -m gateway.operator COM3 172.20.10.3 --host 172.20.10.2 --port 8080 --inspection-port 5001 --state-file gateway.sqlite3 --events gateway.local.jsonl
+.\.venv\Scripts\python.exe -B -m gateway.operator COM3 172.20.10.3 --host 172.20.10.2 --port 8080 --inspection-port 5001 --state-file gateway.sqlite3 --serial-trace serial.local.jsonl
 ```
 
 Substitute A_COM, B_IP and GATEWAY_IP. Here COM3 is A, the first IP is B,
@@ -204,17 +204,22 @@ values as current device information.
 
 Keep these files on the gateway:
 
-- gateway.sqlite3: durable part counter and operation/accounting/control events.
+- gateway.sqlite3: durable part counter, operation/accounting/control events,
+  batch history and persistent short ID labels.
   Reuse it across restarts; do not delete it to bypass recovery.
-- gateway.local.jsonl: append-only capture sessions, decoded A/B messages and
-  original IDs. A serial_tx/serial_rx hex records preserve SLIP/ATR/CRC bytes
+- serial.local.jsonl: append-only raw A serial capture sessions.
+  A serial_tx/serial_rx hex records preserve SLIP/ATR/CRC bytes
   and local observation times. RX entries are chunks, not assumed whole messages.
   A bounded background writer keeps file writes off the event loop. Capture
   status exposes errors/dropped records; an errored capture is incomplete.
-- Later: Wireshark .pcapng, screen batch-evidence JSON and browser notebook.
+- Later: Wireshark .pcapng, manually downloaded batch-N.json and browser notebook.
   JSONL does not replace the PDF's TCP packet capture. Install Wireshark with
   its Windows capture driver on the gateway in advance; capture selection and
   actual recording belong to the later test phase.
+
+Keep the old gateway.local.jsonl from earlier tests as well. See
+[batch-history.md](batch-history.md) for the History screen, report fields,
+gateway update and compressed log-transfer instructions.
 
 For setup confirmation only, send (without Wi-Fi passwords):
 

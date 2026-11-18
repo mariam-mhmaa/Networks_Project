@@ -91,6 +91,35 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
             await asyncio.sleep(.02)
         return True
 
+    async def test_consecutive_batches_have_separate_read_only_downloads_and_restart_history(self):
+        from gateway.operator.history import History
+        service, client, _ = await self.service()
+        ids = []
+        for _ in range(2):
+            await self.command(service, client, "start", batch_size=2)
+            await self.until(lambda: service.core.state == "IDLE" and service.auto_close.done())
+            await self.until(lambda: service.snapshot()["ready"])
+            ids.append(service.core.b.batch_id)
+        page = (await client.get("/api/history")).json()
+        self.assertEqual([item["batch"]["id"] for item in page["items"]], ids[::-1])
+        reports = []
+        for number, identifier in enumerate(ids, 1):
+            reply = await client.get(f"/api/history/{identifier}?download=true")
+            self.assertEqual(reply.headers["content-disposition"], f'attachment; filename="batch-{number}.json"')
+            report = reply.json()
+            self.assertEqual(report["batch"]["outcome"], "completed")
+            self.assertEqual(report["counts"]["inspected"], 2)
+            jobs = [op for op in report["operations"] if op["id"].startswith(("PROD-", "INSP-"))]
+            self.assertEqual(len(jobs), 4)
+            self.assertTrue(all(op["evidence"]["completed_observed_at"] is not None for op in jobs))
+            self.assertEqual(len(report["controls"]), 1)
+            reports.append(report)
+        self.assertTrue(set(p["part_id"] for p in reports[0]["parts"]).isdisjoint(p["part_id"] for p in reports[1]["parts"]))
+        self.assertEqual(await History(service.core.b.ledger).report(ids[0]), reports[0])
+        self.assertEqual(service.core.state, "IDLE")
+        self.assertEqual((await client.get('/api/history?limit=101')).status_code, 422)
+        self.assertEqual((await client.get('/api/history/unknown')).status_code, 404)
+
     async def test_http_start_full_batch_and_distinct_command_stages(self):
         service, client, _ = await self.service()
         record = await self.command(service, client, "start")
@@ -102,6 +131,7 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(view["batch"]["outcome"], "completed")
         self.assertEqual((view["counts"]["passed"], view["counts"]["failed"]), (3, 1))
         self.assertTrue(view["simulation"])
+        self.assertNotIn(service.core.b.batch_id, view["batch"]["display_id"])
         asset = await client.get("/")
         self.assertIn("The Toy", asset.text)
         self.assertEqual((await client.get("/mock_gateway.py")).status_code, 404)

@@ -153,16 +153,25 @@ The new session's empty batch is not a claim that the previous batch completed.
 Keep the same SQLite state file: durable numeric part allocation and detailed
 request/outcome/accounting/control events survive. Do not delete it to bypass
 recovery. The screen's batch-evidence JSON and browser-log download supplement
-this ledger. The integrated launcher now also records decoded A/B traffic and
-raw A serial TX/RX hex via an off-loop bounded writer. Raw RX entries are chunks;
+this ledger. The integrated launcher records identified application observations
+in SQLite and raw A serial TX/RX hex in a separate off-loop bounded writer. Raw RX entries are chunks;
 serial_tx means the port write completed, not an inferred receiver ACK. Capture
 errors/drops are exposed in status and stderr; capture never decides job outcomes.
 The JSONL does not replace required Wireshark network captures.
 
+Batch History uses read-only `GET /api/history?offset=0&limit=20` and
+`GET /api/history/{batch_id}`. `?download=true` adds the `batch-N.json` attachment
+name. Limits are 1..100 and offset is nonnegative. Reports have schema version 2;
+the live status/command protocol remains version 1 with optional display fields.
+Full IDs remain the authoritative identities. Persistent aliases, compact
+per-batch reports, old-journal migration and update instructions are described
+in [batch-history.md](batch-history.md). History is not execution recovery.
+
 ## Validation limits
 
-75 existing native station/controller/transport tests, 16 operator/capture
-checks and nine Node frontend/protocol/render checks passed (100 total).
+75 existing native station/controller/transport checks passed previously;
+26 operator/history/capture checks and nine Node frontend/protocol/render
+checks pass for the history update. The station core and firmware were unchanged.
 Visual browser inspection remains blocked by the unavailable browser access
 host; no desktop/mobile screenshot or physical-board result is claimed.
 See verification/operator and verification/station-integration for evidence.

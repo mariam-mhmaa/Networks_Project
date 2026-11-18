@@ -27,6 +27,13 @@ class EventLog:
     def logger(self, station):
         return lambda event, data: self.emit(station, event, data)
 
+    def serial_logger(self):
+        """Raw A transport only; application operations live in SQLite."""
+        def log(event, data):
+            if event in {"serial_tx", "serial_rx"}:
+                self.emit("A", event, data)
+        return log
+
     def emit(self, station, event, data):
         if self.closed or self.error:
             self.dropped += 1

@@ -8,6 +8,7 @@ from gateway.inspection.client import Settings
 from gateway.inspection.coordinator import GatewayFault
 from gateway.inspection.wire import ID, uint
 from gateway.production.client import ProductionSettings
+from .history import History
 
 ACTIONS = {"start", "pause", "resume", "stop", "configure", "reconcile", "continue", "recover_a", "recover_b", "close_orphans"}
 
@@ -32,6 +33,12 @@ class OperatorService:
             raise ValueError("lease_s must be finite and positive")
         self.core, self.simulation = core, simulation
         self.evidence=evidence
+        self.history = History(core.b.ledger)
+        self.audit_queue = asyncio.Queue(maxsize=4096)
+        self.audit_writer = None
+        self.audit_error = None
+        self._history_signature = None
+        self._history_lock = asyncio.Lock()
         self.factories = factories or {}
         self.gateway_id = "GW-" + uuid.uuid4().hex
         self.sequence = 0
@@ -63,6 +70,14 @@ class OperatorService:
         def log(kind, message):
             original(kind, message)
             identifier = message.get("job_id", message.get("cmd_id")) if isinstance(message, dict) else None
+            if identifier and kind in {"send", "receive"}:
+                observation = {"station": station, "event": kind, "data": dict(message),
+                    "batch_id": message.get("batch_id") or self.core.b.batch_id,
+                    "observed_at": asyncio.get_running_loop().time()}
+                try:
+                    self.audit_queue.put_nowait(observation)
+                except asyncio.QueueFull:
+                    self.audit_error = "Application observation queue full; consult controller evidence and transport captures"
             if kind == "receive" and identifier:
                 key = (station, identifier)
                 entry = self.progress.setdefault(key, {})
@@ -74,6 +89,34 @@ class OperatorService:
                     entry.setdefault("terminal_at", now)
                 entry["stage"] = stage
         client.link.log = log
+
+    async def _write_observations(self):
+        while True:
+            item = await self.audit_queue.get()
+            try:
+                await self.core.b.ledger.record("station_observation", item)
+            except Exception as exc:
+                self.audit_error = "Application observation write failed: " + str(exc)
+            finally:
+                self.audit_queue.task_done()
+
+    async def _checkpoint(self, *, force=False):
+        async with self._history_lock:
+            view = self.snapshot()
+            self.history.live_batch = view["batch"]["id"] if view["batch"]["outcome"] == "active" and not self._closing else None
+            if not view["batch"]["id"]:
+                return
+            # Countdown ticks, liveness and periodic heartbeats are not history.
+            body = {k: view[k] for k in ("batch", "settings", "counts", "parts", "queue", "state", "fault")}
+            body["parts"] = [{k: v for k, v in part.items() if k not in {"production_result", "inspection_result"}}
+                             for part in body["parts"]]
+            comparable = {**body, "batch": {k: v for k, v in body["batch"].items() if k != "elapsed_ms"}}
+            signature = json.dumps(comparable, sort_keys=True)
+            if force or signature != self._history_signature:
+                await self.core.b.ledger.record("operator_batch_view", body)
+                self._history_signature = signature
+                await self.history.refresh([self.gateway_id, "CFG-GW-" + self.core.a.ids.session + "-0",
+                                            "CFG-GW-" + self.core.b.client.ids.session + "-0"])
 
     @property
     def owner_live(self):
@@ -164,6 +207,8 @@ class OperatorService:
             for c in (self.core.a, self.core.b.client))
 
     async def submit(self, action, body):
+        if self.audit_writer is None:
+            self.audit_writer = asyncio.create_task(self._write_observations())
         if action not in ACTIONS or not isinstance(body, dict):
             raise AdmissionError("Unknown command", 404)
         identifier = body.get("cmd_id")
@@ -183,6 +228,7 @@ class OperatorService:
             raise AdmissionError("Command history is full; no retained identity will be evicted", 503)
         now = asyncio.get_running_loop().time()
         record = {"cmd_id": identifier, "command": action, "phase": "received", "result": "Gateway registered the original request",
+                  "batch_id": body.get("batch_id"),
                   "received_at": now, "accepted_at": None, "completed_at": None, "fingerprint": fingerprint,
                   "body": dict(body), "ack_status": 202}
         self.records[identifier] = record  # Registration precedes reported receipt.
@@ -214,6 +260,7 @@ class OperatorService:
             task.add_done_callback(self.tasks.discard)
         else:
             record["completed_at"] = now
+            await self.core.b.ledger.record("operator_outcome", self.public(record))
         return record["ack_status"], dict(record["ack"])
 
     async def _execute(self, record):
@@ -222,11 +269,14 @@ class OperatorService:
             await core.b.ledger.record("operator_received", {"gateway_id": self.gateway_id, "request": body, "action": action})
             async with asyncio.timeout_at(record["absolute_at"]):
                 if action == "start":
+                    await self._checkpoint(force=True)  # Preserve the prior batch before core maps reset.
                     a, b = validate_settings(body)
                     core.b.capacity, core.b.full_policy = body["queue_capacity"], body["full_policy"]
                     self.started_at = asyncio.get_running_loop().time()
                     self.ended_ms = None
-                    await core.start_run(a, b, body["batch_size"])
+                    record["batch_id"] = "BATCH-GW-" + uuid.uuid4().hex
+                    await core.b.ledger.record("batch_open", {"batch_id": record["batch_id"], "request": body})
+                    await core.start_run(a, b, body["batch_size"], batch_id=record["batch_id"])
                     self.applied = {key: body[key] for key in ("batch_size", "production_time_ms", "inspection_time_ms", "N", "K")}
                     self.pause_reason = None
                     text = "Both station configurations confirmed; this batch is Running"
@@ -278,8 +328,20 @@ class OperatorService:
                 await core._hold("Operator " + action + " requires recovery: " + str(exc))
         finally:
             record["completed_at"] = asyncio.get_running_loop().time()
-            self.active = None
-            await core.b.ledger.record("operator_outcome", self.public(record))
+            terminal = self.public(record)
+            terminal_phase = record["phase"]
+            # Publish completion atomically with releasing the control slot,
+            # after its durable outcome and batch view have been written.
+            record["phase"] = "accepted"
+            try:
+                await core.b.ledger.record("operator_outcome", terminal)
+                if action != "start" or core.b.batch_id == record["batch_id"]:
+                    await self._checkpoint(force=True)
+                else:
+                    await self.history.refresh()
+            finally:
+                record["phase"] = terminal_phase
+                self.active = None
 
     async def _bind_idle_station(self, station, replacement):
         old=self.core.a if station=="A" else self.core.b.client
@@ -322,7 +384,8 @@ class OperatorService:
             self.closing_orphans = False
 
     def public(self, record):
-        return {**{key: record.get(key) for key in ("cmd_id", "command", "phase", "result", "received_at", "accepted_at", "completed_at", "absolute_at")},
+        return {**{key: record.get(key) for key in ("cmd_id", "command", "phase", "result", "received_at", "accepted_at", "completed_at", "absolute_at", "batch_id")},
+                "display_id": self.history.label(record["cmd_id"]),
                 "completion_window_ms": record["ack"].get("completion_window_ms")}
 
     def lookup(self, identifier):
@@ -371,9 +434,12 @@ class OperatorService:
         outcome = "none" if b.batch_id is None else "completed" if state == "Idle" and raw["inspection_complete"] else "incomplete" if state == "Idle" else "active"
         queued = [p["part_id"] for p in parts if p["status"] == "queued"]
         elapsed = self.ended_ms if self.ended_ms is not None else int((asyncio.get_running_loop().time()-self.started_at)*1000) if self.started_at is not None else 0
-        return {"evidence":self.evidence.status() if self.evidence else None, "schema_version": 1, "type": "status", "simulation": self.simulation,
+        return {"evidence":self.evidence.status() if self.evidence else None,
+            "history_error": self.audit_error or self.history.error, "session_labels": dict(self.history.aliases),
+            "gateway_display_id": self.history.label(self.gateway_id),
+            "schema_version": 1, "type": "status", "simulation": self.simulation,
             "gateway_id": self.gateway_id, "status_seq": self.sequence, "state": state, "fault": fault,
-            "settings": self.applied, "batch": {"id": b.batch_id, "target": b.target, "outcome": outcome, "elapsed_ms": elapsed},
+            "settings": self.applied, "batch": {"id": b.batch_id, "display_id": self.history.batch_label(b.batch_id), "target": b.target, "outcome": outcome, "elapsed_ms": elapsed},
             "counts": {"produced": raw["produced"], "inspected": len(b.results), "passed": b.accepted,
                        "failed": b.rejected, "unresolved": raw["unresolved"], "unstarted": b.target-len(core.production_ids),
                        "not_inspected": b.target-len(b.results)},
@@ -392,6 +458,12 @@ class OperatorService:
         while not self._closing:
             await asyncio.sleep(.1)
             now = asyncio.get_running_loop().time()
+            # Configuration may still expose the preceding batch's core maps.
+            if not self.active or self.records[self.active]["command"] != "start":
+                try:
+                    await self._checkpoint()
+                except Exception as exc:
+                    self.history.error = str(exc)
             if not self.active and not (self.auto_close and not self.auto_close.done()):
                 if not self.owner_live and self.core.state == "RUNNING":
                     identifier = "AUTOPAUSE-GW-" + uuid.uuid4().hex
@@ -420,10 +492,15 @@ class OperatorService:
             # isolated cases. Close truthfully as completed or incomplete.
             await self.core.close_run(incomplete=not self.core.snapshot()["inspection_complete"])
             self._freeze_elapsed()
+            await self._checkpoint(force=True)
         except Exception as exc:
             await self.core._hold("Batch closure requires recovery: " + str(exc))
 
     async def start(self):
+        await self.history.refresh([self.gateway_id, "CFG-GW-" + self.core.a.ids.session + "-0",
+                                    "CFG-GW-" + self.core.b.client.ids.session + "-0"])
+        if self.audit_writer is None:
+            self.audit_writer = asyncio.create_task(self._write_observations())
         self.monitor = asyncio.create_task(self._tick())
 
     async def shutdown(self):
@@ -433,3 +510,8 @@ class OperatorService:
             if task: task.cancel()
         await asyncio.gather(*(t for t in jobs if t), return_exceptions=True)
         await self.core.shutdown()
+        if self.audit_writer:
+            await self.audit_queue.join()
+            self.audit_writer.cancel()
+            await asyncio.gather(self.audit_writer, return_exceptions=True)
+        await self._checkpoint(force=True)

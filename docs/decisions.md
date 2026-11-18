@@ -236,6 +236,33 @@ No physical test/flash or network/firewall setting change was performed here.
 The user requested setup first and hardware test cases in a later exchange;
 follow two-pc-hardware-setup.md and stop before Start.
 
+### D022 Retain batch history, use readable aliases, separate evidence
+
+The user approved all five discussed changes on November 19: preserve queue
+reservation and both queue-full policies; retain earlier batches in the existing
+SQLite file with a read-only History view and manual downloads only; separate
+application history from raw serial and Wireshark evidence; persist short display
+aliases while retaining original full protocol IDs; and correct the finished
+batch feedback instead of leaving the earlier Start completion message visible.
+
+Implementation leaves ESP firmware and the station protocol unchanged. Reports
+are projected from durable application events, including pre-update journals.
+Stage observations exclude periodic heartbeats. Query acknowledgement times
+remain attached to query IDs; recovery never creates missing original ACK times.
+Batch summaries reference operation outcomes instead of repeating full outcomes
+in every saved view. Restarted history is read-only and cannot resume execution.
+Display aliases survive when the same gateway database is retained.
+
+The user reported two consecutive four-part hardware batches. The supplied
+latest-batch JSON confirms four produced/inspected, two PASS, two FAIL, zero
+unresolved and no recovery attempts for its eight station jobs. Only the latest
+batch's detailed records were in that export. The old gateway.local.jsonl has
+not yet been received, so the first batch and raw transport evidence have not
+been independently audited. Both ESPs are now USB-powered on the gateway PC;
+A uses COM3 for data, B uses Wi-Fi and its USB connection only for power.
+
+See [batch-history.md](batch-history.md) for update and log-transfer steps.
+
 ## Remaining verification and decisions
 
 - No further operator-policy decision currently blocks implementation.

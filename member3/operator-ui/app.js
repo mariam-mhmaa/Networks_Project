@@ -12,11 +12,19 @@ try { pending = JSON.parse(sessionStorage.getItem(storageKey) || 'null'); }
 catch { $('feedback').textContent = 'Saved command could not be read. Check gateway status before starting work.'; }
 
 function message(text, error = false) { $('feedback').textContent = text; $('feedback').classList.toggle('error', error); }
+function displayId(id) {
+  const match=/^(.*)-(GW|OP)-([0-9a-f]{32})-(\d+)$/.exec(id||'');
+  if(!match)return id||'';
+  const alias=status?.session_labels?.[match[2]+':'+match[3]];
+  return `${match[1]}-${match[2]}-${alias||'session pending'}-${Number(match[4])}`;
+}
 function log(event, text, id = '') {
   logRows.unshift({time: new Date().toLocaleTimeString(), event, text, id}); logRows = logRows.slice(0, 100);
   $('commandLog').replaceChildren(...logRows.map(row => {
     const line = document.createElement('li');
-    line.textContent = `${row.time} · ${row.event} · ${row.text}${row.id ? ' [' + row.id + ']' : ''}`; return line;
+    line.textContent = `${row.time} · ${row.event} · ${row.text}${row.id ? ' [' + displayId(row.id) + ']' : ''}`;
+    if(row.id)line.title=row.id;
+    return line;
   }));
 }
 function persist(record) {
@@ -48,7 +56,7 @@ function renderControls(){
   $('checkCommand').hidden=!pending||!live;
   $('dismissCommand').hidden=!pending||!live||pending.phase!=='unknown';
   $('pendingNotice').hidden=!pending;
-  $('pendingNotice').textContent=pending?`Command ${pending.command}: ${pending.phase} · ${pending.cmd_id}`:'';
+  $('pendingNotice').textContent=pending?`Command ${pending.command}: ${pending.phase} · ${displayId(pending.cmd_id)}`:'';
   $('recoveryBox').hidden=status?.state!=='Fault'&&!status?.stations.production.restarted&&!status?.stations.inspection.restarted;
   for(const id of ['reconcile','continue','endBatch'])$(id).disabled=locked||!active;
   $('continue').disabled=locked||!active||!!status?.configuration_hold;
@@ -107,7 +115,8 @@ function render() {
   $('state').dataset.state = live && status ? status.state : 'stale';
   for (const key of ['produced', 'inspected', 'passed', 'failed','unresolved','unstarted','not_inspected']) $(key).textContent = status ? String(status.counts[key]) : '—';
   $('outcome').textContent = status ? `${fresh} · Batch ${status.batch.outcome}` : 'No gateway status yet';
-  $('batchLabel').textContent = status?.batch.id ? '/ ' + status.batch.id : '/ No batch';
+  $('batchLabel').textContent = status?.batch.id ? '/ ' + (status.batch.display_id||'Current batch') : '/ No batch';
+  $('batchLabel').title=status?.batch.id||'';
   $('faultMessage').hidden = !status?.fault; $('faultMessage').textContent = status?.fault || '';
   const q = status?.queue;
   const queueDrawing = q ? Array.from({length: Math.min(q.capacity, 20)}, (_, i) => '<div class="mini ' + (i < q.size ? 'filled' : '') + '"></div>').join('') : '';
@@ -148,7 +157,7 @@ function completePending(r) {
 function applySnapshot(s, meta) {
   const previous = status; status = s; receivedAt = performance.now();
   if (meta.initial) {
-    clearWorkshopEffects(); log('Synchronized', `Gateway ${s.gateway_id}, sequence ${s.status_seq}`);
+    clearWorkshopEffects(); log('Synchronized', `${s.gateway_display_id||'Gateway'}, sequence ${s.status_seq}`);
     if (pending && (pending.gateway_id !== s.gateway_id || pending.gateway_base !== connection.base)) {
       persist({...pending, phase: 'unknown'}); message('Gateway changed. Previous command outcome is unknown. Review current status before clearing the notice.', true);
     }
@@ -178,6 +187,9 @@ function applySnapshot(s, meta) {
     if (previous.batch.outcome !== 'completed' && s.batch.outcome === 'completed') workshopCelebrate();
   }
   s.command_results.forEach(completePending);
+  if(!pending&&!commandBusy&&!s.control_pending&&['completed','incomplete'].includes(s.batch.outcome)) {
+    message(`${s.batch.display_id||'Batch'} ${s.batch.outcome}: ${s.counts.passed} PASS, ${s.counts.failed} FAIL, ${s.counts.unresolved} unresolved, ${s.counts.not_inspected} not inspected.${s.history_error?' History warning: '+s.history_error:''}`,!!s.history_error);
+  }
   if (meta.initial && pending && pending.gateway_id === s.gateway_id) checkPending();
 }
 function onConnection(next, reason) {
@@ -256,7 +268,86 @@ $('downloadLog').onclick = () => {
   const blob = new Blob([JSON.stringify(logRows, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = 'operator-command-log.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
-$('downloadBatch').onclick=()=>{if(!status)return;const data=new Blob([JSON.stringify(status,null,2)],{type:'application/json'});const url=URL.createObjectURL(data),a=document.createElement('a');a.href=url;a.download='batch-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('downloadBatch').onclick=()=>downloadReport(status?.batch.id);
+
+let historyOffset=0, historyNext=null, selectedReport=null;
+async function downloadReport(id) {
+  if(!connection||!id)return;
+  try {
+    const client=connection, report=await client.json('/api/history/'+encodeURIComponent(id));
+    if(client!==connection)return;
+    const data=new Blob([JSON.stringify(report,null,2)],{type:'application/json'}),url=URL.createObjectURL(data),a=document.createElement('a');
+    a.href=url;a.download=report.batch.display_id.toLowerCase().replace(' ','-')+'.json';a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  } catch(error){message('Report could not be downloaded: '+error.message,true);}
+}
+async function loadHistory(offset=0) {
+  if(!connection)return;
+  const client=connection;
+  try {
+    $('historyMessage').textContent='Loading saved batches...';
+    const page=await client.json('/api/history?offset='+offset);
+    if(client!==connection)return;
+    historyOffset=offset;historyNext=page.next_offset;
+    $('historySelect').replaceChildren(...page.items.map(item=>{
+      const option=document.createElement('option');option.value=item.batch.id;
+      option.textContent=`${item.batch.display_id} - ${item.batch.outcome} - ${item.counts.passed??'?'} PASS / ${item.counts.failed??'?'} FAIL`;
+      return option;
+    }));
+    $('historyPrevious').disabled=offset===0;$('historyNext').disabled=historyNext===null;
+    $('historyMessage').textContent=page.total?`Saved batches ${offset+1}-${offset+page.items.length} of ${page.total}. Viewing history never changes current work.`:'No saved batches yet.';
+    if(page.items.length){$('historySelect').value=page.items[0].batch.id;await selectHistory();}
+    else {$('historyResults').replaceChildren();selectedReport=null;$('historyDownload').disabled=true;}
+  } catch(error){$('historyMessage').textContent='History unavailable: '+error.message;}
+}
+function observationTimes(evidence, received='received_observed_at', accepted='accepted_observed_at', completed='completed_observed_at') {
+  const values=[evidence?.[received],evidence?.[accepted],evidence?.[completed]],known=values.filter(v=>typeof v==='number');
+  const origin=known.length?Math.min(...known):0;
+  return values.map(v=>typeof v==='number'?`+${Math.round((v-origin)*1000)} ms`:'Not observed');
+}
+async function selectHistory() {
+  const client=connection,id=$('historySelect').value;
+  if(!client||!id)return;
+  try {
+    const report=await client.json('/api/history/'+encodeURIComponent(id));
+    if(client!==connection||id!==$('historySelect').value)return;
+    selectedReport=report;$('historyDownload').disabled=false;
+    const summary=document.createElement('p'),c=report.counts;
+    summary.textContent=`${report.batch.display_id}: ${report.batch.outcome}. ${c.produced??'?'} produced, ${c.inspected??'?'} inspected; ${c.passed??'?'} PASS, ${c.failed??'?'} FAIL; ${c.unresolved??'?'} unresolved, ${c.unstarted??'?'} not started, ${c.not_inspected??'?'} not inspected.`;
+    const explanation=document.createElement('p');
+    explanation.textContent='Times below are relative to the first observed stage for each operation. Missing ACKs stay "Not observed". Later responses may establish earlier stages. Details contain full IDs, frozen requests, results and recovery-query evidence.';
+    const table=document.createElement('table'),head=document.createElement('tr');
+    for(const text of ['Operation','Part','Outcome','Received','Accepted','Completed','Attempts / queries','Details']){const th=document.createElement('th');th.textContent=text;head.append(th);}
+    table.append(head);
+    const rows=[...report.controls.map(r=>({id:r.cmd_id,display_id:r.display_id,phase:r.phase,
+      result:r.result,evidence:{received_observed_at:r.received_at,accepted_observed_at:r.accepted_at,completed_observed_at:r.completed_at}})),...report.operations];
+    for(const op of rows){
+      const row=document.createElement('tr'),e=op.evidence;
+      const result=op.recovered_result||op.result;
+      const verdict=result&&typeof result==='object'?result.verdict:null;
+      for(const text of [op.display_id,op.request?.part_id??result?.part_id??'-',op.phase+(verdict?' / '+verdict:''),...observationTimes(e),e?.request_attempts===undefined?(op.target_id?'Recovery query':'Gateway control'):`${e.request_attempts} / ${e.query_attempts}`]){
+        const cell=document.createElement('td');cell.textContent=text;row.append(cell);
+      }
+      const cell=document.createElement('td'),details=document.createElement('details'),label=document.createElement('summary');label.textContent='Technical details';details.append(label);
+      const full=document.createElement('input');full.value=op.id;full.readOnly=true;full.setAttribute('aria-label','Full protocol ID');
+      const copy=document.createElement('button');copy.textContent='Copy full ID';copy.onclick=async()=>{
+        try {if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(op.id);
+          else {full.select();if(!document.execCommand('copy'))throw new Error('Select the ID and press Ctrl+C');}
+          copy.textContent='Copied';}catch{copy.textContent='Select ID, then Ctrl+C';full.select();}
+      };
+      const pre=document.createElement('pre');pre.textContent=JSON.stringify(op,null,2);details.append(full,copy,pre);cell.append(details);row.append(cell);table.append(row);
+    }
+    const wrap=document.createElement('div');wrap.className='history-table';wrap.append(table);
+    const parts=document.createElement('p');parts.textContent='Parts: '+report.parts.map(p=>`${p.part_id}: ${p.status.toUpperCase()}${p.isolated?' (isolated)':''}`).join('; ');
+    $('historyResults').replaceChildren(summary,parts,explanation,wrap);
+  } catch(error){$('historyMessage').textContent='Batch unavailable: '+error.message;}
+}
+$('historyRefresh').onclick=()=>loadHistory(0);
+$('historyPrevious').onclick=()=>loadHistory(Math.max(0,historyOffset-20));
+$('historyNext').onclick=()=>{if(historyNext!==null)loadHistory(historyNext);};
+$('historySelect').onchange=selectHistory;
+$('historyDownload').onclick=()=>downloadReport(selectedReport?.batch.id);
+$('historyPanel').ontoggle=()=>{if($('historyPanel').open)loadHistory(0);};
 $('toyShelf').innerHTML = [0, 1, 0].map(toyArt).join('');
 try { $('gatewayAddress').value = localStorage.getItem('toy-workshop.gateway') || location.origin; } catch { $('gatewayAddress').value = location.origin; }
 render(); connect(); setInterval(renderTimers, 100);
