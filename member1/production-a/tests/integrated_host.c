@@ -33,15 +33,25 @@ int main(int argc,char **argv) {
     if (bind(listener,(struct sockaddr *)&addr,sizeof(addr)) || listen(listener,1)) return 4;
     int n=sizeof(addr); getsockname(listener,(struct sockaddr *)&addr,&n);
     printf("%u\n",(unsigned)ntohs(addr.sin_port)); fflush(stdout);
-    SOCKET client=accept(listener,NULL,NULL); u_long nonblocking=1;
-    ioctlsocket(client,FIONBIO,&nonblocking);
+    SOCKET client=INVALID_SOCKET; u_long nonblocking=1;
+    ioctlsocket(listener,FIONBIO,&nonblocking);
     a_serial_init(&serial,new_boot ? "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" : "abcdef0123456789abcdef0123456789");
     original=serial.protocol.app.publish; serial.protocol.app.publish=filter;
     size_t offset=0;
     for (;;) {
         s_protocol_tick(&serial.protocol,GetTickCount64());
+        if (client==INVALID_SOCKET) {
+            client=accept(listener,NULL,NULL);
+            if (client==INVALID_SOCKET) { Sleep(2); continue; }
+            ioctlsocket(client,FIONBIO,&nonblocking);
+            serial.protocol.next_heartbeat=0;
+        }
         uint8_t bytes[4096]; int got=recv(client,(char *)bytes,sizeof(bytes),0);
-        if (!got) break;
+        if (!got || (got==SOCKET_ERROR && WSAGetLastError()!=WSAEWOULDBLOCK)) {
+            closesocket(client); client=INVALID_SOCKET; offset=0;
+            serial.head=serial.count=0; memset(&serial.decoder,0,sizeof(serial.decoder));
+            continue;
+        }
         if (got>0) {
             if (drop_first_request) {
                 /* Decode/filter whole records without changing retained firmware state. */
@@ -67,5 +77,4 @@ int main(int argc,char **argv) {
         }
         Sleep(2);
     }
-    closesocket(client); closesocket(listener); WSACleanup(); return 0;
 }

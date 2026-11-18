@@ -189,22 +189,44 @@ operator Pause/Stop behavior and Member 3 HTTP/WebSocket screen integration
 remain separate; this is not a claim that the complete Milestone 1 GUI/capture
 demonstration has been delivered.
 
-## Open decisions
+### D019 Approve whole-system operator behavior
 
-- Integration review is in [integration-plan.md](integration-plan.md). The user approved completing B here and directed reuse/completion of Member 3's existing screen. The newly fetched member3/operator-ui branch resolves its source location. Guarded same-batch continuation/incomplete closure is approved under D015–D017. Existing contributor contracts do not override the official PDF or user decisions. The user now wants normal-chat discussion focused on [Member 2 integration](member2-integration.md), rather than additional form-based planning questions for this step.
-- A/B scheduling, identified lookup/retirement, queue reservation and the initial reliability profiles are approved and implemented in D013–D017. Whole-system Pause/Stop/operator effects still need separate agreement.
-- Three-stage deadlines and R01-R10 are approved. O01-O06 in [reliability-open-decisions.md](reliability-open-decisions.md) cover precise anchors/limits, receipt registration, command effects, restart/cache policy, late-result accounting, and query/wire ownership. The historical [reliability review](reliability-review.md) retains candidate mechanisms; earlier numeric retry suggestions and the two-timeout simplification are not approved specifications.
-- Whole-system parent/child operation correlation and Member 1 ID compatibility; B's batch/numeric-part allocation and volatile receiver retention are specified in member2-protocol.md.
-- Exact lifecycle message schemas and operator HTTP/WebSocket representation.
-- Start/configuration sequencing and Idle/Running/Paused/Fault transitions.
-- Pause, Resume, Stop, Fault recovery, and treatment of unfinished work.
-- Inspection queue capacity, full policy, and reservation for production already in progress.
-- Deadlines, retry limits, heartbeat/stale thresholds, and restart/disconnection handling.
-- Operator endpoints and full screen integration. Member 1 serial/identity and A/B retirement are implemented under member1-integration.md; B TCP/rule bounds remain in member2-protocol.md.
-- Serial library and exact runtime/dependency versions.
-- Requirement-by-requirement implementation and verification register, including submission ambiguities.
+On 2026-11-18 the user approved Pause gating new A/B dispatch while current
+accepted jobs finish; explicit Resume continues the same batch. Stop finishes
+current jobs, performs bounded recovery and confirms old-scope closure, then
+ends the batch with actual PASS/FAIL and automatic unfinished reporting.
+A new Start creates a new batch. Screen loss pauses new dispatch after a
+finite liveness interval and never automatically resumes on reconnect.
+Paused fresh/idle stations may receive acknowledged timing/N/K changes for
+future jobs; past results/settings and batch target/queue policy remain fixed.
+Recovery controls and unresolved-part reporting are required.
 
-Queue capacity five and the guide's Pause/Stop policies remain proposals. The TCP framing choice and inspection rule are approved in D010-D011.
+### D020 Implement the operator/gateway integration
+
+Member 3's branch is integrated with its overall workshop visuals preserved.
+The authoritative asyncio core now backs identified HTTP controls and full
+WebSocket status through gateway.operator. One controlling operator lease,
+immutable duplicate-safe command registration, finite send/completion budgets,
+read-only lookup, guarded continuation and explicit closure/restart controls
+implement D019 without browser-generated outcomes. Station links remain open
+between closed batches; ordinary closure does not reopen/reset the serial port.
+
+96 software checks pass: prior 75 station/transport regressions, 12 operator
+native-C-peer/HTTP/WS tests and nine frontend checks. No physical hardware was
+used, and actual browser visual QA is blocked by the unavailable browser host.
+See operator-protocol.md and verification/operator. Earlier pending operator
+items in historical reviews are superseded by D019-D020.
+
+## Remaining verification and decisions
+
+- No further operator-policy decision currently blocks implementation.
+- Validate/tune initial heartbeat, lease and deadline numbers on real hardware
+  while retaining bounded attempts and immutable limits.
+- Perform actual browser visual/responsive QA when browser access is available.
+- Run the assigned ESP32 USB/Wi-Fi and complete-system examiner scenarios,
+  including transport captures and evidence required by the PDF.
+- Milestone 2 security and any unresolved submission-format ambiguities remain
+  outside this Milestone 1 software integration claim.
 
 ## Reference documents already read
 

@@ -208,10 +208,9 @@ class IntegratedTests(unittest.IsolatedAsyncioTestCase):
         batch=await self.batch(target=2)
         await asyncio.wait_for(batch.wait(),5); await asyncio.sleep(1.1)
         await batch.close_run()
-        # Native A harness deliberately serves one connection only. Replace
-        # it with a new fresh receiver (new run starts with boot-bound scope),
-        # while the durable gateway ledger keeps global numeric part identity.
-        batch.a=AClient(f"socket://127.0.0.1:{self.host()}",policy=FAST)
+        # Both physical-style station peers keep their framed links open
+        # across explicit run closure; wait for the new idle heartbeat.
+        await asyncio.sleep(1.1)
         await batch.start_run(ProductionSettings(10),Settings(10,3,0),2,batch_id="batch-two")
         await asyncio.wait_for(batch.wait(),5)
         self.assertEqual(sorted(batch.b.parts),[3,4])

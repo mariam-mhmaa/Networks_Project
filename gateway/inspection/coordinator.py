@@ -151,7 +151,10 @@ class InspectionGateway:
         production completion has somewhere to wait for inspection.
         """
         async with self.condition:
-            while self._slots_used >= self.capacity:
+            while self.state == "PAUSED" or self._slots_used >= self.capacity:
+                if self.state == "PAUSED":
+                    await self.condition.wait()
+                    continue
                 if self.state != "RUNNING":
                     raise GatewayFault(self.fault_reason or "dispatch unavailable")
                 if self.full_policy == "fault":
@@ -168,6 +171,8 @@ class InspectionGateway:
             self._slots_used += 1
             try:
                 part_id = await self.ledger.allocate()
+                while self.state == "PAUSED":
+                    await self.condition.wait()
                 if self.state != "RUNNING" or not self.client.link.fresh or self.client.link.terminal_conflict:
                     raise GatewayFault(self.fault_reason or "dispatch unavailable")
                 part = Part(self.batch_id, part_id, self.client.ids.new("INSP"),
@@ -190,7 +195,7 @@ class InspectionGateway:
                 return False
             if part.job_id in self.skipped_production:
                 raise GatewayFault("retired production requires explicit historical reconciliation")
-            if self.state not in {"RUNNING", "FAULT"}:
+            if self.state not in {"RUNNING", "PAUSED", "FAULT"}:
                 raise GatewayFault("run is closed; production evidence belongs to its original history")
             part.produced = True
             self.queue.put_nowait(part)  # Capacity was reserved before production.
@@ -228,7 +233,7 @@ class InspectionGateway:
                     self.active = part
                 async with self.operation_lock:
                     request = self.requests.get(part.job_id)
-                    if request is None:
+                    if request is None or not part.dispatched:
                         request = self.client.inspection(part.part_id, part.job_id)
                         self.requests[part.job_id] = request
                         self.frozen_settings[part.job_id] = self.client.settings.fields()
@@ -306,7 +311,7 @@ class InspectionGateway:
             self.condition.notify_all()
 
     async def reconfigure(self, settings):
-        if self.state != "RUNNING" or self.active or self.operation_lock.locked():
+        if self.state not in {"RUNNING", "PAUSED"} or self.active or self.operation_lock.locked():
             raise GatewayFault("configuration is BUSY or run is unavailable")
         async with self.operation_lock:
             outcome = await self.client.configure(settings)
@@ -462,7 +467,7 @@ class InspectionGateway:
         await self.shutdown()
         return outcome
 
-    async def shutdown(self):
+    async def shutdown(self, *, close_link=True):
         if self.state == "RUNNING":
             self.state, self.fault_reason = "FAULT", "gateway stopped with an open run"
         self._stopping = True
@@ -476,4 +481,5 @@ class InspectionGateway:
             if not part.dispatched and not part.future.done():
                 part.future.set_result(Outcome("NOT_DISPATCHED", part.job_id, None,
                                                Evidence(), "gateway stopped before submission"))
-        await self.client.close()
+        if close_link:
+            await self.client.close()

@@ -1,21 +1,18 @@
 {
-  "timestamp_utc": "2026-11-18T11:57:31.749872+00:00",
+  "timestamp_utc": "2026-11-18T17:18:01.305230+00:00",
   "scope": "Native C/Python software only; physical USB/Wi-Fi and operator UI NOT TESTED",
   "results": {
     "inspection": {
       "exit_code": 0,
-      "log": "inspection.log",
-      "tests_run": 53
+      "log": "inspection.log"
     },
     "production": {
       "exit_code": 0,
-      "log": "production.log",
-      "tests_run": 19
+      "log": "production.log"
     },
     "serial-link": {
       "exit_code": 0,
-      "log": "serial-link.log",
-      "tests_run": 3
+      "log": "serial-link.log"
     }
   },
   "sources": [
@@ -65,11 +62,35 @@
     },
     {
       "path": "gateway/inspection/coordinator.py",
-      "sha256": "31c20573522d0344b0e3349bc38521232fbce3c3cba6cfce6c9cc3cc96b97add"
+      "sha256": "b0242951149bf96e334bdab10a6e2d53a35e100e01da0aa6db7dc8670b956358"
     },
     {
       "path": "gateway/inspection/wire.py",
       "sha256": "8d3f922c478690ce9c544466ca83f846f75bf7b3ed34ca025e195d285581d7ea"
+    },
+    {
+      "path": "gateway/operator/__init__.py",
+      "sha256": "9ed1b702c21081323ba12669c3f6d9f2ec526960a51605a5e51d421b45b37ad0"
+    },
+    {
+      "path": "gateway/operator/__main__.py",
+      "sha256": "16917327352f0a09d30cd1a94c423369323a081bb04fece12fff4165832bbabb"
+    },
+    {
+      "path": "gateway/operator/requirements.txt",
+      "sha256": "75c9edbfbf9c5a8a4995a4d0befa4ad45434300c7c277a35088d91036ab4f4d4"
+    },
+    {
+      "path": "gateway/operator/server.py",
+      "sha256": "d220f3ebbdec3aaf078762c0a3d3acff7719bf48922ffe390336c3c312abfed9"
+    },
+    {
+      "path": "gateway/operator/service.py",
+      "sha256": "7d8e03fd708eedfb7b62b9a007d510a48d2fec6a5bae82d0e0c2c100c5f1a6b0"
+    },
+    {
+      "path": "gateway/operator/tests/test_operator.py",
+      "sha256": "aba7a3821fb0459ebca4c474eb0452e20b3f4780da932c58eec43f60a553c904"
     },
     {
       "path": "gateway/production/__init__.py",
@@ -89,7 +110,7 @@
     },
     {
       "path": "gateway/production/coordinator.py",
-      "sha256": "10900d90ca2d397353b0bc53a09316d077162fb72e0d98ef53b5d79086f17959"
+      "sha256": "9b70aed1acde2552525edb1becb66e09eb20608c6fbb92414d138d1a0178dd6d"
     },
     {
       "path": "gateway/production/framing.py",
@@ -191,6 +212,5 @@
       "path": "member2/esp32_b_inspection/main/vendor/cjson/cJSON.h",
       "sha256": "25b0145150d500498e4d209cec69c18c42cf818bffcc54690be3b895a2a16dee"
     }
-  ],
-  "total_tests": 75
+  ]
 }

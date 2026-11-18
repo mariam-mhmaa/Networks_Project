@@ -1,6 +1,6 @@
-..Executing <Task pending name='Task-79' coro=<IntegratedTests.test_explicit_restart_fence_allows_incomplete_closure_without_old_result() running at C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\member1\production-a\tests\test_integrated.py:220> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.188 seconds
+..Executing <Task pending name='Task-87' coro=<IntegratedTests.test_explicit_restart_fence_allows_incomplete_closure_without_old_result() running at C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\member1\production-a\tests\test_integrated.py:219> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.203 seconds
 .................
 ----------------------------------------------------------------------
-Ran 19 tests in 50.413s
+Ran 19 tests in 48.202s
 
 OK

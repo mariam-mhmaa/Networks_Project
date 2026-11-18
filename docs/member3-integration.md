@@ -1,7 +1,7 @@
 # Member 3 integration review
 
 Reviewed 2026-11-18 at origin/member3/operator-ui commit d1b8e69.
-The branch is available locally and remotely; it has not been merged here.
+The contributor branch is merged into main without rewriting its history.
 The user's instruction is to preserve the screen's overall shape, interface,
 colors and theme while freely adapting controls/content to the integrated
 project. Hardware testing is deferred until UI integration is ready.
@@ -79,7 +79,7 @@ accepted jobs. Resume continues the same batch with the same identities and
 retained counts. The user explicitly reaffirmed the recovery controls and
 unresolved-part reporting.
 
-Decision 2 (Stop) is still pending: the user asked what accepted work means
+During clarification of decision 2 (Stop), the user asked what accepted work means
 and requested a clearer explanation. In this one-active-job-per-station design,
 it means the current accepted production job and current accepted inspection
 job, not every requested part in the batch or queued inspection work. Already
@@ -102,3 +102,21 @@ classification, then allow an explicit new Start. Operator-link loss pauses
 new dispatch and requires explicit same-batch Resume after resynchronization.
 The recovery controls remain required. Implementation now proceeds on main;
 no further operator-policy decision is pending from this review.
+
+## Implemented integration and current evidence
+
+The user approved all four clarified controls. gateway.operator now serves the
+adapted screen from the real A/B core. Active behavior, command/status fields,
+initial numerical profiles, launch instructions and restart limitations are
+in [operator-protocol.md](operator-protocol.md). The old handoff/mock/examples
+remain historical proposals, not a second authoritative contract.
+
+Preserved cartoon.css, toys.css/js and motion.css/js byte-for-byte from the
+contributor branch. Adapted app/protocol/transport and added themed recovery,
+settings, unfinished-count and evidence controls. The native A test harness
+now preserves application/history across transport reconnections, matching a
+station that remains booted; physical firmware source did not change.
+
+Passed 75 A/B regression tests, 12 operator/native-peer HTTP/WS tests and nine
+Node frontend/protocol/render checks. Browser access host is unavailable, so
+actual visual/mobile QA is explicitly unverified. Hardware remains deferred.

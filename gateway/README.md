@@ -1,24 +1,34 @@
-# Gateway inspection subsystem
+# Integrated gateway
 
-The asyncio B client, operation controller and inspection queue are implemented.
-No additional Python packages are required. See
-[the teammate handoff](../docs/member2-test-handoff.md) and
-[protocol/API contract](../docs/member2-protocol.md).
+`gateway.operator` hosts Member 3's toy-workshop interface and the real
+A -> reserved queue -> B asyncio core. See the [active operator contract](../docs/operator-protocol.md)
+for controls, recovery, HTTP/WebSocket schema and limits.
 
-- inspection/client.py: B adapter, settings and shared ID allocation.
-- inspection/controller.py: one owner for stage deadlines and bounded recovery.
-- inspection/coordinator.py: reservations, durable part numbers, queue,
-  validated result counts, Fault/reconciliation, explicit run closure.
-- inspection/wire.py: bounded framing, one socket reader, boot/liveness context.
-- python -m gateway.inspection: standalone functional exercise; A source simulated.
+```powershell
+python -m pip install -r gateway/operator/requirements.txt
+python -B -m gateway.operator COM5 192.168.137.20 --state-file gateway.sqlite3
+```
 
-Member 1 serial integration and Member 3 HTTP/WebSocket/operator integration
-remain separate. This package supplies their B-side hooks; it is not a
-completed whole-project gateway or a full-batch hardware demonstration.
+Replace the port/IP with the actual stations, then open http://127.0.0.1:8080.
+Only one gateway process may own those links. Preserve the SQLite state file.
+No device port was opened during operator implementation/testing.
 
-Production A and the integrated A → queue → B core are now in
-`gateway.production`. See [the active A integration contract](../docs/member1-integration.md)
-for the real USB/TCP command, bounded recovery and guarded continuation APIs.
-Install `gateway/production/requirements.txt`. The older B-only command still
-uses a simulated producer and remains useful for the assigned B test scope.
-Member 3/operator HTTP/WebSocket integration is still separate work.
+- `inspection`: TCP framing, B settings, bounded operation controller,
+  inspection reservations, durable IDs and validated result accounting.
+- `production`: SLIP/ATR/CRC serial adapter and integrated A/B scheduling,
+  lifecycle, guarded continuation and two-station closure.
+- `operator`: identified HTTP commands, full WebSocket status, operator lease,
+  Pause/Resume/Stop/settings/recovery orchestration and same-origin assets.
+
+The older `python -m gateway.inspection` uses a simulated producer and is a
+B-only exercise. `python -m gateway.production` is the headless A/B exercise;
+neither should run alongside the operator server on the same stations.
+
+Software preview (MSVC required, localhost native C peers, no physical COM):
+`python -B tools/run_operator_preview.py --state-file operator-preview.sqlite3`.
+It is explicitly labelled test mode and is never a silent fallback.
+
+Validation: 75 A/B regressions, 12 operator/native-peer tests and nine frontend
+checks pass. Physical USB/Wi-Fi tests and browser visual QA remain unverified.
+[A integration](../docs/member1-integration.md), [B contract](../docs/member2-protocol.md),
+and [B hardware handoff](../docs/member2-test-handoff.md) remain applicable.

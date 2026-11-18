@@ -1,0 +1,130 @@
+{
+  "timestamp_utc": "2026-11-18T17:18:12.917906+00:00",
+  "contributor_commit": "d1b8e696c169a94292a2081ace02f5938a8b03a0",
+  "tests": {
+    "station_regression": 75,
+    "operator_native_http_ws": 12,
+    "frontend_protocol_render": 9,
+    "total": 96
+  },
+  "results": "PASS",
+  "backend_log": "backend.log",
+  "frontend_log": "frontend.log",
+  "browser_visual_qa": "NOT RUN: browser access host unavailable",
+  "physical_hardware": "NOT RUN: no physical COM/ESP32 used",
+  "firmware_source_changed": false,
+  "theme_integrity": [
+    {
+      "path": "member3/operator-ui/cartoon.css",
+      "sha256": "d8bcdd6d254a7ef3f67f3ffebf899c44b54889a3d18e5cca7ee70f6fe5230cb3",
+      "matches_contributor": true
+    },
+    {
+      "path": "member3/operator-ui/toys.css",
+      "sha256": "dae4586acf1ae283ba4b0ec08b57e4f9fbaec5413eb6fdb381b1a54e488a2d75",
+      "matches_contributor": true
+    },
+    {
+      "path": "member3/operator-ui/toys.js",
+      "sha256": "c1266e0993653c4dd06032584e3ce050b73ad6305f840a3761fa364eb876a426",
+      "matches_contributor": true
+    },
+    {
+      "path": "member3/operator-ui/motion.css",
+      "sha256": "c81a57e375478d36d7b9cdd4274df3fc24fced4fc44d9044c5a9d6f99b95ee02",
+      "matches_contributor": true
+    },
+    {
+      "path": "member3/operator-ui/motion.js",
+      "sha256": "d380173c14f6db7aabd8d63581245a094be92aba61ccd66d973e38d3c80b2b98",
+      "matches_contributor": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "gateway/operator/__init__.py",
+      "sha256": "9ed1b702c21081323ba12669c3f6d9f2ec526960a51605a5e51d421b45b37ad0"
+    },
+    {
+      "path": "gateway/operator/__main__.py",
+      "sha256": "16917327352f0a09d30cd1a94c423369323a081bb04fece12fff4165832bbabb"
+    },
+    {
+      "path": "gateway/operator/requirements.txt",
+      "sha256": "75c9edbfbf9c5a8a4995a4d0befa4ad45434300c7c277a35088d91036ab4f4d4"
+    },
+    {
+      "path": "gateway/operator/server.py",
+      "sha256": "d220f3ebbdec3aaf078762c0a3d3acff7719bf48922ffe390336c3c312abfed9"
+    },
+    {
+      "path": "gateway/operator/service.py",
+      "sha256": "7d8e03fd708eedfb7b62b9a007d510a48d2fec6a5bae82d0e0c2c100c5f1a6b0"
+    },
+    {
+      "path": "gateway/operator/tests/test_operator.py",
+      "sha256": "aba7a3821fb0459ebca4c474eb0452e20b3f4780da932c58eec43f60a553c904"
+    },
+    {
+      "path": "member3/operator-ui/app.js",
+      "sha256": "0f00d7342e95bfd6eda75f850f55de940e1a7499e014061d5085dd0aab1a170f"
+    },
+    {
+      "path": "member3/operator-ui/cartoon.css",
+      "sha256": "d8bcdd6d254a7ef3f67f3ffebf899c44b54889a3d18e5cca7ee70f6fe5230cb3"
+    },
+    {
+      "path": "member3/operator-ui/index.html",
+      "sha256": "b3696089d62c8f933d87072e50a0cca871a4c4e8be82fce3d92371af61bfe3fa"
+    },
+    {
+      "path": "member3/operator-ui/integration.css",
+      "sha256": "1a1b8dc8d5eccf8d6e422095aee1684eee7b52463caf58337a402ed279319f87"
+    },
+    {
+      "path": "member3/operator-ui/mock_gateway.py",
+      "sha256": "7d79f08f0386e8b00d0089c7bdcb256ea99184ca1e21f5eadfece23a26315422"
+    },
+    {
+      "path": "member3/operator-ui/motion.css",
+      "sha256": "c81a57e375478d36d7b9cdd4274df3fc24fced4fc44d9044c5a9d6f99b95ee02"
+    },
+    {
+      "path": "member3/operator-ui/motion.js",
+      "sha256": "d380173c14f6db7aabd8d63581245a094be92aba61ccd66d973e38d3c80b2b98"
+    },
+    {
+      "path": "member3/operator-ui/protocol.js",
+      "sha256": "17316db120770e66743cfcdf5e1a607fd8c888bd1c2bbc25a6b59c4689571380"
+    },
+    {
+      "path": "member3/operator-ui/requirements-tested.txt",
+      "sha256": "725b886b54bd730c7a3d6858dd5ab888f99fa431d7488d30722a4766ccce8c36"
+    },
+    {
+      "path": "member3/operator-ui/requirements.txt",
+      "sha256": "1777565875ea3d61d2e112228388b0842f217519b4d52dfe775176c75457e1fe"
+    },
+    {
+      "path": "member3/operator-ui/test_client.mjs",
+      "sha256": "dd16c90a2790bfe4533a1b5ac9e97714db258c29956f1faf998a7dd2417ff708"
+    },
+    {
+      "path": "member3/operator-ui/test_gateway.py",
+      "sha256": "dc3853bcb981ee90b47ed649f46da9fb00b81ce73e9bea9ec611ee385427fe1b"
+    },
+    {
+      "path": "member3/operator-ui/toys.css",
+      "sha256": "dae4586acf1ae283ba4b0ec08b57e4f9fbaec5413eb6fdb381b1a54e488a2d75"
+    },
+    {
+      "path": "member3/operator-ui/toys.js",
+      "sha256": "c1266e0993653c4dd06032584e3ce050b73ad6305f840a3761fa364eb876a426"
+    },
+    {
+      "path": "member3/operator-ui/transport.js",
+      "sha256": "d8244f68d37e51fc3e2d300a55f34980da10ab8ee831321b5a8747f662464790"
+    }
+  ],
+  "preview_teardown": "Owned localhost preview and its two native peers stopped after checks"
+}

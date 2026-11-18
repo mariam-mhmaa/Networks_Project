@@ -1,3 +1,7 @@
+> Operator update: Member 3 is now integrated under D019-D020. See
+> [operator-protocol.md](operator-protocol.md) for current behavior and
+> verification limits. The older gap/planning text below is historical.
+
 > Current 2026-11-18 implementation: A serial, shared A/B lifecycle and
 > identified RETIRE, integrated queue dispatch, partial-batch accounting and
 > explicit guarded continuation are implemented. See member1-integration.md
