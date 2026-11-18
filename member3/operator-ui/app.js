@@ -11,19 +11,23 @@ const storageKey = 'toy-workshop.pending.v1';
 try { pending = JSON.parse(sessionStorage.getItem(storageKey) || 'null'); }
 catch { $('feedback').textContent = 'Saved command could not be read. Check gateway status before starting work.'; }
 
-function message(text, error = false) { $('feedback').textContent = text; $('feedback').classList.toggle('error', error); }
+function message(text, error = false) { $('feedback').textContent = readableText(text); $('feedback').classList.toggle('error', error); }
 function displayId(id) {
   const match=/^(.*)-(GW|OP)-([0-9a-f]{32})-(\d+)$/.exec(id||'');
   if(!match)return id||'';
   const alias=status?.session_labels?.[match[2]+':'+match[3]];
   return `${match[1]}-${match[2]}-${alias||'session pending'}-${Number(match[4])}`;
 }
+function readableText(value) {
+  return String(value??'').replace(/[A-Za-z_]+-(?:GW|OP)-[0-9a-f]{32}-\d+/g,displayId)
+    .replace(/BATCH-GW-[0-9a-f]{32}/g,id=>id===status?.batch.id?status.batch.display_id:'Saved batch')
+    .replace(/(?:GW|OP)-[0-9a-f]{32}/g,'Gateway/operator session');
+}
 function log(event, text, id = '') {
   logRows.unshift({time: new Date().toLocaleTimeString(), event, text, id}); logRows = logRows.slice(0, 100);
   $('commandLog').replaceChildren(...logRows.map(row => {
     const line = document.createElement('li');
-    line.textContent = `${row.time} · ${row.event} · ${row.text}${row.id ? ' [' + displayId(row.id) + ']' : ''}`;
-    if(row.id)line.title=row.id;
+    line.textContent = readableText(`${row.time} · ${row.event} · ${row.text}${row.id ? ' [' + displayId(row.id) + ']' : ''}`);
     return line;
   }));
 }
@@ -65,7 +69,7 @@ function renderControls(){
   $('recoverA').disabled=$('recoverB').disabled=locked;
   $('closeOrphans').hidden=!status?.orphaned;
   $('closeOrphans').disabled=locked||!status?.can_close_orphans;
-  $('recoveryHelp').textContent=status?.state==='Idle'?'A station restarted between batches. Confirm its new idle boot using Recover restarted A/B before the next Start.':status?.orphaned?'A station retains work from a previous gateway session. Wait for idle stations, then close the old scopes.':status?.configuration_hold?'Settings were not confirmed by both stations. End this batch before starting new work.':'Check saved results. Continue only after the gateway confirms safe isolation, or end this batch with its actual totals.';
+  $('recoveryHelp').textContent=status?.state==='Idle'?'A station has already restarted. Confirm restarted A/B reconnects to its new idle boot before the next Start; it does not reboot the ESP or repeat parts.':status?.orphaned?'A station retains work from a previous gateway session. Wait for idle stations, then close the old scopes.':status?.configuration_hold?'Settings were not confirmed by both stations. End this batch before starting new work.':'Check saved results first. If an ESP restarted, Confirm restarted A/B verifies its new idle boot; then end the old batch before a new Start. Missing results remain unresolved. Continue remaining requires safe isolation.';
 }
 function updateMotion() {
   const making=live&&status?.stations.production.busy&&status.stations.production.phase==='active';
@@ -116,7 +120,7 @@ function render() {
   for (const key of ['produced', 'inspected', 'passed', 'failed','unresolved','unstarted','not_inspected']) $(key).textContent = status ? String(status.counts[key]) : '—';
   $('outcome').textContent = status ? `${fresh} · Batch ${status.batch.outcome}` : 'No gateway status yet';
   $('batchLabel').textContent = status?.batch.id ? '/ ' + (status.batch.display_id||'Current batch') : '/ No batch';
-  $('batchLabel').title=status?.batch.id||'';
+  $('batchLabel').title=status?.batch.id?(status.batch.display_id||'Current batch'):'';
   $('faultMessage').hidden = !status?.fault; $('faultMessage').textContent = status?.fault || '';
   const q = status?.queue;
   const queueDrawing = q ? Array.from({length: Math.min(q.capacity, 20)}, (_, i) => '<div class="mini ' + (i < q.size ? 'filled' : '') + '"></div>').join('') : '';
@@ -187,6 +191,7 @@ function applySnapshot(s, meta) {
     if (previous.batch.outcome !== 'completed' && s.batch.outcome === 'completed') workshopCelebrate();
   }
   s.command_results.forEach(completePending);
+  if(meta.initial&&!pending&&!s.control_pending&&s.state==='Idle'&&s.batch.outcome==='none')message('Gateway connected. Both stations are ready when their indicators show connected. Earlier batches are in Batch history.');
   if(!pending&&!commandBusy&&!s.control_pending&&['completed','incomplete'].includes(s.batch.outcome)) {
     message(`${s.batch.display_id||'Batch'} ${s.batch.outcome}: ${s.counts.passed} PASS, ${s.counts.failed} FAIL, ${s.counts.unresolved} unresolved, ${s.counts.not_inspected} not inspected.${s.history_error?' History warning: '+s.history_error:''}`,!!s.history_error);
   }
@@ -204,6 +209,8 @@ function connect() {
     const target = $('gatewayAddress').value.trim() || location.origin;
     const next = new GatewayConnection(target, {onConnection,onSnapshot:applySnapshot,operatorId});
     connection?.close(); connection = next; status = null; lastInputBatch = null;
+    selectedReport=null;$('historyDownload').disabled=true;$('historySelect').replaceChildren();$('historyResults').replaceChildren();
+    $('historyMessage').textContent='Open Batch history or press Refresh history to choose a saved batch.';
     try { localStorage.setItem('toy-workshop.gateway', next.base); } catch { /* Connection still works without remembered preferences. */ }
     connection.connect();
     message(pending ? 'Restoring an unresolved command. Waiting for current gateway status.' : 'Connecting to the workshop gateway…');
@@ -266,24 +273,22 @@ $('dismissCommand').onclick = () => {
 for (const [id, delta] of [['minus', -1], ['plus', 1]]) $(id).onclick = () => { $('quantity').value = Math.max(1, Math.min(64, Number($('quantity').value) + delta)); };
 $('downloadLog').onclick = () => {
   const blob = new Blob([JSON.stringify(logRows, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = 'operator-command-log.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = 'operator-browser-log.json';document.body.append(link);link.click();link.remove();setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
-$('downloadBatch').onclick=()=>downloadReport(status?.batch.id);
-
 let historyOffset=0, historyNext=null, selectedReport=null;
-async function downloadReport(id) {
-  if(!connection||!id)return;
-  try {
-    const client=connection, report=await client.json('/api/history/'+encodeURIComponent(id));
-    if(client!==connection)return;
-    const data=new Blob([JSON.stringify(report,null,2)],{type:'application/json'}),url=URL.createObjectURL(data),a=document.createElement('a');
-    a.href=url;a.download=report.batch.display_id.toLowerCase().replace(' ','-')+'.json';a.click();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-  } catch(error){message('Report could not be downloaded: '+error.message,true);}
+function downloadSelectedReport() {
+  if(!connection||!selectedReport||selectedReport.batch.id!==$('historySelect').value){
+    $('historyMessage').textContent='Select a saved batch and wait for its summary before downloading.';return;
+  }
+  const name=selectedReport.batch.display_id.toLowerCase().replace(' ','-')+'.json';
+  const a=document.createElement('a');a.href=connection.base+'/api/history/'+encodeURIComponent(selectedReport.batch.id)+'?download=true';
+  a.download=name;document.body.append(a);a.click();a.remove();
+  $('historyMessage').textContent=`Requested ${name}. Check your browser Downloads. This file contains the selected batch's results and technical evidence for both stations.`;
 }
 async function loadHistory(offset=0) {
-  if(!connection)return;
+  if(!connection){$('historyMessage').textContent='Connect to the gateway before loading saved batches.';return;}
   const client=connection;
+  selectedReport=null;$('historyDownload').disabled=true;
   try {
     $('historyMessage').textContent='Loading saved batches...';
     const page=await client.json('/api/history?offset='+offset);
@@ -295,6 +300,7 @@ async function loadHistory(offset=0) {
       return option;
     }));
     $('historyPrevious').disabled=offset===0;$('historyNext').disabled=historyNext===null;
+    $('historyPages').hidden=page.total<=20;
     $('historyMessage').textContent=page.total?`Saved batches ${offset+1}-${offset+page.items.length} of ${page.total}. Viewing history never changes current work.`:'No saved batches yet.';
     if(page.items.length){$('historySelect').value=page.items[0].batch.id;await selectHistory();}
     else {$('historyResults').replaceChildren();selectedReport=null;$('historyDownload').disabled=true;}
@@ -305,9 +311,48 @@ function observationTimes(evidence, received='received_observed_at', accepted='a
   const origin=known.length?Math.min(...known):0;
   return values.map(v=>typeof v==='number'?`+${Math.round((v-origin)*1000)} ms`:'Not observed');
 }
+function timingReference(evidence) {
+  const stages=[['Received','received_observed_at'],['Accepted','accepted_observed_at'],['Completed','completed_observed_at']];
+  const known=stages.filter(([,key])=>typeof evidence?.[key]==='number').sort((a,b)=>evidence[a[1]]-evidence[b[1]]);
+  return known.length?known[0][0]:'No reply observed';
+}
+function operationName(op) {
+  const action=op.command||op.request?.type||op.result?.action||op.id.split('-')[0];
+  return ({start:'Start batch',pause:'Pause dispatch',resume:'Resume batch',stop:'End batch',configure:'Apply settings',
+    reconcile:'Check saved results',continue:'Continue remaining parts',recover_a:'Confirm restarted A',recover_b:'Confirm restarted B',close_orphans:'Close old station runs',
+    CFG:'Apply settings',CONFIGURE:'Apply settings',PROD:'Produce part',PRODUCE:'Produce part',INSP:'Inspect part',INSPECT:'Inspect part',
+    CLOSE:'Close station batch',QUERY:'Check a saved result',RETIRE:'Isolate an uncertain part'})[action]||readableText(action);
+}
+function operationDetails(op) {
+  const r=op.recovered_result||op.result, result=r&&typeof r==='object'?r:{},e=op.evidence||{};
+  const entries=[['ID',op.display_id||displayId(op.id)],['Action',operationName(op)],
+    ['Station',op.station==='A'?'A - production':op.station==='B'?'B - inspection':'Gateway / operator control']];
+  const part=op.request?.part_id??result.part_id;
+  if(part!==undefined)entries.push(['Part',part]);
+  entries.push(['Outcome',op.phase]);
+  if(result.verdict)entries.push(['Inspection verdict',result.verdict]);
+  if(result.config_version!==undefined)entries.push(['Settings revision',result.config_version]);
+  const settings=result.settings||op.request||{};
+  for(const [key,label] of [['production_time_ms','Production time'],['inspection_time_ms','Inspection time'],['N','Rule N'],['K','Rule K']]){
+    if(settings[key]!==undefined)entries.push([label,key.endsWith('_ms')?`${settings[key]} ms`:settings[key]]);
+  }
+  if(result.elapsed_ms!==undefined)entries.push(['Device-reported execution time',`${result.elapsed_ms} ms`]);
+  if(typeof r==='string')entries.push([op.command==='start'?'Start result recorded at the time':'Control result',r]);
+  if(op.reason||op.recovery_note)entries.push(['Recovery / explanation',op.recovery_note||op.reason]);
+  entries.push(['Timing starts at',timingReference(e)]);
+  const times=observationTimes(e);['Received','Accepted','Completed'].forEach((label,i)=>entries.push([label,times[i]]));
+  const established={RECEIVED:'Received acknowledgement',ACCEPTED:'Accepted acknowledgement',COMPLETED:'Completion reply',QUERY_COMPLETED:'Completed result recovered by a read-only query'};
+  for(const [key,label] of [['delivery_established_by','Delivery confirmed by'],['acceptance_established_by','Acceptance confirmed by']]){
+    if(e[key])entries.push([label,established[e[key]]||e[key]]);
+  }
+  if(e.request_attempts!==undefined)entries.push(['Original request attempts',e.request_attempts],['Recovery queries',e.query_attempts]);
+  if(op.target_id)entries.push(['Query target',displayId(op.target_id)]);
+  return entries.map(([label,value])=>[label,readableText(value)]);
+}
 async function selectHistory() {
   const client=connection,id=$('historySelect').value;
   if(!client||!id)return;
+  selectedReport=null;$('historyDownload').disabled=true;
   try {
     const report=await client.json('/api/history/'+encodeURIComponent(id));
     if(client!==connection||id!==$('historySelect').value)return;
@@ -315,27 +360,25 @@ async function selectHistory() {
     const summary=document.createElement('p'),c=report.counts;
     summary.textContent=`${report.batch.display_id}: ${report.batch.outcome}. ${c.produced??'?'} produced, ${c.inspected??'?'} inspected; ${c.passed??'?'} PASS, ${c.failed??'?'} FAIL; ${c.unresolved??'?'} unresolved, ${c.unstarted??'?'} not started, ${c.not_inspected??'?'} not inspected.`;
     const explanation=document.createElement('p');
-    explanation.textContent='Times below are relative to the first observed stage for each operation. Missing ACKs stay "Not observed". Later responses may establish earlier stages. Details contain full IDs, frozen requests, results and recovery-query evidence.';
+    explanation.textContent='Each row has its own clock. "Timing starts at" names the first reply observed for that row (+0 ms); the other times count from that reply, not from the batch start or request send. "Not observed" means that acknowledgement was missing. Device execution time is listed separately in Details. Short IDs are used on screen; the downloaded report preserves original identities for technical checks.';
     const table=document.createElement('table'),head=document.createElement('tr');
-    for(const text of ['Operation','Part','Outcome','Received','Accepted','Completed','Attempts / queries','Details']){const th=document.createElement('th');th.textContent=text;head.append(th);}
+    for(const text of ['Operation','Station','Part','Outcome','Timing starts at','Received','Accepted','Completed','Attempts / queries','Details']){const th=document.createElement('th');th.textContent=text;head.append(th);}
     table.append(head);
-    const rows=[...report.controls.map(r=>({id:r.cmd_id,display_id:r.display_id,phase:r.phase,
+    const rows=[...report.controls.map(r=>({id:r.cmd_id,display_id:r.display_id,command:r.command,phase:r.phase,
       result:r.result,evidence:{received_observed_at:r.received_at,accepted_observed_at:r.accepted_at,completed_observed_at:r.completed_at}})),...report.operations];
     for(const op of rows){
       const row=document.createElement('tr'),e=op.evidence;
       const result=op.recovered_result||op.result;
       const verdict=result&&typeof result==='object'?result.verdict:null;
-      for(const text of [op.display_id,op.request?.part_id??result?.part_id??'-',op.phase+(verdict?' / '+verdict:''),...observationTimes(e),e?.request_attempts===undefined?(op.target_id?'Recovery query':'Gateway control'):`${e.request_attempts} / ${e.query_attempts}`]){
+      const operation=document.createElement('td'),name=document.createElement('strong'),identity=document.createElement('small');
+      name.textContent=operationName(op);identity.textContent=op.display_id||displayId(op.id);operation.append(name,identity);row.append(operation);
+      for(const text of [op.station||'Gateway',op.request?.part_id??result?.part_id??'-',op.phase+(verdict?' / '+verdict:''),timingReference(e),...observationTimes(e),e?.request_attempts===undefined?(op.target_id?'Recovery query':'Gateway control'):`${e.request_attempts} / ${e.query_attempts}`]){
         const cell=document.createElement('td');cell.textContent=text;row.append(cell);
       }
-      const cell=document.createElement('td'),details=document.createElement('details'),label=document.createElement('summary');label.textContent='Technical details';details.append(label);
-      const full=document.createElement('input');full.value=op.id;full.readOnly=true;full.setAttribute('aria-label','Full protocol ID');
-      const copy=document.createElement('button');copy.textContent='Copy full ID';copy.onclick=async()=>{
-        try {if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(op.id);
-          else {full.select();if(!document.execCommand('copy'))throw new Error('Select the ID and press Ctrl+C');}
-          copy.textContent='Copied';}catch{copy.textContent='Select ID, then Ctrl+C';full.select();}
-      };
-      const pre=document.createElement('pre');pre.textContent=JSON.stringify(op,null,2);details.append(full,copy,pre);cell.append(details);row.append(cell);table.append(row);
+      const cell=document.createElement('td'),details=document.createElement('details'),label=document.createElement('summary');label.textContent='Details';details.append(label);
+      const list=document.createElement('dl');
+      for(const [key,value] of operationDetails(op)){const term=document.createElement('dt'),description=document.createElement('dd');term.textContent=key;description.textContent=value;list.append(term,description);}
+      details.append(list);cell.append(details);row.append(cell);table.append(row);
     }
     const wrap=document.createElement('div');wrap.className='history-table';wrap.append(table);
     const parts=document.createElement('p');parts.textContent='Parts: '+report.parts.map(p=>`${p.part_id}: ${p.status.toUpperCase()}${p.isolated?' (isolated)':''}`).join('; ');
@@ -346,7 +389,7 @@ $('historyRefresh').onclick=()=>loadHistory(0);
 $('historyPrevious').onclick=()=>loadHistory(Math.max(0,historyOffset-20));
 $('historyNext').onclick=()=>{if(historyNext!==null)loadHistory(historyNext);};
 $('historySelect').onchange=selectHistory;
-$('historyDownload').onclick=()=>downloadReport(selectedReport?.batch.id);
+$('historyDownload').onclick=downloadSelectedReport;
 $('historyPanel').ontoggle=()=>{if($('historyPanel').open)loadHistory(0);};
 $('toyShelf').innerHTML = [0, 1, 0].map(toyArt).join('');
 try { $('gatewayAddress').value = localStorage.getItem('toy-workshop.gateway') || location.origin; } catch { $('gatewayAddress').value = location.origin; }

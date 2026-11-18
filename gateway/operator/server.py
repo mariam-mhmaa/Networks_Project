@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from urllib.parse import urlsplit
 from fastapi import FastAPI, Query, Request, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from .service import AdmissionError
 
 ASSETS = Path(__file__).resolve().parents[2] / "member3/operator-ui"
@@ -56,6 +56,8 @@ def create_app(service):
         if value and download:
             number = service.history.numbers[identifier]
             headers["Content-Disposition"] = f'attachment; filename="batch-{number}.json"'
+            return Response(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False)+"\n",
+                            media_type="application/json", headers=headers)
         return JSONResponse(value or {"error": "Unknown batch"}, status_code=200 if value else 404, headers=headers)
 
     @app.post("/api/{action}")

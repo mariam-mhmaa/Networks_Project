@@ -263,6 +263,30 @@ A uses COM3 for data, B uses Wi-Fi and its USB connection only for power.
 
 See [batch-history.md](batch-history.md) for update and log-transfer steps.
 
+### D023 Simplify operator evidence and explain station recovery
+
+The user requested simpler operation names, station labels, short IDs throughout
+the GUI, readable Details instead of raw JSON, one batch-report download and
+pagination hidden when unnecessary. These presentation changes preserve full
+wire identities in the database and downloaded technical evidence, with no
+firmware, execution, recovery-policy or acknowledgement-timestamp change.
+
+The old live-batch evidence button returned silently after restart because there
+was no live batch ID. It is removed in favor of Download batch report for the
+selected History entry. Download uses the existing read-only attachment endpoint
+directly from the click, including when no current batch exists. The selected
+report button is disabled during loading/failure; downloads are formatted JSON.
+The separate browser-message export is explicitly optional troubleshooting.
+
+Recover A/B labels become Confirm restarted A/B, making clear that they verify
+an already restarted ESP rather than rebooting it or repeating jobs. Documentation
+distinguishes A's raw USB serial trace, both stations' application evidence and
+B's Wi-Fi TCP capture. Review of the supplied old log verified 64 station
+operations across five closed batches and all submitted work for parts 1-22,
+with matching three-stage replies, expected verdicts and valid captured A CRCs.
+Read-only inspection of the running updated gateway also confirmed five saved
+completed batches, Idle readiness, connected A/B and zero raw-trace drops/errors.
+
 ## Remaining verification and decisions
 
 - No further operator-policy decision currently blocks implementation.

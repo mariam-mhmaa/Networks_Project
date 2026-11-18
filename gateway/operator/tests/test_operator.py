@@ -106,6 +106,8 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         for number, identifier in enumerate(ids, 1):
             reply = await client.get(f"/api/history/{identifier}?download=true")
             self.assertEqual(reply.headers["content-disposition"], f'attachment; filename="batch-{number}.json"')
+            self.assertIn('\n  "schema_version": 2,', reply.text)
+            self.assertEqual(reply.headers['content-type'], 'application/json')
             report = reply.json()
             self.assertEqual(report["batch"]["outcome"], "completed")
             self.assertEqual(report["counts"]["inspected"], 2)

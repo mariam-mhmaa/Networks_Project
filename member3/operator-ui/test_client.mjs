@@ -142,7 +142,7 @@ await test('Operator does not optimistically start work, double-click, or comple
   function node() {
     const selectors = new Map();
     return {value: '', dataset: {}, children: [], style: {setProperty() {}}, classList: {toggle() {}, add() {}, remove() {}},
-      setAttribute() {}, append(child) { this.children.push(child); }, replaceChildren(...children) { this.children = children; }, querySelectorAll() {return [];},
+      setAttribute() {}, append(...children) { this.children.push(...children); }, replaceChildren(...children) { this.children = children; }, querySelectorAll() {return [];},
       querySelector(key) { if (!selectors.has(key)) selectors.set(key, node()); return selectors.get(key); }, remove() {}, click() {}};
   }
   for (const id of ids) elements.set(id, node());
@@ -163,6 +163,11 @@ await test('Operator does not optimistically start work, double-click, or comple
   assert.equal(elements.get('start').disabled, true);
   client.handlers.onConnection('live'); const initial=snapshot();initial.operator.controller_id=storage.get('toy-workshop.operator');client.handlers.onSnapshot(initial, {initial: true});
   assert.equal(elements.get('start').disabled, false);
+  assert.match(elements.get('feedback').textContent,/Gateway connected/);
+  assert.equal(ids.has('downloadBatch'),false,'One batch download button, tied to History');
+  assert.equal(elements.get('historyDownload').disabled,true);
+  elements.get('historyDownload').onclick();
+  assert.match(elements.get('historyMessage').textContent,/Select a saved batch/);
   elements.get('start').onclick(); elements.get('start').onclick();
   assert.equal(sends, 1); assert.equal(elements.get('state').textContent, 'Idle');
   assert.equal(client.record.body.production_time_ms, 2000);
@@ -206,8 +211,45 @@ await test('Operator does not optimistically start work, double-click, or comple
   finished.batch.display_id='Batch 7';client.handlers.onSnapshot(finished,{initial:false});
   assert.equal(vm.runInContext(`displayId('${full}')`,ctx),'PROD-GW-S01-5');
   assert.equal(elements.get('batchLabel').textContent,'/ Batch 7');
-  assert.equal(elements.get('batchLabel').title,'batch-test');
+  assert.equal(elements.get('batchLabel').title,'Batch 7');
   assert.equal(vm.runInContext('observationTimes({completed_observed_at:12})[0]',ctx),'Not observed');
   assert.equal(vm.runInContext('observationTimes({completed_observed_at:12})[2]',ctx),'+0 ms');
+  assert.equal(vm.runInContext('timingReference({completed_observed_at:12})',ctx),'Completed');
+  const requests=[];
+  const report={batch:{id:'saved-batch',display_id:'Batch 5',outcome:'completed'},
+    counts:{produced:1,inspected:1,passed:1,failed:0,unresolved:0,unstarted:0,not_inspected:0},
+    parts:[{part_id:17,status:'pass',isolated:false}],controls:[],operations:[{
+      id:full,display_id:'PROD-GW-S01-5',station:'A',phase:'COMPLETED',
+      request:{type:'PRODUCE',boot_id:'b'.repeat(32),part_id:17},
+      result:{config_version:3,elapsed_ms:2000,settings:{production_time_ms:2000}},
+      evidence:{received_observed_at:10,accepted_observed_at:10.032,completed_observed_at:12.032,request_attempts:1,query_attempts:0}}]};
+  let pageTotal=5,failHistory=false;
+  client.json=async path=>{
+    requests.push(path);if(failHistory)throw new Error('Gateway unavailable');
+    return path.startsWith('/api/history?')?{items:[{batch:report.batch,counts:report.counts}],total:pageTotal,next_offset:pageTotal>20?20:null}:clone(report);
+  };
+  await elements.get('historyRefresh').onclick();
+  assert.equal(elements.get('historyPages').hidden,true,'Pagination hidden when five batches fit on one page');
+  assert.equal(elements.get('historyDownload').disabled,false,'Old batch remains downloadable without a live batch');
+  function texts(n){return [n.textContent||'',...(n.children||[]).flatMap(texts)].join('\n');}
+  const visible=texts(elements.get('historyResults'));
+  assert.match(visible,/Produce part/);assert.match(visible,/Settings revision\n3/);
+  assert.match(visible,/Production time\n2000 ms/);
+  assert.match(visible,/Device-reported execution time\n2000 ms/);
+  assert.doesNotMatch(visible,/[a-f0-9]{32}/,'Details never reveal full random identities or boot IDs');
+  assert.doesNotMatch(visible,/\{\s*"/,'Details use labelled fields instead of raw JSON');
+  vm.runInContext('status.batch.id=null;status.batch.outcome="none"',ctx);
+  elements.get('historyDownload').onclick();
+  const link=vm.runInContext('document.body.children.at(-1)',ctx);
+  assert.equal(link.href,'http://127.0.0.1:8080/api/history/saved-batch?download=true');
+  assert.equal(link.download,'batch-5.json');
+  assert.match(elements.get('historyMessage').textContent,/Requested batch-5.json/);
+  assert.equal(sends,1,'History reads and downloads never dispatch station work');
+  pageTotal=21;await elements.get('historyRefresh').onclick();
+  assert.equal(elements.get('historyPages').hidden,false);
+  assert.equal(elements.get('historyNext').disabled,false);
+  failHistory=true;await elements.get('historyRefresh').onclick();
+  assert.equal(elements.get('historyDownload').disabled,true);
+  assert.match(elements.get('historyMessage').textContent,/History unavailable: Gateway unavailable/);
 });
 console.log('Passed ' + results.length + ' client/protocol checks:\n- ' + results.join('\n- '));

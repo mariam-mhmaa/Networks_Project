@@ -11,10 +11,12 @@ request/outcome events are read into History, including journals created before
 this update. A missing old timestamp stays missing. An interrupted/open batch
 does not become Completed just because the gateway restarted.
 
-Click **Download selected batch** only when you want a JSON file, such as
-`batch-1.json`. Download batch evidence in the command notebook downloads the
-current batch using the same report format. The browser chooses the download
-folder; the gateway does not create a report directory or one file per run.
+Select a batch in History, then click **Download batch report** only when you
+want a JSON file, such as `batch-1.json`. This is the single batch download;
+it works for historical batches even when the live dashboard has no active
+batch after a restart. It stays disabled while no valid report is selected.
+The browser chooses the download folder; the gateway does not create a report
+directory or one file per run. The downloaded JSON is formatted with indentation.
 
 ## What to look for
 
@@ -30,16 +32,46 @@ folder; the gateway does not create a report directory or one file per run.
   timestamp. Technical evidence names what established those stages.
 - Attempts / queries: original-request attempts and bounded read-only recovery
   queries are distinct. Query ACK times belong to the query, not the original job.
-- Technical details contain the full original identity, frozen request, validated
-  result and controller evidence. Unvalidated wire observations alone never
-  become a confirmed verdict.
+- On-screen Details use labelled fields: short ID, station, part, settings
+  revision, applied settings, device execution time, stage observations and
+  recovery information. No raw JSON, full protocol IDs or boot UUIDs are exposed
+  in the GUI. The downloadable technical report retains the original requests,
+  validated results, full identities and controller evidence for correlation.
+  Unvalidated wire observations alone never become a confirmed verdict.
 
 Short labels such as `PROD-GW-S01-5` and `Batch 1` are for reading. The full IDs
-remain unchanged in messages and technical evidence. Expand **Technical details**
-to copy a full ID. Session aliases are allocated in SQLite and are not reused for
+remain unchanged in messages, the database and downloaded technical evidence.
+Only short labels appear in the GUI, including Details. Session aliases are allocated in SQLite and are not reused for
 different sessions when the gateway restarts with the same database. Copy the
 database along with history when moving to another gateway; a new database has
 its own display-name namespace.
+
+The table names each action and station explicitly: Start batch, Apply settings
+for A or B, Produce part, Inspect part, Close station batch, and any recovery
+queries. Each row has its own clock. The Timing starts at column identifies
+which observed stage is +0 ms. This is not time since request submission or
+batch start. A row containing only Completed at +0 ms does not imply instant
+execution. Device-reported execution time appears separately in Details.
+Newer page/Older page only navigate groups of 20 batches, and are hidden if all
+saved batches fit on one page. The dropdown selects an individual batch.
+
+## Which output to use
+
+For ordinary test review, start with the GUI totals and `batch-N.json` from
+History. Its top-level `batch` and `counts` give the summary; `parts` lists the
+individual outcomes; `operations` contains A/B requests, acknowledgements,
+results and retry/query evidence. `controls` contains operator commands.
+Full identities in this technical file allow matching against raw captures;
+the GUI displays their persistent short aliases.
+
+The old three buttons had different targets: Download log exported only recent
+browser messages; Download selected batch exported the selected historical batch;
+Download batch evidence exported the live dashboard batch. The last two used the
+same report format, but the live-batch button silently did nothing when no live
+batch existed after a gateway restart. They are replaced by the single History
+download. The optional **Download browser messages** remains inside
+**Troubleshooting: browser messages**, writing `operator-browser-log.json`.
+It is useful for UI connection problems, not the main device/batch evidence.
 
 ## Three useful evidence sources
 
@@ -51,6 +83,30 @@ its own display-name namespace.
 3. Wireshark capture: actual TCP/HTTP/WebSocket evidence requested by the PDF.
    A JSON report does not replace a packet capture, and packet capture does not
    replace the gateway's application accounting.
+
+A communicates with the gateway through USB serial. Its raw binary frames are
+hex-encoded in `serial.local.jsonl` on the gateway PC, alongside the repository's
+`gateway.sqlite3`. The assistant can decode those frames when needed; the
+operator does not have to read hex. A's decoded application facts also appear
+in the database and exported batch report.
+
+B communicates with the gateway through Wi-Fi TCP port 5001. Its decoded
+requests, acknowledgements and inspection results are in the same database and
+batch report, marked station B. There is no raw B serial inspection trace:
+its USB cable supplies power during normal operation. USB monitor startup/Wi-Fi
+diagnostics are separate and are not currently saved automatically. B's raw
+network evidence will be a Wireshark `.pcapng` file created during the relevant
+capture test; no such new file is created merely by launching the gateway.
+
+## Confirm restarted A/B
+
+These controls were called Recover restarted A/B. They do not reboot or reflash
+an ESP, restart a batch or reproduce a part. They explicitly verify a detected
+different boot and fresh idle status before replacing that station's old client.
+Between closed batches, successful confirmation allows a new Start. If a station
+restarted during an open batch, old uncertain results stay unresolved and the
+old batch must be explicitly ended before a new batch starts. Use the controls
+only when the GUI reports the relevant restart and enables them.
 
 The old `gateway.local.jsonl` remains useful for the two tests already performed.
 Keep it. It contains combined decoded/raw traffic from the previous version.
