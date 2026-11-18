@@ -1,7 +1,7 @@
 # Integrated operator verification - 2026-11-18
 
 - 75 existing A/B/controller/serial regression tests: PASS.
-- 12 operator service/native-C-peer tests, including real HTTP/WebSocket: PASS.
+- 16 operator/capture checks, including real HTTP/WebSocket: PASS.
 - Nine Node frontend/protocol/render checks: PASS.
 - Browser visual/responsive inspection: NOT RUN; browser access host unavailable.
 - Physical ESP32/USB/Wi-Fi tests: NOT RUN here; assigned separately.
@@ -16,3 +16,5 @@ The verification/ directory beside this file and the mock Python tests are
 original contributor evidence at d1b8e69, retained without treating that mock
 as the current integrated backend. The original TEST_RESULTS.md is available
 in contributor branch history. The active contract is ../../docs/operator-protocol.md.
+
+Two-PC phone-hotspot setup and optional flashing instructions: [setup guide](../../docs/two-pc-hardware-setup.md). Setup stops before batch testing.

@@ -38,13 +38,13 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
             await service.shutdown()
         await native.IntegratedTests.asyncTearDown(self)
 
-    async def service(self, *aflags, bflags=(), lease_s=5, keepalive=True, start_monitor=True):
+    async def service(self, *aflags, bflags=(), lease_s=5, keepalive=True, start_monitor=True, evidence=None):
         aport, bport = self.host(*aflags), self.host(*bflags, inspection=True)
-        factories = {"A": lambda: AClient(f"socket://127.0.0.1:{aport}", policy=FAST),
-                     "B": lambda: BClient("127.0.0.1", bport, policy=FAST)}
+        factories = {"A": lambda: AClient(f"socket://127.0.0.1:{aport}", policy=FAST, log=evidence.logger("A") if evidence else None),
+                     "B": lambda: BClient("127.0.0.1", bport, policy=FAST, log=evidence.logger("B") if evidence else None)}
         core = BatchGateway(factories["A"](), factories["B"](), queue_capacity=2, full_policy="block",
                             ledger_path=Path(self.state_dir.name)/f"operator-{len(self.services)}.sqlite3")
-        service = OperatorService(core, simulation=True, factories=factories, lease_s=lease_s)
+        service = OperatorService(core, simulation=True, factories=factories, lease_s=lease_s, evidence=evidence)
         self.services.append(service)
         if start_monitor: await service.start()
         await core.a.connect(); await core.b.client.connect()
@@ -268,6 +268,46 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(service.owner_live)
         service.alive("OP-second",service.gateway_id,service.snapshot()["status_seq"])
         self.assertEqual(service.owner,"OP-second")
+
+    async def test_idle_restart_rebind_keeps_finished_batch_and_allows_new_start(self):
+        from gateway.inspection.wire import Restarted
+        service,client,_=await self.service()
+        await self.command(service,client,"start",batch_size=1)
+        await self.until(lambda: service.core.state=="IDLE")
+        await self.until(lambda: service.snapshot()["control_pending"] is None)
+        before=service.snapshot()
+        service.core.a.link.failure=Restarted("Native injected new boot")
+        aport=self.host("--new-boot")
+        service.factories["A"]=lambda:AClient(f"socket://127.0.0.1:{aport}",policy=FAST)
+        await self.command(service,client,"recover_a")
+        after=service.snapshot()
+        self.assertEqual(after["batch"],before["batch"])
+        self.assertEqual(after["counts"],before["counts"])
+        self.assertEqual(service.core.state,"IDLE")
+        await self.until(lambda: service.snapshot()["ready"])
+        await self.command(service,client,"start",batch_size=1)
+        await self.until(lambda: service.core.state=="IDLE")
+        self.assertNotEqual(service.core.b.batch_id,before["batch"]["id"])
+
+    async def test_remote_origin_commands_and_raw_serial_evidence(self):
+        from gateway.operator.evidence import EventLog
+        capture=EventLog(Path(self.state_dir.name)/"station.local.jsonl")
+        try:
+            service,client,_=await self.service(evidence=capture)
+            body=self.request(service,"start",batch_size=1)
+            response=await client.post("/api/start",json=body,
+                headers={"Host":"192.168.137.1:8080","Origin":"http://192.168.137.1:8080"})
+            self.assertEqual(response.status_code,202)
+            await self.until(lambda: service.lookup(body["cmd_id"])["phase"]=="completed")
+            await self.until(lambda: service.core.state=="IDLE")
+            await service.shutdown()
+        finally: capture.close()
+        records=[json.loads(line) for line in capture.path.read_text().splitlines()]
+        self.assertTrue(any(r["event"]=="serial_tx" for r in records))
+        self.assertTrue(any(r["event"]=="serial_rx" for r in records))
+        for station in ("A","B"):
+            self.assertTrue(any(r["station"]==station and r["event"]=="receive" and r["data"].get("type")=="COMPLETED" for r in records))
+        self.assertIsNone(capture.error)
 
     async def test_real_websocket_full_snapshots_acknowledged_lease_and_http_command(self):
         service, _, app = await self.service(start_monitor=False, keepalive=False)

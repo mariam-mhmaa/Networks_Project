@@ -1,11 +1,11 @@
 {
-  "timestamp_utc": "2026-11-18T17:18:12.917906+00:00",
+  "timestamp_utc": "2026-11-18T19:02:10.135234+00:00",
   "contributor_commit": "d1b8e696c169a94292a2081ace02f5938a8b03a0",
   "tests": {
     "station_regression": 75,
-    "operator_native_http_ws": 12,
+    "operator_and_capture": 16,
     "frontend_protocol_render": 9,
-    "total": 96
+    "total": 100
   },
   "results": "PASS",
   "backend_log": "backend.log",
@@ -47,7 +47,11 @@
     },
     {
       "path": "gateway/operator/__main__.py",
-      "sha256": "16917327352f0a09d30cd1a94c423369323a081bb04fece12fff4165832bbabb"
+      "sha256": "00d8db3ac50cc9747456b9d4fad80181abcfe30f6df1146f0852e92060047183"
+    },
+    {
+      "path": "gateway/operator/evidence.py",
+      "sha256": "16e5e0bfe38820592ea718e135ab08280acc27ebbeab5db693ad72b7e32c547d"
     },
     {
       "path": "gateway/operator/requirements.txt",
@@ -59,15 +63,19 @@
     },
     {
       "path": "gateway/operator/service.py",
-      "sha256": "7d8e03fd708eedfb7b62b9a007d510a48d2fec6a5bae82d0e0c2c100c5f1a6b0"
+      "sha256": "5cec6fc00c61b9182cc2e5363e1d28ee15fa738371bd4ff93e0fc99d80eba3f6"
+    },
+    {
+      "path": "gateway/operator/tests/test_evidence.py",
+      "sha256": "ab4ddb37e1ae0c6cefa67b22e204ebe3d2c98e2a35c2fef8d3a0ca5917a47b7d"
     },
     {
       "path": "gateway/operator/tests/test_operator.py",
-      "sha256": "aba7a3821fb0459ebca4c474eb0452e20b3f4780da932c58eec43f60a553c904"
+      "sha256": "3594309736c3d6e355066ba2548024bb4656e6a3d55f1b4de7118b6a2f4c400d"
     },
     {
       "path": "member3/operator-ui/app.js",
-      "sha256": "0f00d7342e95bfd6eda75f850f55de940e1a7499e014061d5085dd0aab1a170f"
+      "sha256": "39869220db44ef93a800a9debe44150055a3c9cc6a757ed6d8c407b071fffaac"
     },
     {
       "path": "member3/operator-ui/cartoon.css",
@@ -107,7 +115,7 @@
     },
     {
       "path": "member3/operator-ui/test_client.mjs",
-      "sha256": "dd16c90a2790bfe4533a1b5ac9e97714db258c29956f1faf998a7dd2417ff708"
+      "sha256": "970c333acc3daf8ce754cd554e75c411743d3dbd8ccfb5f1b476f9f3ef7d7a54"
     },
     {
       "path": "member3/operator-ui/test_gateway.py",
@@ -124,7 +132,12 @@
     {
       "path": "member3/operator-ui/transport.js",
       "sha256": "d8244f68d37e51fc3e2d300a55f34980da10ab8ee831321b5a8747f662464790"
+    },
+    {
+      "path": "gateway/production/serial_link.py",
+      "sha256": "faec1822ca36cf4dbd6ac44c19d124be5096db20c26c2d6bf3ec5e2e85d82986"
     }
   ],
-  "preview_teardown": "Owned localhost preview and its two native peers stopped after checks"
+  "preview_teardown": "Owned localhost preview and its two native peers stopped after checks",
+  "setup_scope": "Two PCs / phone hotspot; native/remote-origin checks only. Physical setup/testing deferred to user."
 }

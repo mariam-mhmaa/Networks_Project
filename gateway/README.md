@@ -28,7 +28,9 @@ Software preview (MSVC required, localhost native C peers, no physical COM):
 `python -B tools/run_operator_preview.py --state-file operator-preview.sqlite3`.
 It is explicitly labelled test mode and is never a silent fallback.
 
-Validation: 75 A/B regressions, 12 operator/native-peer tests and nine frontend
+Validation: 75 A/B regressions, 16 operator/capture tests and nine frontend
 checks pass. Physical USB/Wi-Fi tests and browser visual QA remain unverified.
 [A integration](../docs/member1-integration.md), [B contract](../docs/member2-protocol.md),
 and [B hardware handoff](../docs/member2-test-handoff.md) remain applicable.
+
+Two-PC phone-hotspot setup and optional flashing instructions: [setup guide](../docs/two-pc-hardware-setup.md). Setup stops before batch testing.

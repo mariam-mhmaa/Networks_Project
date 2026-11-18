@@ -1,6 +1,6 @@
-Executing <Task pending name='Task-2' coro=<ApplicationTests.test_bad_boot_cannot_initiate_work() running at C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\member2\esp32_b_inspection\tests\test_application.py:255> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.359 seconds
+Executing <Task pending name='Task-2' coro=<ApplicationTests.test_bad_boot_cannot_initiate_work() running at C:\Users\ainour\OneDrive - Faculty of Engineering Ain Shams University\Semester7\Networks\Project\Networks_Project\member2\esp32_b_inspection\tests\test_application.py:255> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.406 seconds
 .....................................................
 ----------------------------------------------------------------------
-Ran 53 tests in 28.401s
+Ran 53 tests in 31.127s
 
 OK

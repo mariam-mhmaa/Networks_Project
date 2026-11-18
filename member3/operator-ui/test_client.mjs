@@ -195,5 +195,9 @@ await test('Operator does not optimistically start work, double-click, or comple
   client.handlers.onConnection('disconnected'); client.handlers.onConnection('live');
   client.handlers.onSnapshot(finished, {initial: true});
   assert.equal(effects, 0, 'Reconnect must not replay historical completion effects');
+  finished.stations.production.restarted=true;client.handlers.onSnapshot(finished,{initial:false});
+  assert.equal(elements.get('recoveryBox').hidden,false);
+  assert.equal(elements.get('recoverA').hidden,false);
+  assert.equal(elements.get('recoverA').disabled,false);
 });
 console.log('Passed ' + results.length + ' client/protocol checks:\n- ' + results.join('\n- '));

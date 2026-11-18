@@ -27,10 +27,11 @@ def validate_settings(body):
 
 
 class OperatorService:
-    def __init__(self, core, *, simulation=False, factories=None, lease_s=5.0, history_limit=10000):
+    def __init__(self, core, *, simulation=False, factories=None, lease_s=5.0, history_limit=10000, evidence=None):
         if not math.isfinite(lease_s) or lease_s <= 0:
             raise ValueError("lease_s must be finite and positive")
         self.core, self.simulation = core, simulation
+        self.evidence=evidence
         self.factories = factories or {}
         self.gateway_id = "GW-" + uuid.uuid4().hex
         self.sequence = 0
@@ -114,6 +115,12 @@ class OperatorService:
         elif action == "close_orphans":
             if not self.can_close_orphans:
                 raise AdmissionError("Old scopes require fresh idle evidence from both stations")
+        elif action in {"recover_a", "recover_b"} and self.core.state == "IDLE":
+            if body["batch_id"] != self.core.b.batch_id:
+                raise AdmissionError("Recovery targets a different batch context")
+            client=self.core.a if action=="recover_a" else self.core.b.client
+            if client.link.failure.__class__.__name__ != "Restarted":
+                raise AdmissionError("A detected new station boot is required")
         else:
             if not self._scope(body):
                 raise AdmissionError("Command targets a different or ended batch")
@@ -250,11 +257,14 @@ class OperatorService:
                     station = action[-1].upper()
                     replacement = self.factories[station]()
                     try:
-                        await core.bind_restarted_station(station, replacement)
+                        if core.state=="IDLE":
+                            await self._bind_idle_station(station,replacement)
+                        else:
+                            await core.bind_restarted_station(station, replacement)
                     except BaseException:
                         await replacement.close(); raise
                     self._observe(station, replacement)
-                    text = "New boot fenced old requests; end the old batch before starting another"
+                    text = "Idle station new boot confirmed; next Start creates a new batch" if core.state=="IDLE" else "New boot fenced old requests; end the old batch before starting another"
                 else:
                     await self._close_orphans()
                     text = "Unowned idle station scopes closed; missing historical outcomes remain unknown"
@@ -264,12 +274,26 @@ class OperatorService:
             raise
         except Exception as exc:
             record["phase"], record["result"] = "unresolved", str(exc)
-            if core.b.batch_id:
+            if core.b.batch_id and not (action in {"recover_a","recover_b"} and core.state=="IDLE"):
                 await core._hold("Operator " + action + " requires recovery: " + str(exc))
         finally:
             record["completed_at"] = asyncio.get_running_loop().time()
             self.active = None
             await core.b.ledger.record("operator_outcome", self.public(record))
+
+    async def _bind_idle_station(self, station, replacement):
+        old=self.core.a if station=="A" else self.core.b.client
+        original_boot=old.link.boot_id
+        # Release the old serial handle before opening the same physical port.
+        await old.close()
+        heartbeat=await replacement.connect()
+        if (not original_boot or replacement.link.boot_id==original_boot or not replacement.link.fresh or
+                heartbeat["state"]!="IDLE" or heartbeat["run_open"]):
+            raise GatewayFault("Recovery requires a different fresh idle boot with no open run")
+        await self.core.b.ledger.record("idle_restart_bind",{"station":station,"old_boot":original_boot,
+                                                             "new_boot":replacement.link.boot_id})
+        if station=="A": self.core.a=replacement
+        else: self.core.b.client=replacement
 
     async def _close_orphans(self):
         self.closing_orphans = True
@@ -347,7 +371,7 @@ class OperatorService:
         outcome = "none" if b.batch_id is None else "completed" if state == "Idle" and raw["inspection_complete"] else "incomplete" if state == "Idle" else "active"
         queued = [p["part_id"] for p in parts if p["status"] == "queued"]
         elapsed = self.ended_ms if self.ended_ms is not None else int((asyncio.get_running_loop().time()-self.started_at)*1000) if self.started_at is not None else 0
-        return {"schema_version": 1, "type": "status", "simulation": self.simulation,
+        return {"evidence":self.evidence.status() if self.evidence else None, "schema_version": 1, "type": "status", "simulation": self.simulation,
             "gateway_id": self.gateway_id, "status_seq": self.sequence, "state": state, "fault": fault,
             "settings": self.applied, "batch": {"id": b.batch_id, "target": b.target, "outcome": outcome, "elapsed_ms": elapsed},
             "counts": {"produced": raw["produced"], "inspected": len(b.results), "passed": b.accepted,
@@ -388,7 +412,7 @@ class OperatorService:
                     for client in (self.core.a, self.core.b.client):
                         if not client.link.fresh:
                             try: await asyncio.wait_for(client.connect(), 3)
-                            except Exception: pass
+                            except Exception as exc: client.link.log("connect_error",{"error":str(exc)})
 
     async def _finish_batch(self):
         try:

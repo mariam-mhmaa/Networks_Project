@@ -6,4 +6,6 @@ Start with the [Member 2 test handoff](docs/member2-test-handoff.md), [message/A
 
 Member 1 USB serial integration and the real A → bounded gateway queue → B batch core are now implemented. See [Member 1 integration](docs/member1-integration.md) for the active contract and runnable command. Member 3's existing toy-workshop screen is now integrated through `gateway.operator`, including Pause/Resume/Stop, runtime settings, liveness and recovery controls. See the [operator run instructions and contract](docs/operator-protocol.md). The standalone B exercise uses a simulated production source and is not a whole-system batch demonstration. Approved decisions are in [decisions.md](docs/decisions.md); original references are in reference/. Contributor branches/history are preserved.
 
-Current software validation: **96 checks pass** (75 A/B, 12 operator/native-peer HTTP/WS, nine frontend checks). Browser visual QA is blocked by the browser access host; actual hardware testing remains deferred. No physical ESP32 or COM port was used for this UI work.
+Current software validation: **100 checks pass** (75 A/B, 16 operator/capture, nine frontend checks). Browser visual QA is blocked by the browser access host; actual hardware testing remains deferred. No physical ESP32 or COM port was used for this UI work.
+
+Two-PC phone-hotspot setup and optional flashing instructions: [setup guide](docs/two-pc-hardware-setup.md). Setup stops before batch testing.

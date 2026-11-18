@@ -6,6 +6,7 @@ sequence is added by the worker. There is no retry/deadline controller here.
 import asyncio
 import queue
 import threading
+import time
 from gateway.inspection.wire import Link, ProtocolError, Restarted, decode, uint
 from .framing import SlipDecoder, decode_atr, encode_atr, slip_encode
 
@@ -13,6 +14,7 @@ class SerialLink(Link):
     def __init__(self, port, *, log=None, heartbeat_age=5.0, opener=None):
         super().__init__(port, log=log, heartbeat_age=heartbeat_age)
         self.opener=opener
+        self.capture_raw=log is not None
         self.thread=None
         self.stop=None
         self.outgoing=None
@@ -50,7 +52,14 @@ class SerialLink(Link):
                     if self.sequence>4294967295: raise ProtocolError("ATR attempt sequence exhausted")
                     frame=slip_encode(encode_atr(0,self.sequence,payload))
                     if serial.write(frame)!=len(frame): raise OSError("partial serial frame write")
-                for frame in decoder.feed(serial.read(4096)):
+                    if self.capture_raw:
+                        loop.call_soon_threadsafe(self.log,"serial_tx",{"hex":frame.hex(),"atr_seq":self.sequence,
+                            "observed_monotonic_ns":time.monotonic_ns()})
+                chunk=serial.read(4096)
+                if chunk and self.capture_raw:
+                    loop.call_soon_threadsafe(self.log,"serial_rx",{"hex":chunk.hex(),
+                        "observed_monotonic_ns":time.monotonic_ns()})
+                for frame in decoder.feed(chunk):
                     try: test_id,seq,body=decode_atr(frame)
                     except ValueError: continue
                     if test_id: continue

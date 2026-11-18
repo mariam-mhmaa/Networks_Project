@@ -217,6 +217,25 @@ used, and actual browser visual QA is blocked by the unavailable browser host.
 See operator-protocol.md and verification/operator. Earlier pending operator
 items in historical reviews are superseded by D019-D020.
 
+### D021 Prepare the actual two-PC phone-hotspot setup
+
+The user specified a Windows 11 gateway PC with A over USB, B powered from
+this operator PC and connected by Wi-Fi to a phone hotspot, and a separate
+operator browser. Both PCs and B must share a reachable LAN. The user
+confirmed integrated firmware and app-flash project paths (A COM3, B COM6);
+this review changes only PC-side code, not ESP firmware. No reflash is required
+for these changes. Actual COM/IP assignments remain setup facts to verify.
+
+Added append-only station JSONL evidence with raw A SLIP/ATR TX/RX hex and
+capture-health reporting through a bounded background writer. Added explicit
+new-boot recovery between closed batches, preserving the ended batch report
+instead of leaving the Idle screen without recovery. Remote-origin HTTP
+admission, native peers/capture and idle reboot recovery checks pass. Total
+software checks: 100 (75 station, 16 operator/capture, nine frontend checks).
+No physical test/flash or network/firewall setting change was performed here.
+The user requested setup first and hardware test cases in a later exchange;
+follow two-pc-hardware-setup.md and stop before Start.
+
 ## Remaining verification and decisions
 
 - No further operator-policy decision currently blocks implementation.

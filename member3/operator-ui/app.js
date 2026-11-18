@@ -49,7 +49,7 @@ function renderControls(){
   $('dismissCommand').hidden=!pending||!live||pending.phase!=='unknown';
   $('pendingNotice').hidden=!pending;
   $('pendingNotice').textContent=pending?`Command ${pending.command}: ${pending.phase} · ${pending.cmd_id}`:'';
-  $('recoveryBox').hidden=status?.state!=='Fault';
+  $('recoveryBox').hidden=status?.state!=='Fault'&&!status?.stations.production.restarted&&!status?.stations.inspection.restarted;
   for(const id of ['reconcile','continue','endBatch'])$(id).disabled=locked||!active;
   $('continue').disabled=locked||!active||!!status?.configuration_hold;
   $('recoverA').hidden=!status?.stations.production.restarted;
@@ -57,7 +57,7 @@ function renderControls(){
   $('recoverA').disabled=$('recoverB').disabled=locked;
   $('closeOrphans').hidden=!status?.orphaned;
   $('closeOrphans').disabled=locked||!status?.can_close_orphans;
-  $('recoveryHelp').textContent=status?.orphaned?'A station retains work from a previous gateway session. Wait for idle stations, then close the old scopes.':status?.configuration_hold?'Settings were not confirmed by both stations. End this batch before starting new work.':'Check saved results. Continue only after the gateway confirms safe isolation, or end this batch with its actual totals.';
+  $('recoveryHelp').textContent=status?.state==='Idle'?'A station restarted between batches. Confirm its new idle boot using Recover restarted A/B before the next Start.':status?.orphaned?'A station retains work from a previous gateway session. Wait for idle stations, then close the old scopes.':status?.configuration_hold?'Settings were not confirmed by both stations. End this batch before starting new work.':'Check saved results. Continue only after the gateway confirms safe isolation, or end this batch with its actual totals.';
 }
 function updateMotion() {
   const making=live&&status?.stations.production.busy&&status.stations.production.phase==='active';

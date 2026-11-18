@@ -18,7 +18,11 @@ http://127.0.0.1:8080 in a browser. One server process owns both station links;
 do not simultaneously run the older station CLIs on those links. The default
 listener is local. Device Wi-Fi provisioning, physical USB/Wi-Fi validation,
 raw transport captures and threshold calibration are separate hardware work.
-The serial/TCP firmware is unchanged by this operator integration.
+The serial/TCP firmware is unchanged by this operator integration. For the
+two-PC phone-hotspot topology, follow [the setup-only guide](two-pc-hardware-setup.md).
+Use --host GATEWAY_IP for remote access; all three Wi-Fi devices share the LAN.
+The launcher now appends station traffic/raw A serial bytes to
+gateway.local.jsonl (override with --events); status exposes capture health.
 
 For an explicitly labelled SOFTWARE preview, with MSVC installed:
 
@@ -137,7 +141,9 @@ Check results uses identified read-only station lookup. Continue remaining
 requires fresh same-boot/current-run idle evidence and approved per-job
 retirement/fencing before reuse. Unknown work never becomes FAIL or replacement
 work. End incomplete batch performs the Stop workflow. Recover restarted A/B
-explicitly binds a proven different idle boot; close the old batch before Start.
+explicitly binds a proven different idle boot; close an open old batch before
+Start. If the batch was already ended, idle reboot recovery preserves its
+report and enables the next new Start without reopening that old batch.
 
 A gateway restart creates a new gateway identity and does not replay old HTTP
 requests or restore execution automatically. Retained station runs appear as
@@ -147,12 +153,16 @@ The new session's empty batch is not a claim that the previous batch completed.
 Keep the same SQLite state file: durable numeric part allocation and detailed
 request/outcome/accounting/control events survive. Do not delete it to bypass
 recovery. The screen's batch-evidence JSON and browser-log download supplement
-this ledger; they do not replace required raw serial/network hardware captures.
+this ledger. The integrated launcher now also records decoded A/B traffic and
+raw A serial TX/RX hex via an off-loop bounded writer. Raw RX entries are chunks;
+serial_tx means the port write completed, not an inferred receiver ACK. Capture
+errors/drops are exposed in status and stderr; capture never decides job outcomes.
+The JSONL does not replace required Wireshark network captures.
 
 ## Validation limits
 
-75 existing native station/controller/transport tests, 12 operator/native-peer
-HTTP/WS tests and nine Node frontend/protocol/render checks passed (96 total).
+75 existing native station/controller/transport tests, 16 operator/capture
+checks and nine Node frontend/protocol/render checks passed (100 total).
 Visual browser inspection remains blocked by the unavailable browser access
 host; no desktop/mobile screenshot or physical-board result is claimed.
 See verification/operator and verification/station-integration for evidence.

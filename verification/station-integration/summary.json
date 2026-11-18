@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-11-18T17:18:01.305230+00:00",
+  "timestamp_utc": "2026-11-18T18:56:37.458189+00:00",
   "scope": "Native C/Python software only; physical USB/Wi-Fi and operator UI NOT TESTED",
   "results": {
     "inspection": {
@@ -74,7 +74,11 @@
     },
     {
       "path": "gateway/operator/__main__.py",
-      "sha256": "16917327352f0a09d30cd1a94c423369323a081bb04fece12fff4165832bbabb"
+      "sha256": "00d8db3ac50cc9747456b9d4fad80181abcfe30f6df1146f0852e92060047183"
+    },
+    {
+      "path": "gateway/operator/evidence.py",
+      "sha256": "16e5e0bfe38820592ea718e135ab08280acc27ebbeab5db693ad72b7e32c547d"
     },
     {
       "path": "gateway/operator/requirements.txt",
@@ -86,11 +90,15 @@
     },
     {
       "path": "gateway/operator/service.py",
-      "sha256": "7d8e03fd708eedfb7b62b9a007d510a48d2fec6a5bae82d0e0c2c100c5f1a6b0"
+      "sha256": "5cec6fc00c61b9182cc2e5363e1d28ee15fa738371bd4ff93e0fc99d80eba3f6"
+    },
+    {
+      "path": "gateway/operator/tests/test_evidence.py",
+      "sha256": "ab4ddb37e1ae0c6cefa67b22e204ebe3d2c98e2a35c2fef8d3a0ca5917a47b7d"
     },
     {
       "path": "gateway/operator/tests/test_operator.py",
-      "sha256": "aba7a3821fb0459ebca4c474eb0452e20b3f4780da932c58eec43f60a553c904"
+      "sha256": "3594309736c3d6e355066ba2548024bb4656e6a3d55f1b4de7118b6a2f4c400d"
     },
     {
       "path": "gateway/production/__init__.py",
@@ -122,7 +130,7 @@
     },
     {
       "path": "gateway/production/serial_link.py",
-      "sha256": "7683cb440a88ed6dbc5c3a3668597156391e09d3e6e72feab29998853bcbb069"
+      "sha256": "faec1822ca36cf4dbd6ac44c19d124be5096db20c26c2d6bf3ec5e2e85d82986"
     },
     {
       "path": "member1/production-a/firmware/main/CMakeLists.txt",

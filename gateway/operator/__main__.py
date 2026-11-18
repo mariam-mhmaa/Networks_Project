@@ -6,6 +6,7 @@ from gateway.inspection.client import BClient
 from gateway.production.coordinator import BatchGateway
 from .server import create_app
 from .service import OperatorService
+from .evidence import EventLog
 
 
 def main():
@@ -17,11 +18,22 @@ def main():
     p.add_argument("--port", type=int, default=8080)
     p.add_argument("--state-file", required=True)
     p.add_argument("--operator-stale-seconds", type=float, default=5.0)
+    p.add_argument("--events", default="gateway.local.jsonl", help="append-only station/raw-serial evidence file")
     args = p.parse_args()
-    factories = {"A": lambda: AClient(args.serial_port), "B": lambda: BClient(args.inspection_host, args.inspection_port)}
+    if not 1 <= args.port <= 65535 or not 1 <= args.inspection_port <= 65535:
+        p.error("Ports must be in 1..65535")
+    capture = EventLog(args.events)
+    factories = {"A": lambda: AClient(args.serial_port, log=capture.logger("A")), "B": lambda: BClient(args.inspection_host, args.inspection_port, log=capture.logger("B"))}
     core = BatchGateway(factories["A"](), factories["B"](), queue_capacity=1, full_policy="block", ledger_path=args.state_file)
-    service = OperatorService(core, factories=factories, lease_s=args.operator_stale_seconds)
-    uvicorn.run(create_app(service), host=args.host, port=args.port, workers=1, ws_max_size=4096)
+    service = OperatorService(core, factories=factories, lease_s=args.operator_stale_seconds, evidence=capture)
+    try:
+        capture.emit("gateway","server_started",{"gateway_id":service.gateway_id,"serial_port":args.serial_port,
+            "inspection_host":args.inspection_host,"inspection_port":args.inspection_port,
+            "listen_host":args.host,"listen_port":args.port})
+        print("Station evidence: " + str(capture.path), flush=True)
+        uvicorn.run(create_app(service), host=args.host, port=args.port, workers=1, ws_max_size=4096)
+    finally:
+        capture.close()
 
 
 if __name__ == "__main__": main()
