@@ -1,0 +1,11 @@
+{
+  "one_readme": true,
+  "one_requirements": true,
+  "git_builds_environments_excluded": true,
+  "all_manifest_hashes_verified": true,
+  "retained_evidence_files": 42,
+  "gitless_extracted_launcher_help": true,
+  "gitless_repack_identical_manifest": true,
+  "no_duplicate_zip_entries": true,
+  "physical_hardware_used": false
+}

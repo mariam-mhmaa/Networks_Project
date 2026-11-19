@@ -1,0 +1,8 @@
+{
+  "station": "A",
+  "status": "PASS",
+  "sdk": "ESP-IDF v6.1.1",
+  "bytes": 215152,
+  "sha256": "114a28744c06bb3bd11a316034437b3241b3907724674134db19b3e7e624a966",
+  "flashed": false
+}

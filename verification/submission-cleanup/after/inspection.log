@@ -1,0 +1,6 @@
+Executing <Task pending name='Task-2' coro=<ApplicationTests.test_bad_boot_cannot_initiate_work() running at C:\Espressif\projects\m1-submission\stations\inspection\tests\test_application.py:255> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.312 seconds
+.....................................................
+----------------------------------------------------------------------
+Ran 53 tests in 27.623s
+
+OK

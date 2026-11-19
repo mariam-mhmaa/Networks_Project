@@ -1,0 +1,7 @@
+﻿{
+    "sdk":  "ESP-IDF v6.1.1",
+    "a_exit":  0,
+    "b_exit":  2,
+    "flashed":  false,
+    "credentials":  "Build-only placeholders on B"
+}

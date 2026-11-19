@@ -1,0 +1,14 @@
+[
+  {
+    "file": "measurements.csv",
+    "identical_bytes": true,
+    "original_sha256": "ebb024ca5298a7bc02303a6fc415ec48f94cf8f18412c0eb2adca31b5074e698",
+    "after_sha256": "ebb024ca5298a7bc02303a6fc415ec48f94cf8f18412c0eb2adca31b5074e698"
+  },
+  {
+    "file": "timing-comparison.png",
+    "identical_bytes": true,
+    "original_sha256": "6b12888bd8c9c8e353d642d521af10917f423435b5c37749237b6fdc7c5ea553",
+    "after_sha256": "6b12888bd8c9c8e353d642d521af10917f423435b5c37749237b6fdc7c5ea553"
+  }
+]

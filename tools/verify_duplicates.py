@@ -26,16 +26,16 @@ def main():
     output = parser.parse_args().output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     sys.path.insert(0, str(ROOT))
-    for directory in ("member1/production-a/tests", "member2/esp32_b_inspection/tests"):
+    for directory in ("stations/production/tests", "stations/inspection/tests"):
         sys.path.insert(0, str(ROOT / directory))
     with (output / "software-duplicate-tests.log").open("w", encoding="utf-8") as log:
         log.write("Native C station software tests; localhost only, no physical ESP32s.\n")
         result = unittest.TextTestRunner(stream=log, verbosity=2).run(
             unittest.defaultTestLoader.loadTestsFromNames(TESTS))
     sources = {}
-    for directory in ("gateway", "shared/station", "member1/production-a/firmware/main",
-                      "member1/production-a/tests", "member2/esp32_b_inspection/main",
-                      "member2/esp32_b_inspection/tests"):
+    for directory in ("gateway", "shared/station", "stations/production/firmware/main",
+                      "stations/production/tests", "stations/inspection/main",
+                      "stations/inspection/tests"):
         for path in sorted((ROOT / directory).rglob("*")):
             if path.is_file() and path.suffix in {".py", ".c", ".h"}:
                 sources[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()

@@ -1,41 +1,8 @@
 # Operator HTTP/WebSocket contract
 
-Active Milestone 1 contract, 2026-11-18. This supersedes the proposal in
-Member 3's original handoff, examples and mock gateway. The official PDF
-remains the requirements authority; the team guide is a proposal.
-
-## Run the integrated project
-
-Use Python 3.11 or newer, from the repository root:
-
-```powershell
-python -m pip install -r gateway/operator/requirements.txt
-python -B -m gateway.operator COM5 192.168.137.20 --state-file gateway.sqlite3
-```
-
-Replace COM5 and the IP with the identified A port and B address. Open
-http://127.0.0.1:8080 in a browser. One server process owns both station links;
-do not simultaneously run the older station CLIs on those links. The default
-listener is local. Device Wi-Fi provisioning, physical USB/Wi-Fi validation,
-raw transport captures and threshold calibration are separate hardware work.
-The serial/TCP firmware is unchanged by this operator integration. For the
-two-PC phone-hotspot topology, follow [the setup-only guide](two-pc-hardware-setup.md).
-Use --host GATEWAY_IP for remote access; all three Wi-Fi devices share the LAN.
-The launcher appends raw A serial bytes to `serial.local.jsonl` (override with
-`--serial-trace`; `--events` remains a compatible alias). Decoded application
-history is retained in the SQLite state file; status exposes capture health.
-
-For an explicitly labelled SOFTWARE preview, with MSVC installed:
-
-```powershell
-python -B tools/run_operator_preview.py --state-file operator-preview.sqlite3
-```
-
-This uses the actual A/B C application code through native localhost peers.
-It opens no physical COM port and has no automatic mock fallback. Optional
-`--drop-first-production` with a fresh state file exercises unresolved-part
-recovery. Stop the preview with Ctrl+C. The contributor mock remains a
-standalone design artifact, not the integrated server.
+Implemented Milestone 1 contract. Use the root README for physical setup and
+launch commands; use [Testing](testing.md) for current verification status.
+The assignment PDF is authoritative; the team guide is a proposal.
 
 ## Jobs, the same batch, and a new batch
 
@@ -174,7 +141,7 @@ are fresh/idle. Closing these scopes does not reconstruct missing old results.
 The new session's empty batch is not a claim that the previous batch completed.
 Keep the same SQLite state file: durable numeric part allocation and detailed
 request/outcome/accounting/control events survive. Do not delete it to bypass
-recovery. The screen's batch-evidence JSON and browser-log download supplement
+recovery. The selected batch report and optional browser-message download supplement
 this ledger. The integrated launcher records identified application observations
 in SQLite and raw A serial TX/RX hex in a separate off-loop bounded writer. Raw RX entries are chunks;
 serial_tx means the port write completed, not an inferred receiver ACK. Capture
@@ -185,15 +152,8 @@ Batch History uses read-only `GET /api/history?offset=0&limit=20` and
 `GET /api/history/{batch_id}`. `?download=true` adds the `batch-N.json` attachment
 name. Limits are 1..100 and offset is nonnegative. Reports have schema version 2;
 the live status/command protocol remains version 1 with optional display fields.
-Full IDs remain the authoritative identities. Persistent aliases, compact
-per-batch reports, old-journal migration and update instructions are described
-in [batch-history.md](batch-history.md). History is not execution recovery.
-
-## Validation limits
-
-75 existing native station/controller/transport checks passed previously;
-26 operator/history/capture checks and nine Node frontend/protocol/render
-checks pass for the history update. The station core and firmware were unchanged.
-Visual browser inspection remains blocked by the unavailable browser access
-host; no desktop/mobile screenshot or physical-board result is claimed.
-See verification/operator and verification/station-integration for evidence.
+Full IDs remain authoritative; persistent display aliases and batch numbers are
+allocated in the same database and retained across gateway restarts. A report
+keeps original requests, frozen settings, observed stages, results and recovery
+queries. Missing original ACK observations stay absent. History is read-only;
+it is not execution recovery.

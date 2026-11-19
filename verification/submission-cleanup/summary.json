@@ -1,0 +1,52 @@
+{
+  "baseline_commit": "4584513e2114ae575ecf53295329536d237306b8",
+  "cleanup_scope": "Source-directory names, literal path references, consolidated documentation/dependencies, packaging and verification records only.",
+  "active_software_checks": {
+    "passed": 115,
+    "failed": 0
+  },
+  "duplicate_verification": {
+    "passed": 8,
+    "failed": 0,
+    "overlaps_active_suites": true
+  },
+  "legacy_production_checks": {
+    "passed": 50,
+    "failed": 1,
+    "failure": "test_actual_c_history requires host GCC, absent before and after cleanup; no regression"
+  },
+  "optional_ui_mock_checks": {
+    "passed": 7,
+    "failed": 0
+  },
+  "fresh_python_environment": {
+    "installed": true,
+    "pip_check": "PASS",
+    "dependency_pins": 38
+  },
+  "firmware_builds": {
+    "A_baseline": "PASS",
+    "A_after": "PASS",
+    "B_baseline_retry": "PASS",
+    "B_after": "PASS",
+    "source_and_configuration_unchanged": true
+  },
+  "integrity": {
+    "baseline_source_files_equal_after_literal_path_normalization": 112,
+    "current_evidence_files_byte_identical": 42,
+    "ui_and_firmware_source_byte_identical": true,
+    "report_csv_and_png_byte_identical": true,
+    "readmes": 1,
+    "requirements_files": 1,
+    "supporting_documents": 6
+  },
+  "package_validation": "SHA256 manifest, ZIP integrity, extracted launcher help, Git-independent repack with identical manifest",
+  "physical_hardware_used": false,
+  "boards_flashed": false,
+  "limitations": [
+    "No new hardware tests or live-session interaction.",
+    "One pre-existing legacy host-GCC check remains unavailable.",
+    "Current raw USB frame log/database collection and final report remain separate pending work."
+  ],
+  "backup_outside_submission": "C:\\Users\\ainour\\.codex\\submission-backups\\Networks_Project\\20261119T070811Z"
+}

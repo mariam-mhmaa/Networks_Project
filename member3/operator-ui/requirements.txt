@@ -1,2 +1,0 @@
-# Used only by the local test gateway and integration tests; the UI has no build dependencies.
-aiohttp>=3.10,<4

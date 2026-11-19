@@ -1,0 +1,60 @@
+{
+  "assets": [
+    {
+      "path": "/app.js",
+      "bytes": 32565,
+      "sha256": "06c7ab2662b980ef9264a7be56fbe978809bfff45f2fb7a529ab2c0c80759e60"
+    },
+    {
+      "path": "/cartoon.css",
+      "bytes": 11391,
+      "sha256": "d8bcdd6d254a7ef3f67f3ffebf899c44b54889a3d18e5cca7ee70f6fe5230cb3"
+    },
+    {
+      "path": "/",
+      "bytes": 17701,
+      "sha256": "721ddea80836d06edece4b52cbe01b04ce5490c135acfcde3862dcd768a552f5"
+    },
+    {
+      "path": "/integration.css",
+      "bytes": 4924,
+      "sha256": "ae57fbac4199f63129ff9699618f9fc080ea58fb53542fff0f519102f1a67710"
+    },
+    {
+      "path": "/motion.css",
+      "bytes": 5443,
+      "sha256": "c81a57e375478d36d7b9cdd4274df3fc24fced4fc44d9044c5a9d6f99b95ee02"
+    },
+    {
+      "path": "/motion.js",
+      "bytes": 1425,
+      "sha256": "d380173c14f6db7aabd8d63581245a094be92aba61ccd66d973e38d3c80b2b98"
+    },
+    {
+      "path": "/protocol.js",
+      "bytes": 4484,
+      "sha256": "16ffb6334c85dad6304cf9e87fbfb673bf0471130baeea0671306b7d92e013ad"
+    },
+    {
+      "path": "/toys.css",
+      "bytes": 2512,
+      "sha256": "dae4586acf1ae283ba4b0ec08b57e4f9fbaec5413eb6fdb381b1a54e488a2d75"
+    },
+    {
+      "path": "/toys.js",
+      "bytes": 2257,
+      "sha256": "c1266e0993653c4dd06032584e3ce050b73ad6305f840a3761fa364eb876a426"
+    },
+    {
+      "path": "/transport.js",
+      "bytes": 7066,
+      "sha256": "6343dca6337e075f070fbeacbaed974528d34ca2ab00665e44990eff2ff9a735"
+    }
+  ],
+  "launchers": [
+    "gateway.operator",
+    "gateway.production",
+    "gateway.inspection"
+  ],
+  "physical_hardware_used": false
+}

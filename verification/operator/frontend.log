@@ -8,7 +8,7 @@ Passed 9 client/protocol checks:
 - Malformed status takes the display offline instead of accepting fabricated counters
 - Reconnect refuses a stale sequence under an unchanged gateway boot
 - Operator does not optimistically start work, double-click, or complete jobs when a timer reaches zero
-✔ member3\operator-ui\test_client.mjs (84.1055ms)
+✔ operator_ui\test_client.mjs (183.7051ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -16,4 +16,4 @@ Passed 9 client/protocol checks:
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 92.5662
+ℹ duration_ms 203.3399

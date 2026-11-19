@@ -1,2 +1,0 @@
-# Already present in the working ESP-IDF Python environment; no install needed.
-pyserial==3.5

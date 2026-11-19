@@ -11,7 +11,7 @@ import uvicorn
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "member1/production-a/tests"))
+sys.path.insert(0, str(ROOT / "stations/production/tests"))
 import test_integrated as native
 from gateway.production.client import AClient
 from gateway.inspection.client import BClient

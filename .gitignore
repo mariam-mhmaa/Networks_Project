@@ -7,3 +7,11 @@ __pycache__/
 *.sqlite3-shm
 *.local.jsonl
 /build/
+
+# Regenerable verification/build/package output
+.build-verification/
+/submission/
+**/build/
+**/build-*/
+**/.venv/
+**/.pytest_cache/

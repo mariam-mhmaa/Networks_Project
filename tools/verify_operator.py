@@ -18,9 +18,9 @@ def main():
     results = {}
     commands = {
         "backend": [sys.executable, "-B", "-m", "unittest", "discover", "-s", "gateway/operator/tests", "-p", "test_*.py"],
-        "integration": [sys.executable, "-B", "-m", "unittest", "discover", "-s", "member1/production-a/tests", "-p", "test_integrated.py"],
-        "inspection": [sys.executable, "-B", "-m", "unittest", "discover", "-s", "member2/esp32_b_inspection/tests", "-p", "test_*.py"],
-        "frontend": [node, "--test", "member3/operator-ui/test_client.mjs"],
+        "integration": [sys.executable, "-B", "-m", "unittest", "discover", "-s", "stations/production/tests", "-p", "test_integrated.py"],
+        "inspection": [sys.executable, "-B", "-m", "unittest", "discover", "-s", "stations/inspection/tests", "-p", "test_*.py"],
+        "frontend": [node, "--test", "operator_ui/test_client.mjs"],
     }
     for name, command in commands.items():
         run = subprocess.run(command, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=240)
@@ -30,7 +30,7 @@ def main():
         results[name] = {"exit_code": run.returncode, "checks": int(count[1]) if count else None}
         print(f"{name}: {'PASS' if run.returncode == 0 else 'FAIL'}", flush=True)
     sources = []
-    for directory in ("gateway/operator", "gateway/production", "gateway/inspection", "member3/operator-ui"):
+    for directory in ("gateway/operator", "gateway/production", "gateway/inspection", "operator_ui"):
         for path in sorted((ROOT/directory).rglob("*")):
             if path.is_file() and path.suffix in {".py", ".js", ".mjs", ".css", ".html", ".txt"}:
                 sources.append({"path": path.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})

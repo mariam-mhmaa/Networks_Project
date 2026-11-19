@@ -8,7 +8,7 @@ from fastapi import FastAPI, Query, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, JSONResponse, Response
 from .service import AdmissionError
 
-ASSETS = Path(__file__).resolve().parents[2] / "member3/operator-ui"
+ASSETS = Path(__file__).resolve().parents[2] / "operator_ui"
 PUBLIC_ASSETS = {"index.html", "app.js", "protocol.js", "transport.js", "cartoon.css", "toys.css", "toys.js", "motion.css", "motion.js", "integration.css"}
 
 

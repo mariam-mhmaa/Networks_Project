@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2026-11-19T07:34:12.539856+00:00",
+  "tests_run": 51,
+  "failures": [
+    [
+      "test_history_core.HistoryCoreTests.test_actual_c_history",
+      "Traceback (most recent call last):\n  File \"C:\\Espressif\\projects\\m1-submission\\stations\\production\\tests\\test_history_core.py\", line 14, in test_actual_c_history\n    self.assertIsNotNone(compiler, \"Existing host GCC required; do not substitute ESP cross compiler\")\nAssertionError: unexpectedly None : Existing host GCC required; do not substitute ESP cross compiler\n"
+    ]
+  ],
+  "errors": [],
+  "baseline_same_failure": "test_history_core.HistoryCoreTests.test_actual_c_history: host GCC not on PATH"
+}

@@ -1,0 +1,14 @@
+Native C station software tests; localhost only, no physical ESP32s.
+test_duplicate_post_has_one_execution_and_conflict_does_not_replace_it (gateway.operator.tests.test_operator.OperatorTests.test_duplicate_post_has_one_execution_and_conflict_does_not_replace_it) ... ok
+test_retry_new_atr_sequence_same_job_no_reexecution (test_integrated.IntegratedTests.test_retry_new_atr_sequence_same_job_no_reexecution) ... ok
+test_changed_part_same_production_id_does_not_execute_again (test_integrated.IntegratedTests.test_changed_part_same_production_id_does_not_execute_again) ... ok
+test_fresh_id_cannot_produce_same_part_again (test_integrated.IntegratedTests.test_fresh_id_cannot_produce_same_part_again) ... ok
+test_retry_during_active_job_does_not_restart_timer_or_execute_twice (test_application.ApplicationTests.test_retry_during_active_job_does_not_restart_timer_or_execute_twice) ... ok
+test_duplicate_same_job_replays_result_once (test_application.ApplicationTests.test_duplicate_same_job_replays_result_once) ... ok
+test_changed_contents_same_id_is_conflict_and_does_not_execute (test_application.ApplicationTests.test_changed_contents_same_id_is_conflict_and_does_not_execute) ... ok
+test_fresh_id_cannot_reinspect_same_part (test_application.ApplicationTests.test_fresh_id_cannot_reinspect_same_part) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 26.968s
+
+OK

@@ -10,7 +10,7 @@ import uvicorn
 import websockets
 
 ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(ROOT / "member1/production-a/tests"))
+sys.path.insert(0, str(ROOT / "stations/production/tests"))
 import test_integrated as native
 FAST = native.FAST
 from gateway.production.client import AClient

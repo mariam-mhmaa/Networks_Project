@@ -1,0 +1,10 @@
+....C:\Espressif\projects\m1-submission\operator_ui\mock_gateway.py:321: NotAppKeyWarning: It is recommended to use web.AppKey instances for keys.
+https://docs.aiohttp.org/en/stable/web_advanced.html#application-s-config
+  app["factory"], app["clients"], app["allowed_origin"] = Factory(), set(), allow_origin
+C:\Users\ainour\.codex\venvs\mct431-m1-submission\Lib\site-packages\aiohttp\web_urldispatcher.py:193: DeprecationWarning: Bare functions are deprecated, use async ones
+  warnings.warn(
+...
+----------------------------------------------------------------------
+Ran 7 tests in 0.371s
+
+OK

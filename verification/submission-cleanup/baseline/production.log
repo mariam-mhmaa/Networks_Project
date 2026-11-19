@@ -1,0 +1,14 @@
+....................F...Executing <Task pending name='Task-121' coro=<IntegratedTests.test_explicit_restart_fence_allows_incomplete_closure_without_old_result() running at C:\Espressif\projects\m1-submission\member1\production-a\tests\test_integrated.py:240> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.219 seconds
+................................................
+======================================================================
+FAIL: test_actual_c_history (test_history_core.HistoryCoreTests.test_actual_c_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Espressif\projects\m1-submission\member1\production-a\tests\test_history_core.py", line 14, in test_actual_c_history
+    self.assertIsNotNone(compiler, "Existing host GCC required; do not substitute ESP cross compiler")
+AssertionError: unexpectedly None : Existing host GCC required; do not substitute ESP cross compiler
+
+----------------------------------------------------------------------
+Ran 72 tests in 50.509s
+
+FAILED (failures=1)

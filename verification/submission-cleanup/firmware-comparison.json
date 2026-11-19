@@ -1,0 +1,33 @@
+{
+  "builds": [
+    {
+      "station": "A",
+      "baseline_build": "PASS",
+      "after_build": "PASS",
+      "sdk": "ESP-IDF v6.1.1",
+      "sdkconfig_identical": true,
+      "sdkconfig_sha256": "f3419f473b88d6d548f3fd1de67ae15f3cc5cf7ca1788bea7026847d168c4a5b",
+      "before_binary_bytes": 215152,
+      "after_binary_bytes": 215152,
+      "before_binary_sha256": "114a28744c06bb3bd11a316034437b3241b3907724674134db19b3e7e624a966",
+      "after_binary_sha256": "764a88cb1abb6075e2be748ee9215e619058771cba42dcf3c59e5162df0bf0bf",
+      "flashed": false,
+      "physical_hardware_used": false
+    },
+    {
+      "station": "B",
+      "baseline_build": "PASS",
+      "after_build": "PASS",
+      "sdk": "ESP-IDF v6.1.1",
+      "sdkconfig_identical": true,
+      "sdkconfig_sha256": "5c9b33403dbb3de68b9d5800146427a5456e0e9cfc6948a27a6ba9c6c6657f55",
+      "before_binary_bytes": 811376,
+      "after_binary_bytes": 811376,
+      "before_binary_sha256": "bfaec3f6954685bbfddfa83ffded8183ed2ee84ac3e0d7c22eedc63818ca08af",
+      "after_binary_sha256": "d116bdbee78ac5af7ff846dfc608be2a2fdcdadd6617903f79a6b0dfeba3c95e",
+      "flashed": false,
+      "physical_hardware_used": false
+    }
+  ],
+  "note": "Binary hashes may differ with build timestamps/source paths; all firmware C/header bytes and SDK configuration inputs are unchanged. B uses build-only Wi-Fi placeholders. Initial baseline B disk-full failure was retried successfully after space was freed."
+}

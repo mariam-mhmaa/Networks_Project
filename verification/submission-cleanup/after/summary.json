@@ -1,0 +1,171 @@
+{
+  "timestamp_utc": "2026-11-19T07:34:08.055024+00:00",
+  "results": {
+    "backend": {
+      "exit_code": 0,
+      "checks": 32
+    },
+    "integration": {
+      "exit_code": 0,
+      "checks": 21
+    },
+    "inspection": {
+      "exit_code": 0,
+      "checks": 53
+    },
+    "frontend": {
+      "exit_code": 0,
+      "checks": 9
+    }
+  },
+  "prior_station_regression": {
+    "checks": 75,
+    "commit": "7a6d088",
+    "rerun_this_update": false
+  },
+  "browser_visual_qa": "Not run in this verification script",
+  "physical_hardware": "Not used; native C peers and loopback HTTP/WebSocket only",
+  "firmware_source_changed": false,
+  "sources": [
+    {
+      "path": "gateway/operator/__init__.py",
+      "sha256": "0d63592da8e700cee35ac967ea336ad7f4b45bbff076a3dbe1f40d0b7c6ba8ba"
+    },
+    {
+      "path": "gateway/operator/__main__.py",
+      "sha256": "c83e17a3eea27cf560a0c140952d2894f625f8415338a7a293a600bed95e1011"
+    },
+    {
+      "path": "gateway/operator/evidence.py",
+      "sha256": "3b6cf192e321fa462b88c32ba29ae8e8a3f35fb9ee621ef3453ad836d88d6bcc"
+    },
+    {
+      "path": "gateway/operator/history.py",
+      "sha256": "c4e61a24e88dca8392beab4812b9e27a973c3f4040ac47a9ea3c561c4188dce4"
+    },
+    {
+      "path": "gateway/operator/server.py",
+      "sha256": "d2aa55bdfa6478f962538ea6ccef63432db01de02ae890ec18b3727a2fabaf07"
+    },
+    {
+      "path": "gateway/operator/service.py",
+      "sha256": "f6d15d55e775d578fffab833ead7e439d2b34bc96a21469db47ee36ff6895828"
+    },
+    {
+      "path": "gateway/operator/tests/test_evidence.py",
+      "sha256": "b5d15be3f50e421aeb5be7cd47232376a10ddcd6dc9d1a05bc63198a0f8a42db"
+    },
+    {
+      "path": "gateway/operator/tests/test_history.py",
+      "sha256": "43f3733b6667261d319cdb8e0adecd82a6b3536c9131ec5446d9b64fed73f142"
+    },
+    {
+      "path": "gateway/operator/tests/test_operator.py",
+      "sha256": "a8203347071fc85876a6e6f3b7b506b595531ef77a381c61537d3f31c93ff2c5"
+    },
+    {
+      "path": "gateway/production/__init__.py",
+      "sha256": "880ccf2213f8b360f87d9206e144e9f628ac46a36bbc439915d24e7bf0fa6165"
+    },
+    {
+      "path": "gateway/production/__main__.py",
+      "sha256": "7a5c99a8bad28784213a8b37f49c416e032b91b2d202c7bf2115055f3ae940c7"
+    },
+    {
+      "path": "gateway/production/client.py",
+      "sha256": "fab7349caa8ca924a400a5410405f687c31a195d23c560ed752c223c7fea0209"
+    },
+    {
+      "path": "gateway/production/controller.py",
+      "sha256": "18c323afbe63ff5d0f261626243e7afd91930b7d9ee4800dcf2e5e58e81a1b56"
+    },
+    {
+      "path": "gateway/production/coordinator.py",
+      "sha256": "1a1f2af04a4294fec4b32921b22aa03c45f680f5ddef13b76d8830752518cce0"
+    },
+    {
+      "path": "gateway/production/framing.py",
+      "sha256": "7fa29efa46e2655daa4837c20608b084c029addf308da069b9005133e11e37cf"
+    },
+    {
+      "path": "gateway/production/serial_link.py",
+      "sha256": "faec1822ca36cf4dbd6ac44c19d124be5096db20c26c2d6bf3ec5e2e85d82986"
+    },
+    {
+      "path": "gateway/inspection/__init__.py",
+      "sha256": "76a2b6385c1402d5ad94634ff051fdb725e0a3c59bbe61550315801b6d988dc2"
+    },
+    {
+      "path": "gateway/inspection/__main__.py",
+      "sha256": "1d43af7ef82b99adccc8bfe7333c5edb54e7994daa7ad712d0aa0e9132ac0dda"
+    },
+    {
+      "path": "gateway/inspection/client.py",
+      "sha256": "c8446b7fbcf379310cf0c0c87f537e3ed993d0c2785ca13857cfa71760ab5ff9"
+    },
+    {
+      "path": "gateway/inspection/controller.py",
+      "sha256": "156388525e663f36a095546664076bb7cda2369dbaf80358f63b67beb940f18c"
+    },
+    {
+      "path": "gateway/inspection/coordinator.py",
+      "sha256": "b0242951149bf96e334bdab10a6e2d53a35e100e01da0aa6db7dc8670b956358"
+    },
+    {
+      "path": "gateway/inspection/wire.py",
+      "sha256": "ae923c7530072839468baea40b3815425fa8994b4502ebada34349554f61062b"
+    },
+    {
+      "path": "operator_ui/app.js",
+      "sha256": "06c7ab2662b980ef9264a7be56fbe978809bfff45f2fb7a529ab2c0c80759e60"
+    },
+    {
+      "path": "operator_ui/cartoon.css",
+      "sha256": "d8bcdd6d254a7ef3f67f3ffebf899c44b54889a3d18e5cca7ee70f6fe5230cb3"
+    },
+    {
+      "path": "operator_ui/index.html",
+      "sha256": "721ddea80836d06edece4b52cbe01b04ce5490c135acfcde3862dcd768a552f5"
+    },
+    {
+      "path": "operator_ui/integration.css",
+      "sha256": "ae57fbac4199f63129ff9699618f9fc080ea58fb53542fff0f519102f1a67710"
+    },
+    {
+      "path": "operator_ui/mock_gateway.py",
+      "sha256": "7d79f08f0386e8b00d0089c7bdcb256ea99184ca1e21f5eadfece23a26315422"
+    },
+    {
+      "path": "operator_ui/motion.css",
+      "sha256": "c81a57e375478d36d7b9cdd4274df3fc24fced4fc44d9044c5a9d6f99b95ee02"
+    },
+    {
+      "path": "operator_ui/motion.js",
+      "sha256": "d380173c14f6db7aabd8d63581245a094be92aba61ccd66d973e38d3c80b2b98"
+    },
+    {
+      "path": "operator_ui/protocol.js",
+      "sha256": "16ffb6334c85dad6304cf9e87fbfb673bf0471130baeea0671306b7d92e013ad"
+    },
+    {
+      "path": "operator_ui/test_client.mjs",
+      "sha256": "b49a9dfb0f0d1585c84119a671c7ba0e882e9b0346e6636a6d48d34ad09fcaa3"
+    },
+    {
+      "path": "operator_ui/test_gateway.py",
+      "sha256": "dc3853bcb981ee90b47ed649f46da9fb00b81ce73e9bea9ec611ee385427fe1b"
+    },
+    {
+      "path": "operator_ui/toys.css",
+      "sha256": "dae4586acf1ae283ba4b0ec08b57e4f9fbaec5413eb6fdb381b1a54e488a2d75"
+    },
+    {
+      "path": "operator_ui/toys.js",
+      "sha256": "c1266e0993653c4dd06032584e3ce050b73ad6305f840a3761fa364eb876a426"
+    },
+    {
+      "path": "operator_ui/transport.js",
+      "sha256": "6343dca6337e075f070fbeacbaed974528d34ca2ab00665e44990eff2ff9a735"
+    }
+  ]
+}

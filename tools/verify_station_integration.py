@@ -13,9 +13,9 @@ OUT = ROOT / "verification/station-integration"
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     suites = [
-        ("inspection", "member2/esp32_b_inspection/tests", "test_*.py"),
-        ("production", "member1/production-a/tests", "test_integrated.py"),
-        ("serial-link", "member1/production-a/tests", "test_serial_link.py"),
+        ("inspection", "stations/inspection/tests", "test_*.py"),
+        ("production", "stations/production/tests", "test_integrated.py"),
+        ("serial-link", "stations/production/tests", "test_serial_link.py"),
     ]
     results = {}
     for name, directory, pattern in suites:
@@ -25,8 +25,8 @@ def main():
         results[name] = {"exit_code": result.returncode, "log": f"{name}.log"}
         print(f"{name}: {'PASS' if result.returncode == 0 else 'FAIL'}", flush=True)
     sources = []
-    for directory in ("shared/station", "gateway", "member1/production-a/firmware/main",
-                      "member2/esp32_b_inspection/main"):
+    for directory in ("shared/station", "gateway", "stations/production/firmware/main",
+                      "stations/inspection/main"):
         for path in sorted((ROOT / directory).rglob("*")):
             if path.is_file() and path.suffix in {".c", ".h", ".py", ".txt"}:
                 sources.append({"path": path.relative_to(ROOT).as_posix(),

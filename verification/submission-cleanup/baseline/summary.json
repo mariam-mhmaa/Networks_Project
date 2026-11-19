@@ -1,0 +1,61 @@
+{
+  "timestamp_utc": "2026-11-19T07:12:00.835918+00:00",
+  "scope": "Software only; no physical device or gateway connected",
+  "phase": "baseline",
+  "results": {
+    "operator": {
+      "exit_code": 0,
+      "checks": 32,
+      "command": [
+        "C:\\Users\\ainour\\OneDrive - Faculty of Engineering Ain Shams University\\Semester7\\Networks\\Project\\Networks_Project\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "gateway/operator/tests",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    "production": {
+      "exit_code": 1,
+      "checks": 72,
+      "command": [
+        "C:\\Users\\ainour\\OneDrive - Faculty of Engineering Ain Shams University\\Semester7\\Networks\\Project\\Networks_Project\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "member1/production-a/tests",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    "inspection": {
+      "exit_code": 0,
+      "checks": 53,
+      "command": [
+        "C:\\Users\\ainour\\OneDrive - Faculty of Engineering Ain Shams University\\Semester7\\Networks\\Project\\Networks_Project\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "member2/esp32_b_inspection/tests",
+        "-p",
+        "test_*.py"
+      ]
+    },
+    "frontend": {
+      "exit_code": 0,
+      "checks": 9,
+      "command": [
+        "C:\\Users\\ainour\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "--test",
+        "member3/operator-ui/test_client.mjs"
+      ]
+    }
+  }
+}

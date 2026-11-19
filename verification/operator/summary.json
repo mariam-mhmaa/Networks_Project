@@ -1,5 +1,5 @@
 {
-  "timestamp_utc": "2026-11-19T05:12:33.591616+00:00",
+  "timestamp_utc": "2026-11-19T07:34:08.055024+00:00",
   "results": {
     "backend": {
       "exit_code": 0,
@@ -7,7 +7,7 @@
     },
     "integration": {
       "exit_code": 0,
-      "checks": 19
+      "checks": 21
     },
     "inspection": {
       "exit_code": 0,
@@ -29,7 +29,7 @@
   "sources": [
     {
       "path": "gateway/operator/__init__.py",
-      "sha256": "9ed1b702c21081323ba12669c3f6d9f2ec526960a51605a5e51d421b45b37ad0"
+      "sha256": "0d63592da8e700cee35ac967ea336ad7f4b45bbff076a3dbe1f40d0b7c6ba8ba"
     },
     {
       "path": "gateway/operator/__main__.py",
@@ -41,19 +41,11 @@
     },
     {
       "path": "gateway/operator/history.py",
-      "sha256": "2f06d80c1cad864abae12f7a72047b566338fa970884be9680a2388b6e88da92"
-    },
-    {
-      "path": "gateway/operator/requirements-test.txt",
-      "sha256": "934fbb549ab3209320a68f549631f92ffa7dcd1372d15620c148eb5f55bd7735"
-    },
-    {
-      "path": "gateway/operator/requirements.txt",
-      "sha256": "75c9edbfbf9c5a8a4995a4d0befa4ad45434300c7c277a35088d91036ab4f4d4"
+      "sha256": "c4e61a24e88dca8392beab4812b9e27a973c3f4040ac47a9ea3c561c4188dce4"
     },
     {
       "path": "gateway/operator/server.py",
-      "sha256": "6bca50f6729d90388d684dcc7b57fbb200e7f2bade190c9f828f45c4247d9818"
+      "sha256": "d2aa55bdfa6478f962538ea6ccef63432db01de02ae890ec18b3727a2fabaf07"
     },
     {
       "path": "gateway/operator/service.py",
@@ -65,11 +57,11 @@
     },
     {
       "path": "gateway/operator/tests/test_history.py",
-      "sha256": "a574f392bcb8a408ae76393cf688b65aa39bf3a1dba741b7ceed08bcb58e149a"
+      "sha256": "43f3733b6667261d319cdb8e0adecd82a6b3536c9131ec5446d9b64fed73f142"
     },
     {
       "path": "gateway/operator/tests/test_operator.py",
-      "sha256": "7ca3f41c72c3cf72f0d38bbb9fae6b165036273d867b6fc26419ddfbc59bf53f"
+      "sha256": "a8203347071fc85876a6e6f3b7b506b595531ef77a381c61537d3f31c93ff2c5"
     },
     {
       "path": "gateway/production/__init__.py",
@@ -77,7 +69,7 @@
     },
     {
       "path": "gateway/production/__main__.py",
-      "sha256": "e722d55b9fd659cb9351abf4e5878e3042d0a88d3f14508cdf15462b5ca85cfa"
+      "sha256": "7a5c99a8bad28784213a8b37f49c416e032b91b2d202c7bf2115055f3ae940c7"
     },
     {
       "path": "gateway/production/client.py",
@@ -94,10 +86,6 @@
     {
       "path": "gateway/production/framing.py",
       "sha256": "7fa29efa46e2655daa4837c20608b084c029addf308da069b9005133e11e37cf"
-    },
-    {
-      "path": "gateway/production/requirements.txt",
-      "sha256": "7c3a7b075c67c54222834f80a92ff4a7651995b7e21c4e37370a7d90018c16de"
     },
     {
       "path": "gateway/production/serial_link.py",
@@ -128,68 +116,56 @@
       "sha256": "ae923c7530072839468baea40b3815425fa8994b4502ebada34349554f61062b"
     },
     {
-      "path": "member3/operator-ui/app.js",
-      "sha256": "a297c5eccb916d76c03f131e6265982e3466b4db146a65ed1b9ba7924e72efd9"
+      "path": "operator_ui/app.js",
+      "sha256": "06c7ab2662b980ef9264a7be56fbe978809bfff45f2fb7a529ab2c0c80759e60"
     },
     {
-      "path": "member3/operator-ui/cartoon.css",
+      "path": "operator_ui/cartoon.css",
       "sha256": "d8bcdd6d254a7ef3f67f3ffebf899c44b54889a3d18e5cca7ee70f6fe5230cb3"
     },
     {
-      "path": "member3/operator-ui/index.html",
-      "sha256": "db528e5bf0bf8f47d9b02c850c0ce28b9b49e48e7c74769b66906ff64d637617"
+      "path": "operator_ui/index.html",
+      "sha256": "721ddea80836d06edece4b52cbe01b04ce5490c135acfcde3862dcd768a552f5"
     },
     {
-      "path": "member3/operator-ui/integration.css",
-      "sha256": "ed8adee8dd3e45904cb0ec23f2b0f556820d4caeedcf31d5c008e8f42c1c486b"
+      "path": "operator_ui/integration.css",
+      "sha256": "ae57fbac4199f63129ff9699618f9fc080ea58fb53542fff0f519102f1a67710"
     },
     {
-      "path": "member3/operator-ui/mock_gateway.py",
+      "path": "operator_ui/mock_gateway.py",
       "sha256": "7d79f08f0386e8b00d0089c7bdcb256ea99184ca1e21f5eadfece23a26315422"
     },
     {
-      "path": "member3/operator-ui/motion.css",
+      "path": "operator_ui/motion.css",
       "sha256": "c81a57e375478d36d7b9cdd4274df3fc24fced4fc44d9044c5a9d6f99b95ee02"
     },
     {
-      "path": "member3/operator-ui/motion.js",
+      "path": "operator_ui/motion.js",
       "sha256": "d380173c14f6db7aabd8d63581245a094be92aba61ccd66d973e38d3c80b2b98"
     },
     {
-      "path": "member3/operator-ui/protocol.js",
-      "sha256": "17316db120770e66743cfcdf5e1a607fd8c888bd1c2bbc25a6b59c4689571380"
+      "path": "operator_ui/protocol.js",
+      "sha256": "16ffb6334c85dad6304cf9e87fbfb673bf0471130baeea0671306b7d92e013ad"
     },
     {
-      "path": "member3/operator-ui/requirements-tested.txt",
-      "sha256": "725b886b54bd730c7a3d6858dd5ab888f99fa431d7488d30722a4766ccce8c36"
+      "path": "operator_ui/test_client.mjs",
+      "sha256": "b49a9dfb0f0d1585c84119a671c7ba0e882e9b0346e6636a6d48d34ad09fcaa3"
     },
     {
-      "path": "member3/operator-ui/requirements.txt",
-      "sha256": "1777565875ea3d61d2e112228388b0842f217519b4d52dfe775176c75457e1fe"
-    },
-    {
-      "path": "member3/operator-ui/test_client.mjs",
-      "sha256": "11128ec3fc5f3c0e7f9505a4bbc4d492affe91c5ea778fe981095423f96dfd5c"
-    },
-    {
-      "path": "member3/operator-ui/test_gateway.py",
+      "path": "operator_ui/test_gateway.py",
       "sha256": "dc3853bcb981ee90b47ed649f46da9fb00b81ce73e9bea9ec611ee385427fe1b"
     },
     {
-      "path": "member3/operator-ui/toys.css",
+      "path": "operator_ui/toys.css",
       "sha256": "dae4586acf1ae283ba4b0ec08b57e4f9fbaec5413eb6fdb381b1a54e488a2d75"
     },
     {
-      "path": "member3/operator-ui/toys.js",
+      "path": "operator_ui/toys.js",
       "sha256": "c1266e0993653c4dd06032584e3ce050b73ad6305f840a3761fa364eb876a426"
     },
     {
-      "path": "member3/operator-ui/transport.js",
-      "sha256": "d8244f68d37e51fc3e2d300a55f34980da10ab8ee831321b5a8747f662464790"
-    },
-    {
-      "path": "member3/operator-ui/verification/server_tests.txt",
-      "sha256": "42e1163dbec34058ac44b73ae67cb98fadec981266f650d88d3e56fad8cec65f"
+      "path": "operator_ui/transport.js",
+      "sha256": "6343dca6337e075f070fbeacbaed974528d34ca2ab00665e44990eff2ff9a735"
     }
   ]
 }

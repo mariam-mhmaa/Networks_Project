@@ -1,7 +1,7 @@
 # Upstream files retain their original bytes and formatting.
-member2/esp32_b_inspection/main/vendor/cjson/cJSON.c -text -whitespace
-member2/esp32_b_inspection/main/vendor/cjson/cJSON.h -text -whitespace
-member2/esp32_b_inspection/main/vendor/cjson/LICENSE -text -whitespace
+stations/inspection/main/vendor/cjson/cJSON.c -text -whitespace
+stations/inspection/main/vendor/cjson/cJSON.h -text -whitespace
+stations/inspection/main/vendor/cjson/LICENSE -text -whitespace
 shared/station/vendor/cjson/cJSON.c -text -whitespace
 shared/station/vendor/cjson/cJSON.h -text -whitespace
 shared/station/vendor/cjson/LICENSE -text -whitespace

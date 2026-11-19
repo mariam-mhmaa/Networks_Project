@@ -1,0 +1,8 @@
+..Evidence write failed: Out of range float values are not JSON compliant
+.........Executing <Task pending name='Task-182' coro=<OperatorTests.test_consecutive_batches_have_separate_read_only_downloads_and_restart_history() running at C:\Espressif\projects\m1-submission\gateway\operator\tests\test_operator.py:96> wait_for=<Future pending cb=[shield.<locals>._outer_done_callback() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py:908, Task.task_wakeup()] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:428> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.250 seconds
+...............Executing <Task pending name='Task-2910' coro=<OperatorTests.test_real_websocket_full_snapshots_acknowledged_lease_and_http_command() running at C:\Espressif\projects\m1-submission\gateway\operator\tests\test_operator.py:538> cb=[_run_until_complete_cb() at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:181] created at C:\Users\ainour\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py:100> took 0.219 seconds
+......
+----------------------------------------------------------------------
+Ran 32 tests in 56.987s
+
+OK
