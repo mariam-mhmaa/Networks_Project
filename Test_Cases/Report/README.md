@@ -61,3 +61,17 @@ written interpretation in the report. Retain raw PCAP/serial logs, reports and
 CSV as supporting files. The general PDF checklist still requires diagrams,
 message specifications, reproducible instructions, protocol rationale and a
 specific-task contribution table; these assets alone do not complete it.
+
+## Later verification and closure-status correction
+
+The follow-up Batch 9 files are in `../Evidences/T01_NORMAL_CAPTURE` (the name
+chosen by the user). Its capture and GUI/report agree on four produced and
+inspected parts, two PASS/two FAIL and no missing work. Its startup messages
+verify the startup fix. A second status issue was found at normal closure:
+"batch closure in progress" was published as Fault before successful Idle.
+This has now been corrected without bypassing real failure/recovery handling;
+30 backend, 19 native A/B integration and 9 frontend checks passed. Physical
+verification of the closure correction is still pending. Preserve both runs'
+original captures and distinguish pre-fix evidence in the report. The existing
+CSV/plot/excerpt above continue to describe their explicitly stated Batch 8
+source; they have not been silently relabelled as Batch 9 measurements.

@@ -259,3 +259,33 @@ excerpt, and written interpretation/provenance/reproduction instructions.
 These are Milestone 1 application evidence; they do not claim to perform the
 formal Milestone 2 protocol benchmark. A's current raw serial file still needs
 to be collected once for the testing session and checked.
+
+### User-named T01_NORMAL_CAPTURE: Batch 9 review and closure correction
+
+The user saved the follow-up run in `Test_Cases/Evidences/T01_NORMAL_CAPTURE`.
+Its final GUI and History screenshots, `batch-9.json`, and raw capture agree:
+parts 37/39 PASS, 38/40 FAIL; four produced/inspected; no missing work. B's six
+request/three-stage-response exchanges match the report exactly; all 12 station
+operations have one request attempt, zero queries and observed R/A/C stages.
+The captured HTTP Start confirms target 4, production 2000 ms, inspection
+1000 ms, N=2, K=0, queue 2/block. The settings image is an older Batch 7 image;
+do not label it as a fresh Batch 9 setup screenshot.
+
+The new capture verifies corrected startup: pending Start is Idle with a
+coherent empty view, then Running with Batch 9. It also reveals a separate
+closure issue: frames 3082/3090 publish Fault / "batch closure in progress"
+before frame 3098 correctly becomes Idle/Completed. Final results are correct;
+retain this as pre-correction evidence rather than claiming a fault-free run.
+
+The closure correction now gates A using `ending` and B using its paused
+dispatcher without manufacturing a Fault. Normal automatic closure remains
+Running / Closing batch until both stations confirm; a normal Stop remains
+Paused / Stopping while current jobs finish. Read-only recovery is invoked
+only when uncertainty actually exists. Real closure failure or conflicting /
+stale station evidence remains Fault and requires explicit recovery.
+Software verification passed 30 backend, 19 native A/B integration and 9
+frontend checks. These include withheld B closure confirmation (not completed
+early), failed B closure after A closes (results retained, explicit recovery),
+and normal Stop without a false Fault. Hardware verification of this closure
+correction remains pending and can accompany the next assigned case; do not
+restart the entire test sequence. Neither ESP firmware was changed.

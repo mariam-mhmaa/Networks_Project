@@ -203,6 +203,69 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(view["counts"]["unstarted"], 4)
         self.assertEqual(view["parts"], [])
 
+    async def test_normal_closure_stays_running_until_both_stations_confirm(self):
+        from unittest.mock import patch
+        service, client, _ = await self.service()
+        entered, release = asyncio.Event(), asyncio.Event()
+        close_station = service.core._close_station
+
+        async def blocked_close(station, peer):
+            if station == "B":
+                entered.set()
+                await release.wait()
+            return await close_station(station, peer)
+
+        with patch.object(service.core, "_close_station", blocked_close):
+            await self.command(service, client, "start", batch_size=2)
+            await asyncio.wait_for(entered.wait(), 5)
+            for _ in range(3):
+                view = (await client.get("/api/status")).json()
+                self.assertEqual(view["state"], "Running")
+                self.assertIsNone(view["fault"])
+                self.assertEqual(view["control_pending"], "completing_batch")
+                self.assertEqual(view["batch"]["outcome"], "active")
+                self.assertEqual(view["counts"]["produced"], 2)
+                self.assertEqual(view["counts"]["inspected"], 2)
+                self.assertIsNone(service.core.active)
+                self.assertIsNone(service.core.b.active)
+                await asyncio.sleep(.1)
+            self.assertEqual(service.core.closures["A"][1].state, "COMPLETED")
+            report = (await client.get('/api/history/' + service.core.b.batch_id)).json()
+            self.assertNotEqual(report["batch"]["outcome"], "completed")
+            release.set()
+            await self.until(lambda: service.core.state == "IDLE" and service.auto_close.done())
+        view = service.snapshot()
+        self.assertEqual(view["batch"]["outcome"], "completed")
+        self.assertFalse(service.core.closing)
+        self.assertIsNone(view["fault"])
+
+    async def test_failed_closure_preserves_results_and_requires_explicit_recovery(self):
+        from unittest.mock import patch
+        service, client, _ = await self.service()
+        close_station = service.core._close_station
+
+        async def fail_b(station, peer):
+            if station == "B":
+                raise native.GatewayFault("B closure acknowledgement unavailable")
+            return await close_station(station, peer)
+
+        with patch.object(service.core, "_close_station", fail_b):
+            await self.command(service, client, "start", batch_size=2)
+            await self.until(lambda: service.auto_close and service.auto_close.done())
+        view = (await client.get("/api/status")).json()
+        self.assertEqual(view["state"], "Fault")
+        self.assertIn("B closure acknowledgement unavailable", view["fault"])
+        self.assertEqual(view["batch"]["outcome"], "active")
+        self.assertEqual(view["counts"]["produced"], 2)
+        self.assertEqual(view["counts"]["inspected"], 2)
+        self.assertEqual(service.core.closures["A"][1].state, "COMPLETED")
+        self.assertFalse(service.core.closing)
+        await asyncio.sleep(.2)
+        self.assertEqual(service.snapshot()["state"], "Fault")
+        await self.command(service, client, "stop")
+        self.assertEqual(service.snapshot()["state"], "Idle")
+        self.assertEqual(service.snapshot()["batch"]["outcome"], "completed")
+
     async def test_pause_finishes_current_jobs_then_resume_same_batch(self):
         service, client, _ = await self.service()
         await self.command(service, client, "start", batch_size=6, production_time_ms=200, inspection_time_ms=350)
@@ -226,7 +289,16 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         await self.command(service, client, "start", batch_size=8, production_time_ms=200, inspection_time_ms=300)
         await self.until(lambda: service.core.active and service.core.b.active)
         old_batch = service.core.b.batch_id
-        await self.command(service, client, "stop")
+        body = self.request(service, "stop")
+        self.assertEqual((await client.post("/api/stop", json=body)).status_code, 202)
+        end = asyncio.get_running_loop().time()+5
+        while service.lookup(body["cmd_id"])["phase"] == "accepted":
+            view = (await client.get("/api/status")).json()
+            self.assertNotEqual(view["state"], "Fault", view)
+            self.assertIsNone(view["fault"])
+            self.assertLess(asyncio.get_running_loop().time(), end)
+            await asyncio.sleep(.01)
+        self.assertEqual(service.lookup(body["cmd_id"])["phase"], "completed")
         stopped = service.snapshot()
         self.assertEqual(stopped["batch"]["outcome"], "incomplete")
         self.assertEqual(stopped["state"], "Idle")

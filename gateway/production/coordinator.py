@@ -17,7 +17,7 @@ class BatchGateway:
         self.production_ids={}; self.producer=None; self.health=None; self.active=None
         self.closures={}; self.restart_fences=set()
         self.dispatch_lock=asyncio.Lock()
-        self.pending_part=None; self.ending=False; self.production_started={}; self.configuration_hold=False
+        self.pending_part=None; self.ending=False; self.closing=False; self.production_started={}; self.configuration_hold=False
         self.changed=asyncio.Condition(); self.control=asyncio.Lock(); self.stopping=False
 
     async def _hold(self, reason):
@@ -52,7 +52,7 @@ class BatchGateway:
         view=self.b.snapshot()
         unresolved_parts={self.requests[j]["part_id"] for j in self.unresolved}
         unresolved_parts.update(self.b.requests[j]["part_id"] for j in self.b.unresolved)
-        view.update(state=self.state if self.state!="RUNNING" else self.b.state,
+        view.update(state=self.state if self.state!="RUNNING" or (self.closing and self.b.state!="FAULT") else self.b.state,
             fault_reason=self.fault_reason or self.b.fault_reason,
             produced=sum(o.state=="COMPLETED" for o in self.outcomes.values()),
             unresolved=len(unresolved_parts), production_unresolved_job_ids=list(self.unresolved),
@@ -188,7 +188,8 @@ class BatchGateway:
                 raise GatewayFault(self.fault_reason)
             await asyncio.sleep(.02)
         # Read-only late-result recovery may amend only this original batch.
-        await self.b._fault("ending batch: recovering retained outcomes")
+        if set(self.unresolved)-self.isolated or set(self.b.unresolved)-self.b.isolated:
+            await self.b._fault("ending batch: recovering retained outcomes")
         for identifier in list(self.unresolved):
             if identifier not in self.isolated: await self.reconcile_production(identifier)
         for identifier in list(self.b.unresolved):
@@ -363,18 +364,29 @@ class BatchGateway:
             if self.active or self.b.active: raise GatewayFault("accepted work must finish before closure")
             if not incomplete and (self.restart_fences or not self.snapshot()["inspection_complete"]):
                 raise GatewayFault("batch incomplete; explicit incomplete closure required")
-            await self._hold("batch closure in progress")
-            await self.b._fault("batch closure in progress")
-            # Hold both dispatchers and serialize against an inspector that
-            # has left its queue but has not yet submitted its request.
-            async with self.b.operation_lock:
-                if self.b.active: raise GatewayFault("inspection is still in flight")
-                await self._close_station("A",self.a)
-                await self._close_station("B",self.b.client)
-            await self.b.ledger.record("batch_close",self.snapshot())
-            self.state="IDLE"; self.fault_reason=None; self.b.state="IDLE"; self.b.fault_reason=None
-            await self.shutdown(close_links=False)
-            return self.snapshot()
+            # Closing is a pending control, not a fault. Gate A synchronously
+            # before yielding, then gate B under its dispatch condition.
+            # Existing faults remain visible throughout explicit recovery.
+            self.ending=True; self.closing=True
+            try:
+                async with self.b.condition:
+                    if self.b.state!="FAULT": self.b.state="PAUSED"
+                    self.b.condition.notify_all()
+                # Serialize against an inspector that has left its queue but
+                # has not yet submitted its request.
+                async with self.b.operation_lock:
+                    if self.b.active: raise GatewayFault("inspection is still in flight")
+                    await self._close_station("A",self.a)
+                    await self._close_station("B",self.b.client)
+                await self.b.ledger.record("batch_close",self.snapshot())
+                self.state="IDLE"; self.fault_reason=None; self.b.state="IDLE"; self.b.fault_reason=None
+                await self.shutdown(close_links=False)
+                return self.snapshot()
+            except (Exception,asyncio.CancelledError) as exc:
+                await self._hold("Batch closure requires recovery: "+str(exc))
+                raise
+            finally:
+                self.closing=False
 
     async def shutdown(self, *, close_links=True):
         if self.state=="RUNNING": await self._hold("gateway stopped with an open batch")

@@ -61,6 +61,14 @@ confirm; no work dispatches during this wait. Successful configuration publishes
 the new batch together. A failed or expired configuration exposes Fault and
 requires recovery. This pending control is not a fifth operating state.
 
+Normal automatic closure remains Running with `control_pending:completing_batch`
+("Closing batch") until both station closures are confirmed. A's ending gate
+and B's paused dispatcher prevent any new jobs during closure. A normal Stop
+holds Paused/Stopping while existing work finishes; it enters recovery only
+when unresolved work actually requires it. Neither ordinary wait manufactures
+a Fault. Closure failure, disconnection, or conflicting evidence still exposes
+Fault, retains results and prevents a new Start until explicit recovery.
+
 While Paused and both stations are fresh/idle in the current run, Apply settings
 confirms identified configurations on both stations before Resume. Past jobs
 and their verdicts retain frozen settings. Queued jobs not yet submitted to B
