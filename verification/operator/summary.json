@@ -1,9 +1,9 @@
 {
-  "timestamp_utc": "2026-11-18T23:30:53.955279+00:00",
+  "timestamp_utc": "2026-11-19T00:59:26.415915+00:00",
   "results": {
     "backend": {
       "exit_code": 0,
-      "checks": 26
+      "checks": 28
     },
     "frontend": {
       "exit_code": 0,
@@ -49,7 +49,7 @@
     },
     {
       "path": "gateway/operator/service.py",
-      "sha256": "c178c70e39ce6ffb42c4446c205563e70b8cfaaf5d95ca3bd2a299819ba70b7d"
+      "sha256": "f6d15d55e775d578fffab833ead7e439d2b34bc96a21469db47ee36ff6895828"
     },
     {
       "path": "gateway/operator/tests/test_evidence.py",
@@ -61,11 +61,11 @@
     },
     {
       "path": "gateway/operator/tests/test_operator.py",
-      "sha256": "663f17904295f92c77545020cd2426e7ecca1ad87f5244cfd20580b4da7a7336"
+      "sha256": "cf9f9ef9cf7807c9d4dc5f555d1fed9934971ce6ce272efbbc3c06217dde8063"
     },
     {
       "path": "member3/operator-ui/app.js",
-      "sha256": "94617abce3cf7669b38db21857987616916a8938ca2302e7868fa87867e8cb22"
+      "sha256": "a297c5eccb916d76c03f131e6265982e3466b4db146a65ed1b9ba7924e72efd9"
     },
     {
       "path": "member3/operator-ui/cartoon.css",

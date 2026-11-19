@@ -21,8 +21,9 @@ raw transport captures and threshold calibration are separate hardware work.
 The serial/TCP firmware is unchanged by this operator integration. For the
 two-PC phone-hotspot topology, follow [the setup-only guide](two-pc-hardware-setup.md).
 Use --host GATEWAY_IP for remote access; all three Wi-Fi devices share the LAN.
-The launcher now appends station traffic/raw A serial bytes to
-gateway.local.jsonl (override with --events); status exposes capture health.
+The launcher appends raw A serial bytes to `serial.local.jsonl` (override with
+`--serial-trace`; `--events` remains a compatible alias). Decoded application
+history is retained in the SQLite state file; status exposes capture health.
 
 For an explicitly labelled SOFTWARE preview, with MSVC installed:
 
@@ -52,6 +53,13 @@ be established, the gateway retains Fault and exposes recovery. PASS/FAIL
 counts always remain actual confirmed B results. Missing work is automatically
 reported as INCOMPLETE, alongside unresolved, not-started and not-inspected
 counts; these categories can overlap and must not be summed as disjoint totals.
+
+While Start applies settings, status remains Idle with `control_pending:start`
+and a "Starting: applying settings" explanation. Batch identity, totals, parts,
+settings and queue remain the last coherent idle view until both stations
+confirm; no work dispatches during this wait. Successful configuration publishes
+the new batch together. A failed or expired configuration exposes Fault and
+requires recovery. This pending control is not a fifth operating state.
 
 While Paused and both stations are fresh/idle in the current run, Apply settings
 confirms identified configurations on both stations before Resume. Past jobs

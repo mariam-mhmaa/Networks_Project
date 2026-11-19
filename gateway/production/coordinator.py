@@ -34,13 +34,15 @@ class BatchGateway:
             # a visible Fault and needs explicit closure, never partial dispatch.
             self.state="FAULT"; self.fault_reason="batch configuration incomplete"
             await self.b.start_run(inspection_settings,target,batch_id=batch_id)
+            # B has established the new batch. Clear old production accounting
+            # before awaiting A, including when A configuration later fails.
+            self.requests={}; self.settings={}; self.outcomes={}; self.unresolved={}; self.isolated=set(); self.production_ids={}
+            self.closures={}; self.restart_fences=set()
+            self.pending_part=None; self.ending=False; self.production_started={}; self.configuration_hold=False
             self.a.select_run(self.b.batch_id,heartbeat["run_no"]+1)
             outcome=await self.a.configure(production_settings)
             await self.b.ledger.record("production_configure",asdict(outcome))
             if outcome.state!="COMPLETED": raise GatewayFault("A configuration did not complete")
-            self.requests={}; self.settings={}; self.outcomes={}; self.unresolved={}; self.isolated=set(); self.production_ids={}
-            self.closures={}; self.restart_fences=set()
-            self.pending_part=None; self.ending=False; self.production_started={}; self.configuration_hold=False
             self.stopping=False; self.state="RUNNING"; self.fault_reason=None
             self.producer=asyncio.create_task(self._produce())
             self.health=asyncio.create_task(self._health())

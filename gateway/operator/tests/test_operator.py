@@ -138,6 +138,71 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("The Toy", asset.text)
         self.assertEqual((await client.get("/mock_gateway.py")).status_code, 404)
 
+    async def test_start_publishes_coherent_previous_batch_until_both_settings_confirm(self):
+        from unittest.mock import patch
+        service, client, _ = await self.service()
+        await self.command(service, client, "start", batch_size=2)
+        await self.until(lambda: service.core.state == "IDLE" and service.auto_close.done())
+        await self.until(lambda: service.snapshot()["ready"])
+        before = service.snapshot()
+        b_entered, a_entered = asyncio.Event(), asyncio.Event()
+        b_release, a_release = asyncio.Event(), asyncio.Event()
+        configure_b, configure_a = service.core.b.client.configure, service.core.a.configure
+
+        async def blocked_b(settings):
+            b_entered.set()
+            await b_release.wait()
+            return await configure_b(settings)
+
+        async def blocked_a(settings):
+            a_entered.set()
+            await a_release.wait()
+            return await configure_a(settings)
+
+        with patch.object(service.core.b.client, "configure", blocked_b), patch.object(service.core.a, "configure", blocked_a):
+            body = self.request(service, "start", batch_size=4, queue_capacity=1)
+            self.assertEqual((await client.post("/api/start", json=body)).status_code, 202)
+            for entered, release in ((b_entered, b_release), (a_entered, a_release)):
+                await asyncio.wait_for(entered.wait(), 3)
+                view = (await client.get("/api/status")).json()
+                self.assertEqual(view["state"], "Idle")
+                self.assertIsNone(view["fault"])
+                self.assertEqual(view["control_pending"], "start")
+                for key in ("batch", "counts", "settings", "parts", "queue"):
+                    self.assertEqual(view[key], before[key], key)
+                self.assertIsNone(service.core.active)
+                self.assertIsNone(service.core.b.active)
+                release.set()
+            await self.until(lambda: service.lookup(body["cmd_id"])["phase"] == "completed")
+        await self.until(lambda: service.core.state == "IDLE" and service.auto_close.done())
+        view = service.snapshot()
+        self.assertNotEqual(view["batch"]["id"], before["batch"]["id"])
+        self.assertEqual(view["counts"]["produced"], 4)
+        self.assertEqual(view["counts"]["inspected"], 4)
+        previous = (await client.get('/api/history/' + before['batch']['id'])).json()
+        self.assertEqual(previous['counts'], before['counts'])
+        self.assertEqual(previous['batch']['outcome'], 'completed')
+
+    async def test_failed_start_exposes_fault_without_previous_production_counts(self):
+        from unittest.mock import patch
+        service, client, _ = await self.service()
+        await self.command(service, client, "start", batch_size=2)
+        await self.until(lambda: service.core.state == "IDLE" and service.auto_close.done())
+        await self.until(lambda: service.snapshot()["ready"])
+        before = service.snapshot()
+        with patch.object(service.core.a, "configure", side_effect=native.GatewayFault("A settings unavailable")):
+            body = self.request(service, "start", batch_size=4)
+            self.assertEqual((await client.post("/api/start", json=body)).status_code, 202)
+            await self.until(lambda: service.lookup(body["cmd_id"])["phase"] == "unresolved" and not service.active)
+        view = (await client.get("/api/status")).json()
+        self.assertEqual(view["state"], "Fault")
+        self.assertIn("A settings unavailable", view["fault"])
+        self.assertNotEqual(view["batch"]["id"], before["batch"]["id"])
+        self.assertEqual(view["counts"]["produced"], 0)
+        self.assertEqual(view["counts"]["inspected"], 0)
+        self.assertEqual(view["counts"]["unstarted"], 4)
+        self.assertEqual(view["parts"], [])
+
     async def test_pause_finishes_current_jobs_then_resume_same_batch(self):
         service, client, _ = await self.service()
         await self.command(service, client, "start", batch_size=6, production_time_ms=200, inspection_time_ms=350)

@@ -1,5 +1,6 @@
 """One owner for operator commands, deduplication, liveness and display facts."""
 import asyncio
+from copy import deepcopy
 from dataclasses import asdict
 import json
 import math
@@ -57,6 +58,7 @@ class OperatorService:
         self.ended_ms = None
         self.pause_reason = None
         self.progress = {}
+        self._start_view = None
         self._closing = False
         self._connect_after = 0.0
         self.closing_orphans = False
@@ -270,6 +272,9 @@ class OperatorService:
             async with asyncio.timeout_at(record["absolute_at"]):
                 if action == "start":
                     await self._checkpoint(force=True)  # Preserve the prior batch before core maps reset.
+                    # Configuration awaits mutate A/B contexts separately. Keep
+                    # publishing the last coherent idle view until both confirm.
+                    self._start_view = self.snapshot()
                     a, b = validate_settings(body)
                     core.b.capacity, core.b.full_policy = body["queue_capacity"], body["full_policy"]
                     self.started_at = asyncio.get_running_loop().time()
@@ -279,6 +284,7 @@ class OperatorService:
                     await core.start_run(a, b, body["batch_size"], batch_id=record["batch_id"])
                     self.applied = {key: body[key] for key in ("batch_size", "production_time_ms", "inspection_time_ms", "N", "K")}
                     self.pause_reason = None
+                    self._start_view = None
                     text = "Both station configurations confirmed; this batch is Running"
                 elif action == "pause":
                     await core.pause(); self.pause_reason = "Operator paused dispatch"
@@ -320,9 +326,11 @@ class OperatorService:
                     text = "Unowned idle station scopes closed; missing historical outcomes remain unknown"
             record["phase"], record["result"] = "completed", text
         except asyncio.CancelledError:
+            self._start_view = None
             record["phase"], record["result"] = "unresolved", "Gateway stopped while this command was pending"
             raise
         except Exception as exc:
+            self._start_view = None
             record["phase"], record["result"] = "unresolved", str(exc)
             if core.b.batch_id and not (action in {"recover_a","recover_b"} and core.state=="IDLE"):
                 await core._hold("Operator " + action + " requires recovery: " + str(exc))
@@ -434,7 +442,7 @@ class OperatorService:
         outcome = "none" if b.batch_id is None else "completed" if state == "Idle" and raw["inspection_complete"] else "incomplete" if state == "Idle" else "active"
         queued = [p["part_id"] for p in parts if p["status"] == "queued"]
         elapsed = self.ended_ms if self.ended_ms is not None else int((asyncio.get_running_loop().time()-self.started_at)*1000) if self.started_at is not None else 0
-        return {"evidence":self.evidence.status() if self.evidence else None,
+        view = {"evidence":self.evidence.status() if self.evidence else None,
             "history_error": self.audit_error or self.history.error, "session_labels": dict(self.history.aliases),
             "gateway_display_id": self.history.label(self.gateway_id),
             "schema_version": 1, "type": "status", "simulation": self.simulation,
@@ -453,6 +461,10 @@ class OperatorService:
             "ready": all(client.link.fresh and client.link.heartbeat and
                          (core.state!="IDLE" or not client.link.heartbeat["run_open"])
                          for client in (core.a,b.client))}
+        if self._start_view is not None:
+            for key in ("state", "fault", "batch", "settings", "counts", "parts", "queue"):
+                view[key] = deepcopy(self._start_view[key])
+        return view
 
     async def _tick(self):
         while not self._closing:

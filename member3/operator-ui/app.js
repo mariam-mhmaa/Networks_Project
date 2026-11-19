@@ -117,6 +117,7 @@ function render() {
   if(live&&status?.operator.controller_id&&status.operator.controller_id!==operatorId) $('connectionReason').textContent='View only - another operator panel holds control';
   $('state').textContent = status ? status.state + (status.control_pending?' · '+({stop:'Stopping',configure:'Applying settings',completing_batch:'Closing batch'}[status.control_pending]||status.control_pending):'') + (live ? '' : ' · stale') : 'Not connected';
   $('state').dataset.state = live && status ? status.state : 'stale';
+  if (status?.state === 'Idle' && status.control_pending === 'start') $('state').textContent = 'Idle - Starting: applying settings' + (live ? '' : ' - stale');
   for (const key of ['produced', 'inspected', 'passed', 'failed','unresolved','unstarted','not_inspected']) $(key).textContent = status ? String(status.counts[key]) : '—';
   $('outcome').textContent = status ? `${fresh} · Batch ${status.batch.outcome}` : 'No gateway status yet';
   $('batchLabel').textContent = status?.batch.id ? '/ ' + (status.batch.display_id||'Current batch') : '/ No batch';
@@ -191,6 +192,7 @@ function applySnapshot(s, meta) {
     if (previous.batch.outcome !== 'completed' && s.batch.outcome === 'completed') workshopCelebrate();
   }
   s.command_results.forEach(completePending);
+  if (s.state === 'Idle' && s.control_pending === 'start') message('Starting: waiting for both stations to confirm settings. Previous batch totals stay shown until the new batch is ready.');
   if(meta.initial&&!pending&&!s.control_pending&&s.state==='Idle'&&s.batch.outcome==='none')message('Gateway connected. Both stations are ready when their indicators show connected. Earlier batches are in Batch history.');
   if(!pending&&!commandBusy&&!s.control_pending&&['completed','incomplete'].includes(s.batch.outcome)) {
     message(`${s.batch.display_id||'Batch'} ${s.batch.outcome}: ${s.counts.passed} PASS, ${s.counts.failed} FAIL, ${s.counts.unresolved} unresolved, ${s.counts.not_inspected} not inspected.${s.history_error?' History warning: '+s.history_error:''}`,!!s.history_error);
