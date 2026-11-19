@@ -93,6 +93,27 @@ class IntegratedTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(same.result,out.result)
         await asyncio.sleep(1.1); self.assertEqual(a.link.heartbeat["executions"],1)
 
+    async def test_changed_part_same_production_id_does_not_execute_again(self):
+        a=await self.client()
+        original=await a.produce(7)
+        self.assertEqual(original.state,"COMPLETED",original.reason)
+        changed=await a.produce(8,identifier=original.identifier)
+        self.assertEqual(changed.state,"UNRESOLVED")
+        self.assertIn("ID_CONFLICT",changed.reason)
+        await asyncio.sleep(1.1)  # A publishes its execution counter once per second.
+        self.assertEqual(a.link.heartbeat["executions"],1)
+
+    async def test_fresh_id_cannot_produce_same_part_again(self):
+        a=await self.client()
+        original=await a.produce(7)
+        self.assertEqual(original.state,"COMPLETED",original.reason)
+        duplicate=await a.produce(7)
+        self.assertNotEqual(original.identifier,duplicate.identifier)
+        self.assertEqual(duplicate.state,"REJECTED",duplicate.reason)
+        self.assertEqual(duplicate.reason,"PART_ALREADY_ACCEPTED")
+        await asyncio.sleep(1.1)
+        self.assertEqual(a.link.heartbeat["executions"],1)
+
     async def test_retirement_active_busy_then_actual_completion(self):
         a=await self.client(duration=200)
         task=asyncio.create_task(a.produce(5)); await asyncio.sleep(.06)
