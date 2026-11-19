@@ -239,6 +239,51 @@ class OperatorTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(service.core.closing)
         self.assertIsNone(view["fault"])
 
+    async def test_reconnected_b_clears_old_error_and_stop_waits_for_idle(self):
+        from unittest.mock import patch
+        service, client, _ = await self.service()
+        link = service.core.b.client.link
+        await link.close()
+        link.failure = ConnectionResetError("previous connection failed before its greeting")
+        await service.core.b.client.connect()
+        self.assertTrue(link.fresh)
+        self.assertIsNone(link.failure)
+        await self.command(service, client, "start", batch_size=8,
+                           production_time_ms=150, inspection_time_ms=250)
+        await self.until(lambda: service.core.active and service.core.b.active)
+        ready = service.core._ready
+        idle_confirmed = asyncio.Event()
+
+        async def confirm_idle_later():
+            await self.until(lambda: not service.core.active and not service.core.b.active)
+            await asyncio.sleep(.15)
+            idle_confirmed.set()
+
+        task = asyncio.create_task(confirm_idle_later())
+        try:
+            with patch.object(service.core, "_ready", lambda peer: idle_confirmed.is_set() and ready(peer)):
+                await self.command(service, client, "stop")
+            await task
+        finally:
+            idle_confirmed.set()
+            task.cancel()
+            await asyncio.gather(task, return_exceptions=True)
+        view = service.snapshot()
+        self.assertEqual(view["state"], "Idle")
+        self.assertEqual(view["batch"]["outcome"], "incomplete")
+        self.assertEqual(view["counts"]["unresolved"], 0)
+
+    async def test_detected_b_restart_is_not_a_healthy_reconnection(self):
+        from gateway.inspection.wire import Restarted
+        service, _, _ = await self.service()
+        link = service.core.b.client.link
+        failure = Restarted("different receiver boot")
+        link.failure = failure
+        self.assertFalse(link.fresh)
+        with self.assertRaises(Restarted):
+            await link.connect()
+        self.assertIs(link.failure, failure)
+
     async def test_failed_closure_preserves_results_and_requires_explicit_recovery(self):
         from unittest.mock import patch
         service, client, _ = await self.service()

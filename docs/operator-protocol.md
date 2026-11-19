@@ -69,6 +69,12 @@ when unresolved work actually requires it. Neither ordinary wait manufactures
 a Fault. Closure failure, disconnection, or conflicting evidence still exposes
 Fault, retains results and prevents a new Start until explicit recovery.
 
+During Stop, a completed job may precede the next idle heartbeat; the gateway
+waits within the existing bounded idle-confirmation window. An error retained
+from an earlier B connection must not be mistaken for a current transport
+failure after a validated same-boot greeting. The transport clears that old
+error on the valid greeting, while real failures and new boots remain visible.
+
 While Paused and both stations are fresh/idle in the current run, Apply settings
 confirms identified configurations on both stations before Resume. Past jobs
 and their verdicts retain frozen settings. Queued jobs not yet submitted to B

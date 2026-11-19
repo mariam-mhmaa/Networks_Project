@@ -1,13 +1,17 @@
 {
-  "timestamp_utc": "2026-11-19T03:30:09.379923+00:00",
+  "timestamp_utc": "2026-11-19T05:12:33.591616+00:00",
   "results": {
     "backend": {
       "exit_code": 0,
-      "checks": 30
+      "checks": 32
     },
     "integration": {
       "exit_code": 0,
       "checks": 19
+    },
+    "inspection": {
+      "exit_code": 0,
+      "checks": 53
     },
     "frontend": {
       "exit_code": 0,
@@ -65,7 +69,7 @@
     },
     {
       "path": "gateway/operator/tests/test_operator.py",
-      "sha256": "0761045097794b47ba109f790b1a783da32cd4ad675f822991d8b546afae3377"
+      "sha256": "7ca3f41c72c3cf72f0d38bbb9fae6b165036273d867b6fc26419ddfbc59bf53f"
     },
     {
       "path": "gateway/production/__init__.py",
@@ -98,6 +102,30 @@
     {
       "path": "gateway/production/serial_link.py",
       "sha256": "faec1822ca36cf4dbd6ac44c19d124be5096db20c26c2d6bf3ec5e2e85d82986"
+    },
+    {
+      "path": "gateway/inspection/__init__.py",
+      "sha256": "76a2b6385c1402d5ad94634ff051fdb725e0a3c59bbe61550315801b6d988dc2"
+    },
+    {
+      "path": "gateway/inspection/__main__.py",
+      "sha256": "1d43af7ef82b99adccc8bfe7333c5edb54e7994daa7ad712d0aa0e9132ac0dda"
+    },
+    {
+      "path": "gateway/inspection/client.py",
+      "sha256": "c8446b7fbcf379310cf0c0c87f537e3ed993d0c2785ca13857cfa71760ab5ff9"
+    },
+    {
+      "path": "gateway/inspection/controller.py",
+      "sha256": "156388525e663f36a095546664076bb7cda2369dbaf80358f63b67beb940f18c"
+    },
+    {
+      "path": "gateway/inspection/coordinator.py",
+      "sha256": "b0242951149bf96e334bdab10a6e2d53a35e100e01da0aa6db7dc8670b956358"
+    },
+    {
+      "path": "gateway/inspection/wire.py",
+      "sha256": "ae923c7530072839468baea40b3815425fa8994b4502ebada34349554f61062b"
     },
     {
       "path": "member3/operator-ui/app.js",

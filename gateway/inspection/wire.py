@@ -100,7 +100,7 @@ class Link:
 
     @property
     def fresh(self):
-        return self.writer is not None and not self.writer.is_closing() and (
+        return not self.failure and self.writer is not None and not self.writer.is_closing() and (
             asyncio.get_running_loop().time() - self.last_heartbeat <= self.heartbeat_age)
 
     def route(self, identifier, queue):
@@ -148,6 +148,11 @@ class Link:
                             and isinstance(message.get("batch_id"), str)):
                         raise ProtocolError("malformed heartbeat")
                     self.boot_id = message["boot_id"]
+                    # A validated heartbeat from the original boot establishes
+                    # the new connection. A previous transport error must not
+                    # remain latched as a failure of this healthy connection.
+                    # Different boots raise Restarted above, before this point.
+                    self.failure = None
                     self.heartbeat, self.last_heartbeat = message, now
                     self.query_no = max(self.query_no, message["query_high_water"])
                     if not self.ready.done():

@@ -36,6 +36,11 @@ heartbeat as stale and stops new dispatch. Initial connection discovery has
 three bounded one-second attempts, separated by 30 ms. Operation reconnects
 are requested only by their operation controller and consume its bounds.
 
+A valid heartbeat from the same receiver boot clears an obsolete transport
+failure from an earlier connection. Failed/invalid greetings do not establish
+freshness; a detected boot change remains latched until explicit recovery.
+Reconnection does not reset operation identities, execution history or budgets.
+
 ## Requests
 
 | type | Additional fields | Effect |
