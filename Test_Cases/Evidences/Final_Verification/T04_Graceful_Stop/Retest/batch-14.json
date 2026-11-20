@@ -1,0 +1,503 @@
+{
+  "schema_version": 2,
+  "batch": {
+    "display_id": "Batch 14",
+    "elapsed_ms": 9890,
+    "id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+    "outcome": "incomplete",
+    "target": 8
+  },
+  "settings": {
+    "K": 0,
+    "N": 2,
+    "batch_size": 8,
+    "inspection_time_ms": 5000,
+    "production_time_ms": 3000
+  },
+  "counts": {
+    "produced": 2,
+    "inspected": 1,
+    "passed": 1,
+    "failed": 0,
+    "unresolved": 0,
+    "unstarted": 6,
+    "not_inspected": 7
+  },
+  "parts": [
+    {
+      "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+      "isolated": false,
+      "part_id": 59,
+      "produced": true,
+      "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000001",
+      "status": "pass"
+    },
+    {
+      "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000002",
+      "isolated": false,
+      "part_id": 60,
+      "produced": true,
+      "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000002",
+      "status": "uninspected"
+    }
+  ],
+  "operations": [
+    {
+      "id": "CFG-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+      "station": "B",
+      "phase": "COMPLETED",
+      "request": {
+        "K": 0,
+        "N": 2,
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "fb87aa41402d632406e183cdf82ec192",
+        "cmd_id": "CFG-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+        "inspection_time_ms": 5000,
+        "run_no": 1,
+        "type": "CONFIGURE",
+        "v": 1
+      },
+      "result": {
+        "action": "CONFIGURE",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "cmd_id": "CFG-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+        "config_version": 1,
+        "elapsed_ms": 0,
+        "run_no": 1,
+        "settings": {
+          "K": 0,
+          "N": 2,
+          "inspection_time_ms": 5000
+        },
+        "state": "COMPLETED"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876340.234,
+        "completed_observed_at": 876340.234,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876340.093,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876340.093
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876340.234
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876340.234
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "display_id": "CFG-GW-S37-1"
+    },
+    {
+      "id": "CFG-GW-172a4f0a83a0499695a97639d49132e2-000001",
+      "station": "A",
+      "phase": "COMPLETED",
+      "request": {
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "f7100699df012d1186548e385a1317df",
+        "cmd_id": "CFG-GW-172a4f0a83a0499695a97639d49132e2-000001",
+        "production_time_ms": 3000,
+        "run_no": 1,
+        "type": "CONFIGURE",
+        "v": 1
+      },
+      "result": {
+        "action": "CONFIGURE",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "cmd_id": "CFG-GW-172a4f0a83a0499695a97639d49132e2-000001",
+        "config_version": 1,
+        "elapsed_ms": 0,
+        "run_no": 1,
+        "settings": {
+          "production_time_ms": 3000
+        },
+        "state": "COMPLETED"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876340.359,
+        "completed_observed_at": 876340.39,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876340.328,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876340.328
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876340.359
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876340.39
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "display_id": "CFG-GW-S36-1"
+    },
+    {
+      "id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000001",
+      "station": "A",
+      "phase": "COMPLETED",
+      "request": {
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "f7100699df012d1186548e385a1317df",
+        "config_version": 1,
+        "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000001",
+        "part_id": 59,
+        "run_no": 1,
+        "type": "PRODUCE",
+        "v": 1
+      },
+      "result": {
+        "action": "PRODUCE",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "config_version": 1,
+        "elapsed_ms": 3000,
+        "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000001",
+        "part_id": 59,
+        "produced": true,
+        "run_no": 1,
+        "settings": {
+          "production_time_ms": 3000
+        },
+        "state": "COMPLETED"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876340.64,
+        "completed_observed_at": 876343.625,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876340.609,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876340.609
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876340.64
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876343.625
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "display_id": "PROD-GW-S36-1"
+    },
+    {
+      "id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+      "station": "B",
+      "phase": "COMPLETED",
+      "request": {
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "fb87aa41402d632406e183cdf82ec192",
+        "config_version": 1,
+        "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+        "part_id": 59,
+        "run_no": 1,
+        "type": "INSPECT",
+        "v": 1
+      },
+      "result": {
+        "action": "INSPECT",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "config_version": 1,
+        "elapsed_ms": 5000,
+        "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+        "part_id": 59,
+        "run_no": 1,
+        "settings": {
+          "K": 0,
+          "N": 2,
+          "inspection_time_ms": 5000
+        },
+        "state": "COMPLETED",
+        "verdict": "PASS"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876343.921,
+        "completed_observed_at": 876348.89,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876343.828,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876343.828
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876343.921
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876348.875
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "accounted": true,
+      "display_id": "INSP-GW-S37-1"
+    },
+    {
+      "id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000002",
+      "station": "A",
+      "phase": "COMPLETED",
+      "request": {
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "f7100699df012d1186548e385a1317df",
+        "config_version": 1,
+        "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000002",
+        "part_id": 60,
+        "run_no": 1,
+        "type": "PRODUCE",
+        "v": 1
+      },
+      "result": {
+        "action": "PRODUCE",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "config_version": 1,
+        "elapsed_ms": 3000,
+        "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000002",
+        "part_id": 60,
+        "produced": true,
+        "run_no": 1,
+        "settings": {
+          "production_time_ms": 3000
+        },
+        "state": "COMPLETED"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876343.843,
+        "completed_observed_at": 876346.843,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876343.812,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876343.812
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876343.843
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876346.843
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "display_id": "PROD-GW-S36-2"
+    },
+    {
+      "id": "CLOSE-GW-172a4f0a83a0499695a97639d49132e2-000001",
+      "station": "A",
+      "phase": "COMPLETED",
+      "request": {
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "f7100699df012d1186548e385a1317df",
+        "cmd_id": "CLOSE-GW-172a4f0a83a0499695a97639d49132e2-000001",
+        "run_no": 1,
+        "type": "CLOSE",
+        "v": 1
+      },
+      "result": {
+        "action": "CLOSE",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "closed": true,
+        "cmd_id": "CLOSE-GW-172a4f0a83a0499695a97639d49132e2-000001",
+        "config_version": 1,
+        "elapsed_ms": 0,
+        "run_no": 1,
+        "settings": {
+          "production_time_ms": 3000
+        },
+        "state": "COMPLETED"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876349.281,
+        "completed_observed_at": 876349.312,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876349.25,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876349.25
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876349.281
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876349.312
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "display_id": "CLOSE-GW-S36-1"
+    },
+    {
+      "id": "CLOSE-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+      "station": "B",
+      "phase": "COMPLETED",
+      "request": {
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "boot_id": "fb87aa41402d632406e183cdf82ec192",
+        "cmd_id": "CLOSE-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+        "run_no": 1,
+        "type": "CLOSE",
+        "v": 1
+      },
+      "result": {
+        "action": "CLOSE",
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "closed": true,
+        "cmd_id": "CLOSE-GW-f45643c48c304f9d848a99909df0b0fa-000001",
+        "config_version": 1,
+        "elapsed_ms": 0,
+        "run_no": 1,
+        "settings": {
+          "K": 0,
+          "N": 2,
+          "inspection_time_ms": 5000
+        },
+        "state": "COMPLETED"
+      },
+      "evidence": {
+        "acceptance_established_by": "ACCEPTED",
+        "accepted_observed_at": 876349.75,
+        "completed_observed_at": 876349.75,
+        "delivery_established_by": "RECEIVED",
+        "queries": {},
+        "query_attempts": 0,
+        "received_observed_at": 876349.578,
+        "request_attempts": 1
+      },
+      "observations": [
+        {
+          "stage": "RECEIVED",
+          "state": null,
+          "observed_at": 876349.578
+        },
+        {
+          "stage": "ACCEPTED",
+          "state": null,
+          "observed_at": 876349.75
+        },
+        {
+          "stage": "COMPLETED",
+          "state": null,
+          "observed_at": 876349.75
+        }
+      ],
+      "duplicate_observations": 0,
+      "reason": null,
+      "display_id": "CLOSE-GW-S37-1"
+    }
+  ],
+  "controls": [
+    {
+      "absolute_at": 876374.875,
+      "accepted_at": 876339.875,
+      "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+      "cmd_id": "START-OP-f99bd4a79e87cea72e1d17629926d03a-000001",
+      "command": "start",
+      "completed_at": 876340.406,
+      "completion_window_ms": 35000,
+      "display_id": "START-OP-S38-1",
+      "phase": "completed",
+      "received_at": 876339.875,
+      "result": "Both station configurations confirmed; this batch is Running"
+    },
+    {
+      "absolute_at": 876439.437,
+      "accepted_at": 876344.437,
+      "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+      "cmd_id": "STOP-OP-f99bd4a79e87cea72e1d17629926d03a-000001",
+      "command": "stop",
+      "completed_at": 876349.781,
+      "completion_window_ms": 95000,
+      "display_id": "STOP-OP-S38-1",
+      "phase": "completed",
+      "received_at": 876344.437,
+      "result": "Batch ended with all confirmed results retained: INCOMPLETE"
+    }
+  ],
+  "notes": [
+    "Times are gateway monotonic observations, not device execution timestamps.",
+    "Null acknowledgement times mean no original acknowledgement was observed.",
+    "History is read-only and never restarts work. Use serial traces and Wireshark for transport evidence."
+  ],
+  "queue": {
+    "capacity": 2,
+    "full_policy": "block",
+    "part_ids": [],
+    "reserved": 1,
+    "size": 0
+  },
+  "saved_state": "Idle",
+  "saved_fault": null,
+  "sessions": {
+    "GW:172a4f0a83a0499695a97639d49132e2": "S36",
+    "GW:f45643c48c304f9d848a99909df0b0fa": "S37",
+    "OP:f99bd4a79e87cea72e1d17629926d03a": "S38"
+  }
+}

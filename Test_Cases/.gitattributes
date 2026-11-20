@@ -1,0 +1,8 @@
+# Preserve exported evidence exactly, including original line endings.
+*.json -text
+*.jsonl -text
+*.csv -text
+*.log -text
+*.png -text
+*.pcapng -text
+*.sqlite3 -text

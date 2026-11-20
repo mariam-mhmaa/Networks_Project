@@ -1,0 +1,447 @@
+{
+  "scope": "Physical gateway HTTP duplicate command test; no duplicate station jobs injected",
+  "gateway_base": "http://172.20.10.2:8080",
+  "original_command_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+  "batch": {
+    "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+    "display_id": "Batch 16",
+    "target": 6,
+    "outcome": "completed",
+    "elapsed_ms": 109719
+  },
+  "before_settings": {
+    "batch_size": 6,
+    "production_time_ms": 1000,
+    "inspection_time_ms": 2000,
+    "N": 1,
+    "K": 0
+  },
+  "before_counts": {
+    "produced": 6,
+    "inspected": 6,
+    "passed": 1,
+    "failed": 5,
+    "unresolved": 0,
+    "unstarted": 0,
+    "not_inspected": 0
+  },
+  "before_history_total": 16,
+  "requests": [
+    {
+      "label": "identical_replay_1",
+      "sent_at_utc": "2026-11-19T06:50:48.911436+00:00",
+      "elapsed_ms": 32.0,
+      "request": {
+        "schema_version": 1,
+        "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+        "operator_id": "OP-bfe84d31e5ab03b2e38e92b4c6e652fc",
+        "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "batch_size": 6,
+        "production_time_ms": 3000,
+        "inspection_time_ms": 5000,
+        "N": 2,
+        "K": 0,
+        "queue_capacity": 2,
+        "full_policy": "block"
+      },
+      "http_status": 202,
+      "response": {
+        "schema_version": 1,
+        "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+        "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "command": "start",
+        "accepted": true,
+        "phase": "accepted",
+        "message": "Registered and accepted; completion will be reported separately",
+        "completion_window_ms": 35000
+      }
+    },
+    {
+      "label": "identical_replay_2",
+      "sent_at_utc": "2026-11-19T06:50:49.003300+00:00",
+      "elapsed_ms": 94.0,
+      "request": {
+        "schema_version": 1,
+        "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+        "operator_id": "OP-bfe84d31e5ab03b2e38e92b4c6e652fc",
+        "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "batch_size": 6,
+        "production_time_ms": 3000,
+        "inspection_time_ms": 5000,
+        "N": 2,
+        "K": 0,
+        "queue_capacity": 2,
+        "full_policy": "block"
+      },
+      "http_status": 202,
+      "response": {
+        "schema_version": 1,
+        "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+        "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "command": "start",
+        "accepted": true,
+        "phase": "accepted",
+        "message": "Registered and accepted; completion will be reported separately",
+        "completion_window_ms": 35000
+      }
+    },
+    {
+      "label": "same_id_changed_contents",
+      "sent_at_utc": "2026-11-19T06:50:49.246673+00:00",
+      "elapsed_ms": 46.0,
+      "request": {
+        "schema_version": 1,
+        "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+        "operator_id": "OP-bfe84d31e5ab03b2e38e92b4c6e652fc",
+        "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "batch_size": 7,
+        "production_time_ms": 3000,
+        "inspection_time_ms": 5000,
+        "N": 2,
+        "K": 0,
+        "queue_capacity": 2,
+        "full_policy": "block"
+      },
+      "http_status": 409,
+      "response": {
+        "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+        "error": "ID_CONFLICT: original command contents are immutable"
+      }
+    }
+  ],
+  "passed": true,
+  "after_settings": {
+    "batch_size": 6,
+    "production_time_ms": 1000,
+    "inspection_time_ms": 2000,
+    "N": 1,
+    "K": 0
+  },
+  "after_counts": {
+    "produced": 6,
+    "inspected": 6,
+    "passed": 1,
+    "failed": 5,
+    "unresolved": 0,
+    "unstarted": 0,
+    "not_inspected": 0
+  },
+  "after_history_total": 16,
+  "unchanged_batch_report": true,
+  "unchanged_original_command": true,
+  "delayed_observation_snapshots": [
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    },
+    {
+      "state": "Idle",
+      "batch": {
+        "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "Batch 16",
+        "target": 6,
+        "outcome": "completed",
+        "elapsed_ms": 109719
+      },
+      "counts": {
+        "produced": 6,
+        "inspected": 6,
+        "passed": 1,
+        "failed": 5,
+        "unresolved": 0,
+        "unstarted": 0,
+        "not_inspected": 0
+      },
+      "settings": {
+        "batch_size": 6,
+        "production_time_ms": 1000,
+        "inspection_time_ms": 2000,
+        "N": 1,
+        "K": 0
+      }
+    }
+  ],
+  "finished_at_utc": "2026-11-19T06:50:53.420475+00:00"
+}

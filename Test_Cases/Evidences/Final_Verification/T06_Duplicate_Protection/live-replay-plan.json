@@ -1,0 +1,70 @@
+{
+  "scope": "Live HTTP command duplicate protection only; device duplicate execution is tested separately in native software. No new physical batch is intended.",
+  "gateway_base": "http://172.20.10.2:8080",
+  "source_capture": "Test_Cases\\Evidences\\Final_Verification\\T05_Paused_Settings_Change\\T05_Paused_Setting_Change_Capture.pcapng",
+  "source_capture_sha256": "fd74095357640d1fa97afc7e2348499268b55bc48aa557c78d4371ddeb745fb5",
+  "original_request_frame": 3617,
+  "original_request": {
+    "schema_version": 1,
+    "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+    "operator_id": "OP-bfe84d31e5ab03b2e38e92b4c6e652fc",
+    "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+    "batch_size": 6,
+    "production_time_ms": 3000,
+    "inspection_time_ms": 5000,
+    "N": 2,
+    "K": 0,
+    "queue_capacity": 2,
+    "full_policy": "block"
+  },
+  "conflicting_request": {
+    "schema_version": 1,
+    "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+    "operator_id": "OP-bfe84d31e5ab03b2e38e92b4c6e652fc",
+    "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+    "batch_size": 7,
+    "production_time_ms": 3000,
+    "inspection_time_ms": 5000,
+    "N": 2,
+    "K": 0,
+    "queue_capacity": 2,
+    "full_policy": "block"
+  },
+  "preflight_command": {
+    "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+    "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+    "command": "start",
+    "phase": "completed",
+    "result": "Both station configurations confirmed; this batch is Running",
+    "received_at": 878170.109,
+    "accepted_at": 878170.109,
+    "completed_at": 878170.64,
+    "absolute_at": 878205.109,
+    "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+    "display_id": "START-OP-S40-1",
+    "completion_window_ms": 35000
+  },
+  "preflight_batch": {
+    "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+    "display_id": "Batch 16",
+    "target": 6,
+    "outcome": "completed",
+    "elapsed_ms": 109719
+  },
+  "preflight_counts": {
+    "produced": 6,
+    "inspected": 6,
+    "passed": 1,
+    "failed": 5,
+    "unresolved": 0,
+    "unstarted": 0,
+    "not_inspected": 0
+  },
+  "expected_http_statuses": [
+    202,
+    202,
+    409
+  ],
+  "expected_conflict": "ID_CONFLICT",
+  "physical_replays_sent": false
+}

@@ -1,0 +1,962 @@
+{
+  "status": {
+    "evidence": {
+      "path": "C:\\Users\\pc\\OneDrive - Faculty of Engineering Ain Shams University\\Semester 7\\MCT431 Industrial Communications and Network Systems\\Project\\Networks_Project\\serial.local.jsonl",
+      "session": "982f300807764e3cab4d6f1097a486ee",
+      "written": 6519,
+      "dropped": 0,
+      "error": null
+    },
+    "history_error": null,
+    "session_labels": {
+      "GW:38ff15de36b843b7991ec0ca7b782030": "S01",
+      "GW:e525ddc8b6c04692b5679c6616a08ca6": "S02",
+      "GW:15b44634a8294817a2f2644e79eb355d": "S03",
+      "GW:e9fc72f6b06c4d8b82e1bb5f9d1a3f44": "S04",
+      "OP:d11b10f9c2c3d7e0f82a908050702f3b": "S05",
+      "OP:109649188697901bae8d2ebb6a40d04f": "S06",
+      "GW:09f699a4132b4657b90d94c4b7d15b0c": "S07",
+      "GW:9df64db2ce5a4f26a73805f4dcea5d36": "S08",
+      "OP:a13dd7910b3d4a3cc2bd24c8b11a0bca": "S09",
+      "GW:bc418c342da3406abbef33b3ee42a01d": "S10",
+      "GW:474ac7f0fe2f4f8cb1b9a30ee9e54e38": "S11",
+      "GW:b7bb08697d6444d3a5d45ae474d02d42": "S12",
+      "GW:beeb099d03d44153b7f0630cdc944df6": "S13",
+      "OP:a624844f943446673bfa024e9b1e0055": "S14",
+      "OP:153392b77edc095f3ae3405172b0054c": "S15",
+      "GW:8a4a844680b741609f13e522b8d1dc0d": "S16",
+      "GW:25dd1224575f4f8aabb5d229face30d1": "S17",
+      "GW:1a0689885bdd4c448f0db268da67859e": "S18",
+      "OP:0a0212cf6fe817be52765dd44024baa3": "S19",
+      "OP:bfe84d31e5ab03b2e38e92b4c6e652fc": "S20",
+      "OP:da452b1d4124f827b45a757267f87636": "S21",
+      "GW:ce0b7556f42442e385d325033463057c": "S22",
+      "GW:c3e98c1a9a294dbf957a2058aac4d144": "S23",
+      "GW:6f07b85f720a4a76972018d6cb86b206": "S24",
+      "OP:1e1b5792aee511d3af131fcf870d8d1e": "S25",
+      "GW:9a8a5788e4634fcdbc5e362d119b13df": "S26",
+      "GW:75f094bc12744d2ea99a9b8be773ac24": "S27",
+      "GW:83b09d1dfc4b47da83f77e71130c6220": "S28",
+      "OP:f63b675fd17bdc06c6fa269617388fb9": "S29",
+      "OP:2dd83ef98da3574b8ac3b5f999379c37": "S30",
+      "OP:d6bac55e84f53ce0deaac1cfdd08f1ca": "S31",
+      "OP:7059135842f34bd995a057ad22443733": "S32",
+      "GW:f0de71880739407d99c3e94a978188d9": "S33",
+      "GW:dcc0019a241f4c5fa0d84589528ca47a": "S34",
+      "GW:46dc14268a54485fa845fc7582410ee7": "S35",
+      "GW:172a4f0a83a0499695a97639d49132e2": "S36",
+      "GW:f45643c48c304f9d848a99909df0b0fa": "S37",
+      "OP:f99bd4a79e87cea72e1d17629926d03a": "S38",
+      "OP:75bc66a7a23f593d167f1917af08e211": "S39",
+      "OP:8256165647369776c4b2671231d8ce9b": "S40"
+    },
+    "gateway_display_id": "GW-S35",
+    "schema_version": 1,
+    "type": "status",
+    "simulation": false,
+    "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+    "status_seq": 49419,
+    "state": "Idle",
+    "fault": null,
+    "settings": {
+      "batch_size": 6,
+      "production_time_ms": 1000,
+      "inspection_time_ms": 2000,
+      "N": 1,
+      "K": 0
+    },
+    "batch": {
+      "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+      "display_id": "Batch 16",
+      "target": 6,
+      "outcome": "completed",
+      "elapsed_ms": 109719
+    },
+    "counts": {
+      "produced": 6,
+      "inspected": 6,
+      "passed": 1,
+      "failed": 5,
+      "unresolved": 0,
+      "unstarted": 0,
+      "not_inspected": 0
+    },
+    "queue": {
+      "size": 0,
+      "capacity": 2,
+      "part_ids": [],
+      "full_policy": "block",
+      "reserved": 0
+    },
+    "stations": {
+      "production": {
+        "connected": true,
+        "busy": false,
+        "part_id": null,
+        "remaining_ms": null,
+        "phase": "idle",
+        "boot_id": "f7100699df012d1186548e385a1317df",
+        "restarted": false
+      },
+      "inspection": {
+        "connected": true,
+        "busy": false,
+        "part_id": null,
+        "remaining_ms": null,
+        "phase": "idle",
+        "boot_id": "fb87aa41402d632406e183cdf82ec192",
+        "restarted": false
+      }
+    },
+    "parts": [
+      {
+        "part_id": 67,
+        "status": "pass",
+        "produced": true,
+        "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000009",
+        "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000009",
+        "isolated": false,
+        "production_result": {
+          "state": "COMPLETED",
+          "identifier": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000009",
+          "result": {
+            "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000009",
+            "action": "PRODUCE",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 67,
+            "config_version": 3,
+            "settings": {
+              "production_time_ms": 3000
+            },
+            "elapsed_ms": 3000,
+            "produced": true
+          },
+          "evidence": {
+            "received_observed_at": 878170.781,
+            "accepted_observed_at": 878170.812,
+            "completed_observed_at": 878173.812,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        },
+        "inspection_result": {
+          "state": "COMPLETED",
+          "identifier": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000009",
+          "result": {
+            "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000009",
+            "action": "INSPECT",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 67,
+            "config_version": 3,
+            "settings": {
+              "inspection_time_ms": 5000,
+              "N": 2,
+              "K": 0
+            },
+            "elapsed_ms": 5000,
+            "verdict": "PASS"
+          },
+          "evidence": {
+            "received_observed_at": 878174.031,
+            "accepted_observed_at": 878174.125,
+            "completed_observed_at": 878179.031,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        }
+      },
+      {
+        "part_id": 68,
+        "status": "fail",
+        "produced": true,
+        "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000010",
+        "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000010",
+        "isolated": false,
+        "production_result": {
+          "state": "COMPLETED",
+          "identifier": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000010",
+          "result": {
+            "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000010",
+            "action": "PRODUCE",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 68,
+            "config_version": 3,
+            "settings": {
+              "production_time_ms": 3000
+            },
+            "elapsed_ms": 3000,
+            "produced": true
+          },
+          "evidence": {
+            "received_observed_at": 878174.062,
+            "accepted_observed_at": 878174.093,
+            "completed_observed_at": 878177.078,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        },
+        "inspection_result": {
+          "state": "COMPLETED",
+          "identifier": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000010",
+          "result": {
+            "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000010",
+            "action": "INSPECT",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 68,
+            "config_version": 4,
+            "settings": {
+              "inspection_time_ms": 2000,
+              "N": 1,
+              "K": 0
+            },
+            "elapsed_ms": 2000,
+            "verdict": "FAIL"
+          },
+          "evidence": {
+            "received_observed_at": 878268.796,
+            "accepted_observed_at": 878268.953,
+            "completed_observed_at": 878270.781,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        }
+      },
+      {
+        "part_id": 69,
+        "status": "fail",
+        "produced": true,
+        "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000011",
+        "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000011",
+        "isolated": false,
+        "production_result": {
+          "state": "COMPLETED",
+          "identifier": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000011",
+          "result": {
+            "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000011",
+            "action": "PRODUCE",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 69,
+            "config_version": 4,
+            "settings": {
+              "production_time_ms": 1000
+            },
+            "elapsed_ms": 1000,
+            "produced": true
+          },
+          "evidence": {
+            "received_observed_at": 878268.812,
+            "accepted_observed_at": 878268.843,
+            "completed_observed_at": 878269.843,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        },
+        "inspection_result": {
+          "state": "COMPLETED",
+          "identifier": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000011",
+          "result": {
+            "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000011",
+            "action": "INSPECT",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 69,
+            "config_version": 4,
+            "settings": {
+              "inspection_time_ms": 2000,
+              "N": 1,
+              "K": 0
+            },
+            "elapsed_ms": 2000,
+            "verdict": "FAIL"
+          },
+          "evidence": {
+            "received_observed_at": 878271.078,
+            "accepted_observed_at": 878271.078,
+            "completed_observed_at": 878273.0,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        }
+      },
+      {
+        "part_id": 70,
+        "status": "fail",
+        "produced": true,
+        "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000012",
+        "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000012",
+        "isolated": false,
+        "production_result": {
+          "state": "COMPLETED",
+          "identifier": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000012",
+          "result": {
+            "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000012",
+            "action": "PRODUCE",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 70,
+            "config_version": 4,
+            "settings": {
+              "production_time_ms": 1000
+            },
+            "elapsed_ms": 1000,
+            "produced": true
+          },
+          "evidence": {
+            "received_observed_at": 878270.0,
+            "accepted_observed_at": 878270.031,
+            "completed_observed_at": 878271.031,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        },
+        "inspection_result": {
+          "state": "COMPLETED",
+          "identifier": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000012",
+          "result": {
+            "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000012",
+            "action": "INSPECT",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 70,
+            "config_version": 4,
+            "settings": {
+              "inspection_time_ms": 2000,
+              "N": 1,
+              "K": 0
+            },
+            "elapsed_ms": 2000,
+            "verdict": "FAIL"
+          },
+          "evidence": {
+            "received_observed_at": 878273.109,
+            "accepted_observed_at": 878273.234,
+            "completed_observed_at": 878275.109,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        }
+      },
+      {
+        "part_id": 71,
+        "status": "fail",
+        "produced": true,
+        "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000013",
+        "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000013",
+        "isolated": false,
+        "production_result": {
+          "state": "COMPLETED",
+          "identifier": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000013",
+          "result": {
+            "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000013",
+            "action": "PRODUCE",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 71,
+            "config_version": 4,
+            "settings": {
+              "production_time_ms": 1000
+            },
+            "elapsed_ms": 1000,
+            "produced": true
+          },
+          "evidence": {
+            "received_observed_at": 878271.187,
+            "accepted_observed_at": 878271.218,
+            "completed_observed_at": 878272.218,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        },
+        "inspection_result": {
+          "state": "COMPLETED",
+          "identifier": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000013",
+          "result": {
+            "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000013",
+            "action": "INSPECT",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 71,
+            "config_version": 4,
+            "settings": {
+              "inspection_time_ms": 2000,
+              "N": 1,
+              "K": 0
+            },
+            "elapsed_ms": 2010,
+            "verdict": "FAIL"
+          },
+          "evidence": {
+            "received_observed_at": 878275.171,
+            "accepted_observed_at": 878275.312,
+            "completed_observed_at": 878277.187,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        }
+      },
+      {
+        "part_id": 72,
+        "status": "fail",
+        "produced": true,
+        "production_job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000014",
+        "inspection_job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000014",
+        "isolated": false,
+        "production_result": {
+          "state": "COMPLETED",
+          "identifier": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000014",
+          "result": {
+            "job_id": "PROD-GW-172a4f0a83a0499695a97639d49132e2-000014",
+            "action": "PRODUCE",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 72,
+            "config_version": 4,
+            "settings": {
+              "production_time_ms": 1000
+            },
+            "elapsed_ms": 1000,
+            "produced": true
+          },
+          "evidence": {
+            "received_observed_at": 878273.218,
+            "accepted_observed_at": 878273.25,
+            "completed_observed_at": 878274.25,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        },
+        "inspection_result": {
+          "state": "COMPLETED",
+          "identifier": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000014",
+          "result": {
+            "job_id": "INSP-GW-f45643c48c304f9d848a99909df0b0fa-000014",
+            "action": "INSPECT",
+            "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+            "run_no": 3,
+            "state": "COMPLETED",
+            "part_id": 72,
+            "config_version": 4,
+            "settings": {
+              "inspection_time_ms": 2000,
+              "N": 1,
+              "K": 0
+            },
+            "elapsed_ms": 2000,
+            "verdict": "FAIL"
+          },
+          "evidence": {
+            "received_observed_at": 878277.343,
+            "accepted_observed_at": 878277.421,
+            "completed_observed_at": 878279.328,
+            "delivery_established_by": "RECEIVED",
+            "acceptance_established_by": "ACCEPTED",
+            "request_attempts": 1,
+            "query_attempts": 0,
+            "queries": {}
+          },
+          "reason": null
+        }
+      }
+    ],
+    "command_results": [
+      {
+        "cmd_id": "START-OP-f99bd4a79e87cea72e1d17629926d03a-000001",
+        "command": "start",
+        "phase": "completed",
+        "result": "Both station configurations confirmed; this batch is Running",
+        "received_at": 876339.875,
+        "accepted_at": 876339.875,
+        "completed_at": 876340.406,
+        "absolute_at": 876374.875,
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "display_id": "START-OP-S38-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "STOP-OP-f99bd4a79e87cea72e1d17629926d03a-000001",
+        "command": "stop",
+        "phase": "completed",
+        "result": "Batch ended with all confirmed results retained: INCOMPLETE",
+        "received_at": 876344.437,
+        "accepted_at": 876344.437,
+        "completed_at": 876349.781,
+        "absolute_at": 876439.437,
+        "batch_id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+        "display_id": "STOP-OP-S38-1",
+        "completion_window_ms": 95000
+      },
+      {
+        "cmd_id": "START-OP-75bc66a7a23f593d167f1917af08e211-000001",
+        "command": "start",
+        "phase": "completed",
+        "result": "Both station configurations confirmed; this batch is Running",
+        "received_at": 877421.906,
+        "accepted_at": 877421.906,
+        "completed_at": 877422.468,
+        "absolute_at": 877456.906,
+        "batch_id": "BATCH-GW-b20539b13c094c6a87186311f99bb884",
+        "display_id": "START-OP-S39-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "PAUSE-OP-75bc66a7a23f593d167f1917af08e211-000001",
+        "command": "pause",
+        "phase": "completed",
+        "result": "Paused: current jobs may finish; remaining work stays in this same batch",
+        "received_at": 877427.015,
+        "accepted_at": 877427.015,
+        "completed_at": 877427.046,
+        "absolute_at": 877462.015,
+        "batch_id": "BATCH-GW-b20539b13c094c6a87186311f99bb884",
+        "display_id": "PAUSE-OP-S39-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "RESUME-OP-75bc66a7a23f593d167f1917af08e211-000001",
+        "command": "resume",
+        "phase": "completed",
+        "result": "Resumed the same batch with its original parts and results",
+        "received_at": 877557.75,
+        "accepted_at": 877557.75,
+        "completed_at": 877557.765,
+        "absolute_at": 877592.75,
+        "batch_id": "BATCH-GW-b20539b13c094c6a87186311f99bb884",
+        "display_id": "RESUME-OP-S39-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "command": "start",
+        "phase": "completed",
+        "result": "Both station configurations confirmed; this batch is Running",
+        "received_at": 878170.109,
+        "accepted_at": 878170.109,
+        "completed_at": 878170.64,
+        "absolute_at": 878205.109,
+        "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "START-OP-S40-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "PAUSE-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "command": "pause",
+        "phase": "completed",
+        "result": "Paused: current jobs may finish; remaining work stays in this same batch",
+        "received_at": 878174.734,
+        "accepted_at": 878174.734,
+        "completed_at": 878174.765,
+        "absolute_at": 878209.734,
+        "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "PAUSE-OP-S40-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "CONFIGURE-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "command": "configure",
+        "phase": "completed",
+        "result": "Both settings confirmed for future jobs; batch remains Paused",
+        "received_at": 878218.203,
+        "accepted_at": 878218.203,
+        "completed_at": 878218.828,
+        "absolute_at": 878253.203,
+        "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "CONFIGURE-OP-S40-1",
+        "completion_window_ms": 35000
+      },
+      {
+        "cmd_id": "RESUME-OP-8256165647369776c4b2671231d8ce9b-000001",
+        "command": "resume",
+        "phase": "completed",
+        "result": "Resumed the same batch with its original parts and results",
+        "received_at": 878268.578,
+        "accepted_at": 878268.578,
+        "completed_at": 878268.593,
+        "absolute_at": 878303.578,
+        "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+        "display_id": "RESUME-OP-S40-1",
+        "completion_window_ms": 35000
+      }
+    ],
+    "operator": {
+      "controller_id": "OP-bfe84d31e5ab03b2e38e92b4c6e652fc",
+      "lease_ms": 5000
+    },
+    "pause_reason": null,
+    "control_pending": null,
+    "configuration_hold": false,
+    "orphaned": false,
+    "can_close_orphans": false,
+    "can_edit": false,
+    "can_resume": false,
+    "ready": true
+  },
+  "command": {
+    "gateway_id": "GW-46dc14268a54485fa845fc7582410ee7",
+    "cmd_id": "START-OP-8256165647369776c4b2671231d8ce9b-000001",
+    "command": "start",
+    "phase": "completed",
+    "result": "Both station configurations confirmed; this batch is Running",
+    "received_at": 878170.109,
+    "accepted_at": 878170.109,
+    "completed_at": 878170.64,
+    "absolute_at": 878205.109,
+    "batch_id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+    "display_id": "START-OP-S40-1",
+    "completion_window_ms": 35000
+  },
+  "history": {
+    "items": [
+      {
+        "batch": {
+          "display_id": "Batch 16",
+          "elapsed_ms": 109719,
+          "id": "BATCH-GW-80318e3c13194ef3983eb10edbd2fff0",
+          "outcome": "completed",
+          "target": 6
+        },
+        "counts": {
+          "produced": 6,
+          "inspected": 6,
+          "passed": 1,
+          "failed": 5,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 15",
+          "elapsed_ms": 162265,
+          "id": "BATCH-GW-b20539b13c094c6a87186311f99bb884",
+          "outcome": "completed",
+          "target": 6
+        },
+        "counts": {
+          "produced": 6,
+          "inspected": 6,
+          "passed": 3,
+          "failed": 3,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 14",
+          "elapsed_ms": 9890,
+          "id": "BATCH-GW-0b15047242004fbc9f84fd98dfda4d86",
+          "outcome": "incomplete",
+          "target": 8
+        },
+        "counts": {
+          "produced": 2,
+          "inspected": 1,
+          "passed": 1,
+          "failed": 0,
+          "unresolved": 0,
+          "unstarted": 6,
+          "not_inspected": 7
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 13",
+          "elapsed_ms": 2608672,
+          "id": "BATCH-GW-eca0a7741d2f47f5a294b1896c2b02ff",
+          "outcome": "incomplete",
+          "target": 8
+        },
+        "counts": {
+          "produced": 2,
+          "inspected": 1,
+          "passed": 1,
+          "failed": 0,
+          "unresolved": 0,
+          "unstarted": 6,
+          "not_inspected": 7
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 12",
+          "elapsed_ms": 189467,
+          "id": "BATCH-GW-3737453ca3384bc18b513437041e018d",
+          "outcome": "completed",
+          "target": 6
+        },
+        "counts": {
+          "produced": 6,
+          "inspected": 6,
+          "passed": 3,
+          "failed": 3,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 11",
+          "elapsed_ms": 27141,
+          "id": "BATCH-GW-fd6fa748ef9049fa830ba0da64ec1722",
+          "outcome": "completed",
+          "target": 6
+        },
+        "counts": {
+          "produced": 6,
+          "inspected": 6,
+          "passed": 3,
+          "failed": 3,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 10",
+          "elapsed_ms": 11062,
+          "id": "BATCH-GW-f6a9f88c7537454bb40329ae479e2f53",
+          "outcome": "completed",
+          "target": 4
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 9",
+          "elapsed_ms": 11172,
+          "id": "BATCH-GW-8b103b9aedcd45c9aea2e5480b665d23",
+          "outcome": "completed",
+          "target": 4
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 8",
+          "elapsed_ms": 11172,
+          "id": "BATCH-GW-307c898b34484f1eb6b7e52d11c47b87",
+          "outcome": "completed",
+          "target": 4
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 7",
+          "elapsed_ms": 10797,
+          "id": "BATCH-GW-1448b595edf048999779a66b4010c07a",
+          "outcome": "completed",
+          "target": 4
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "display_id": "Batch 6",
+          "elapsed_ms": 29469,
+          "id": "BATCH-GW-9ed23e163ea24d389d202fa6498d9d61",
+          "outcome": "completed",
+          "target": 6
+        },
+        "counts": {
+          "produced": 6,
+          "inspected": 6,
+          "passed": 4,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "id": "BATCH-GW-5628d1d6751e4b02aabff7e5c2713305",
+          "display_id": "Batch 5",
+          "target": 6,
+          "outcome": "completed",
+          "elapsed_ms": null
+        },
+        "counts": {
+          "produced": 6,
+          "inspected": 6,
+          "passed": 3,
+          "failed": 3,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "id": "BATCH-GW-8cb8f70e5689409289a78a9fce5bd92f",
+          "display_id": "Batch 4",
+          "target": 4,
+          "outcome": "completed",
+          "elapsed_ms": null
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "id": "BATCH-GW-37343e4e0761413ab45224e6dc96e98d",
+          "display_id": "Batch 3",
+          "target": 4,
+          "outcome": "completed",
+          "elapsed_ms": null
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "id": "BATCH-GW-f2406073228f4b84ab9e057b4ad07d22",
+          "display_id": "Batch 2",
+          "target": 4,
+          "outcome": "completed",
+          "elapsed_ms": null
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      },
+      {
+        "batch": {
+          "id": "BATCH-GW-8cfb605401d4471c8841f27c8ae089f1",
+          "display_id": "Batch 1",
+          "target": 4,
+          "outcome": "completed",
+          "elapsed_ms": null
+        },
+        "counts": {
+          "produced": 4,
+          "inspected": 4,
+          "passed": 2,
+          "failed": 2,
+          "unresolved": 0,
+          "unstarted": 0,
+          "not_inspected": 0
+        }
+      }
+    ],
+    "total": 16,
+    "offset": 0,
+    "next_offset": null
+  }
+}
